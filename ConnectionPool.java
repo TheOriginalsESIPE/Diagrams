@@ -12,7 +12,7 @@ import greg_pds.ServerMetier;
 
 
 public class ConnectionPool{
-	ArrayList<Connection> connectionsList = new ArrayList<Connection>();
+	Vector<Connection> connectionsList = new Vector<Connection>();
 
 	public ConnectionPool(){
 		initializeConnectionPool();
