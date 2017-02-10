@@ -26,3 +26,11 @@ N'oublie pas initialiser un git dans votre projet. `$git init`
 
 `git merge nom_branch`   
 
+## Processus pour commencer
+1. cloner ce projet dans ton respositry local avec `$git clone addr.git`   
+2. changer le repertoire dans Master de ce projet `$cd Master`   
+3. verifier si tous sont correcte `$git remote show origin`   
+4. creer votre propre branche `$git -b checkout nomprenom`   
+5. editer votre branche en ajoutant les fichiers `$git add *.java; $git commit -m "xxx@etu.u-pec.fr"`   
+6. push votre branche sur celle branche de github `$git push origin nomprenom`   
+
