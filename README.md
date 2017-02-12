@@ -1,8 +1,6 @@
-# Master
+# Branch -- Yuxin
+Ce que je m'occupe: Jar auto-executable   
+Le fichier de pdf montre les régles pour executer le fichier.  
 
-un autre ligne
 
-modif depuis github
-
-je change et commite pour pouvoir créer un conflit
 
