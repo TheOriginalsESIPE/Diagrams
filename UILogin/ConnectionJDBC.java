@@ -1,7 +1,4 @@
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.*;
-import java.util.Properties;
 
 /**
  * Created by tearsyu on 13/02/17.
@@ -12,19 +9,20 @@ public class ConnectionJDBC {
     Connection conn = null;
     Statement statement = null;
     ResultSet rs = null;
+    CallableStatement callst = null;
 
     public void connectJDBC(){
-        Properties prop = new Properties();
+        //Properties prop = new Properties();
 
         try {
-            prop.load(new FileInputStream("src/config.properties"));
-            String username = prop.getProperty("dbuser");
-            String password = prop.getProperty("dbpassword");
+            //prop.load(new FileInputStream("src/config.properties"));
+            //String username = prop.getProperty("dbuser");
+            //String password = prop.getProperty("dbpassword");
+            String username = "Tearsyu";
+            String password = "0123398lain";
             System.out.println("Connect to database...");
             Class.forName(driver);
             conn = DriverManager.getConnection(link, username, password);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
