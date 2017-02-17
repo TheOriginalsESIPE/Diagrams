@@ -23,6 +23,7 @@
 		
 		/**
 		 * Vector 'Thread-Safe' does not need synchronization.
+		 *
 		 * Creation of connection list
 		 */
 		
@@ -95,7 +96,10 @@
 			if(input == null){
 				System.out.println("Sorry, unable to find "+fileName);
 			}
+
+
 			//loading a properties file
+			
 			try{
 				properties.load(input);
 			}catch(IOException e){
@@ -159,7 +163,9 @@
 		 */
 
 		public synchronized void returnConnectionPool(Connection connection){
+			
 			//Adding the connection from the client back to the connection pool
+			
 			connectionList.add(connection);	
 		}
 		
