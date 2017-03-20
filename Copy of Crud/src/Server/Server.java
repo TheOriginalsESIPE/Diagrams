@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Created by tearsyu on 15/03/17.
- * This class is aim to create a singleton server which play the role of Controller in out project.
+ * This class is aim to create a singleton server which play the role of Controller.Controller in out project.
  */
 public class Server extends JFrame {
     public static final int PORT = 20012;
@@ -35,15 +35,13 @@ public class Server extends JFrame {
             CPoolServHandler handler;
 
             while(true){
-                System.out.println("Waiting for client connect...");
                 server.msg.append("\nWaiting for client connect...");
 
                 client = serverSocket.accept();
-                System.out.println("Connexion successfully! Client is " + client.getInetAddress().getHostAddress());
                 server.msg.append("\nConnexion successfully! \nClient is " + client.getInetAddress().getHostAddress());
                 handler = new CPoolServHandler(client, server);
                 executorService.execute(handler);
-                server.msg.append("Thread active ID "+String.valueOf(handler.getId())+" state is " + handler.getState());
+                server.msg.append("\nThread active ID "+String.valueOf(handler.getId())+" state is " + handler.getState());
 
             }
         }catch (Exception e){}
