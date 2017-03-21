@@ -1,6 +1,10 @@
 package dto;
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 public class Piece_detachedDTO{
 	
 	private String name, mark, model;
@@ -74,4 +78,8 @@ public class Piece_detachedDTO{
 	}
 	
 	
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1

@@ -1,6 +1,10 @@
 package dto;
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 public class Piece_consumptionDTO{
 	
 	private Piece_stockDTO ref_piece_stock;

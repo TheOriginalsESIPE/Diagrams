@@ -1,9 +1,16 @@
 package dto;
 
 
+<<<<<<< HEAD
 public class OperationDTO{
 	
 	private int id_operation=0;
+=======
+
+public class OperationDTO{
+	
+	private int id_operation; //auto-increment
+>>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 	private String name, date_begin, date_end, time, degre_emergency, login_repairer;
 	private BreakdownDTO id_breakdown;
 	
@@ -93,4 +100,16 @@ public class OperationDTO{
 	public void setId_breakdown(BreakdownDTO id_breakdown) {
 		this.id_breakdown = id_breakdown;
 	}
+<<<<<<< HEAD
+=======
+
+	@Override
+	public String toString() {
+		return "OperationDTO [id_operation=" + id_operation + ", name=" + name + ", date_begin=" + date_begin
+				+ ", date_end=" + date_end + ", time=" + time + ", degre_emergency=" + degre_emergency
+				+ ", login_repairer=" + login_repairer + ", id_breakdown=" + id_breakdown + "]";
+	}
+	
+	
+>>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 }

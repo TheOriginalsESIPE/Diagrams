@@ -1,8 +1,9 @@
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import Controller.ControllerAuthentification;
+import Model.ModelVehicle;
+import Server.Client;
+import Views.ViewAuthentification;
+
+import java.io.IOException;
 
 import javax.swing.SwingUtilities;
 
@@ -13,12 +14,17 @@ public class TestVehicule {
 		public void run(){
 			ModelVehicle m =new ModelVehicle();
 			ViewAuthentification v = new ViewAuthentification();
-			
-			//Controleur c = new Controleur(m, v);
+
+            //Start the client and connect to the server.
+			Client client = new Client();
+            try {
+                client.connectToServer();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //Controleur c = new Controleur(m, v);
 			ControllerAuthentification c = new ControllerAuthentification(m, v);
 			c.control();
-			
-		
 		}
 		});
 }

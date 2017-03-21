@@ -1,6 +1,9 @@
 package dto;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 public class Piece_stockDTO{
 	
 	private String login_administrator, date_reception;
@@ -21,8 +24,11 @@ public class Piece_stockDTO{
 		this.ref_piece_stock=rps;
 	}
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 	
 	public String getLogin_administrator() {
 		return login_administrator;
