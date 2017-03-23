@@ -89,7 +89,7 @@
 			String dburl;
 			String userName;
 			String userPasswd;
-			String fileName = "C:/Users/dembe/workspace/PDS_2016-2017/src/sqlconfigDB.properties";
+			String fileName = "properties/configDB.properties";
 
 			input = getClass().getClassLoader().getResourceAsStream(fileName);
 			if(input == null){

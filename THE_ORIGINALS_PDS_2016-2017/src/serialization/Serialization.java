@@ -1,12 +1,16 @@
+package serialization;
+
+import dto.VehicleDTO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Serialisation {
+public class Serialization {
+
 
 	@SuppressWarnings("unchecked")
-	public Object srialisation(int o , VehicleDTO VDTO){
+	public Object serialisAVehicle(int action, VehicleDTO VDTO){
 		JSONObject root = new JSONObject();
-		root.put("action", o);
+		root.put("action", action);
 		JSONObject V1 = new JSONObject();
 		V1.put("numMat", VDTO.getNumMat());
 		V1.put("model", VDTO.getModel());
@@ -16,23 +20,6 @@ public class Serialisation {
 		listDTO.add(V1);
 		root.put("VehicleDTO", listDTO);
 		return root;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 	
 }

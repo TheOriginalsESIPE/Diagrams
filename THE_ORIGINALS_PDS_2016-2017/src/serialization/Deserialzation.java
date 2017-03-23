@@ -1,11 +1,12 @@
-import java.util.ArrayList;
+package serialization;
 
+import dto.VehicleDTO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class deserialisation {
+public class Deserialzation {
 	
-	public VehicleDTO deserialisation(JSONObject jsonobject,VehicleDTO VDTO){
+	public VehicleDTO deserialAVehicle(JSONObject jsonobject, VehicleDTO VDTO){
 		JSONArray msg = (JSONArray) jsonobject.get("VehicleDTO");
 			 JSONObject jsonObject2 = (JSONObject) msg.get(0);
 			 VDTO.setNumMat( (int) jsonObject2.get("numMat"));
@@ -14,11 +15,6 @@ public class deserialisation {
 			 VDTO.setVehicle_type((String) jsonObject2.get("vehicle_type"));
 			 return VDTO;
 		}
-		
-		
-		
-		
-		
 		
 	}
 
