@@ -36,6 +36,10 @@ public class Client {
         client = new Socket(localhost, port);
     }
 
+    public void closeStream{
+        in.close();
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
