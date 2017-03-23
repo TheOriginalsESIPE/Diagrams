@@ -117,8 +117,8 @@
         <option value="$PROJECT_DIR$/src/serialization/deserialisation.java" />
         <option value="$PROJECT_DIR$/src/serialization/Deserialzation.java" />
         <option value="$PROJECT_DIR$/src/serialization/Serialisation.java" />
-        <option value="$PROJECT_DIR$/src/serialization/Serialization.java" />
         <option value="$PROJECT_DIR$/src/enumeration/EnumOperation.java" />
+        <option value="$PROJECT_DIR$/src/serialization/Serialization.java" />
       </list>
     </option>
   </component>
