@@ -5,12 +5,7 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class Authentification extends JFrame implements ActionListener{
 	
@@ -62,6 +57,7 @@ public class Authentification extends JFrame implements ActionListener{
 			registerButton.setBounds(180, 80, 80, 25);
 			panel.add(registerButton);
 		}
+
 
 		
 		public void actionPerformed(ActionEvent e) {

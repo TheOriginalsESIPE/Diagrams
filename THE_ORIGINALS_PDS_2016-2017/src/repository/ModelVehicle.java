@@ -1,22 +1,14 @@
 package repository;
 
 
-import java.awt.TextArea;
 import java.sql.*;
 import java.util.Date;
-
 import sql.MyConnectionPool;
-
 import java.text.SimpleDateFormat;
-//import com.mysql.jdbc.Connection;
 
 	public class ModelVehicle {
 	
-		public static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
-		public static final String DATABASE_URL = "jdbc:mysql://127.0.0.1/pds2";
 		java.sql.Connection connect1 = null;
- 		
- 		
  		
 		    private String numMat;
 		    private String model;
@@ -41,7 +33,7 @@ import java.text.SimpleDateFormat;
 				 
 				 try {
 				
-				Statement stmt = connect1.createStatement( );
+				 Statement stmt = connect1.createStatement( );
 				 String sql = "insert into vehicule_depot(numMat, date_entrance, numPlace) VALUES ('"+answer1+"','"+answer2+"','"+answer3bis+"')";
 				 int n= stmt.executeUpdate(sql);
 				 stmt.close();

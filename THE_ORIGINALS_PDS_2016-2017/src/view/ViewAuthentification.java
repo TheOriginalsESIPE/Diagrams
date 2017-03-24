@@ -1,11 +1,7 @@
 package view;
 import java.awt.GridLayout;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class ViewAuthentification extends JFrame{
 	
@@ -45,47 +41,41 @@ public ViewAuthentification() {
 
 }
 
+	/**
+	 * This is a view to show to client if there is an error.
+	 *
+	 * @param errorType 1:The client can't connect to the server. 2: username or password incorrect.
+     */
+	public void errorDialog(int errorType){
+		if(errorType==1)
+			JOptionPane.showMessageDialog(null, "Can't not connect to the Server." +
+					"\nPlease check if the server is launched.");
+		else if(errorType == 2)
+			JOptionPane.showMessageDialog(null, "Your login or password is incorrect.");
+	}
 
-public JButton getBtnOK() {
+	public JButton getBtnOK() {
 	return btnOK;
 }
 
-
-public JTextField getTxt1() {
+	public JTextField getTxt1() {
 	return txt1;
 }
 
-
-public JPasswordField getTxt2() {
+	public JPasswordField getTxt2() {
 	return txt2;
 }
 
-
-
-
-
-
-
-
-public void setBtnOK(JButton btnOK) {
+	public void setBtnOK(JButton btnOK) {
 	this.btnOK = btnOK;
 }
 
-
-public void setTxt1(JTextField txt1) {
+	public void setTxt1(JTextField txt1) {
 	this.txt1 = txt1;
 }
 
-
-public void setTxt2(JPasswordField txt2) {
+	public void setTxt2(JPasswordField txt2) {
 	this.txt2 = txt2;
 }
-
-
-
-
-
-
-
 
 }

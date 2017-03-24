@@ -3,13 +3,10 @@ package server;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-
 import javax.swing.JButton;
-import javax.swing.text.View;
-
 import repository.ModelVehicle;
-import view.ViewInsert;
 import view.View;
+import view.ViewInsert;
 
 public class Controller{
 	
@@ -81,7 +78,7 @@ ac3 = new ActionListener(){
 		if((JButton)e.getSource()== v.getBtnInsert()){
 			v.getTxtU().setText(null);
 			v.getTxtD().setText(null);
-			v1 = new VueInsert();
+			v1 = new ViewInsert();
 			c1 = new ControllerInsert(mv, v1);
 			c1.control();
 		}}};v.getBtnInsert().addActionListener(ac3);

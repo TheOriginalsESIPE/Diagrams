@@ -1,17 +1,11 @@
 package server;
-import view.Authentification;
+import repository.ModelAuth;
 import view.ViewAuthentification;
 import repository.ModelVehicle;
 import view.View;
-import server.Controller;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-
 import javax.swing.JButton;
-import javax.swing.JFrame;
-//import javax.swing.text.View;
 
 public class ControllerAuthentification {
 	
@@ -19,12 +13,13 @@ public class ControllerAuthentification {
 	private View v;
 	private Controller c1;
 	
-	private ModelVehicle mv;
+	private ModelAuth ma;
+    private ModelVehicle mv;
 	private ActionListener ac;
 	
 	
-	public ControllerAuthentification(ModelVehicle mv, ViewAuthentification v){
-		this.mv=mv;
+	public ControllerAuthentification(ModelAuth ma, ViewAuthentification v){
+		this.ma=ma;
 		this.v1=v;
 		
 		
@@ -34,37 +29,25 @@ public class ControllerAuthentification {
 public void control(){
 	ac = new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
-		
-					 if((JButton)e.getSource()== v1.getBtnOK()){
-						    String answer1 = v1.getTxt1().getText();
-							String answer2 = v1.getTxt2().getText();
-							try {
-							
-							boolean res = mv.log(answer1, answer2);
-							//System.out.println(res);
-							if(res==true){
-							v1.dispose();
-							v1.setVisible(false);
-							v = new View();
-							c1 = new Controller(mv, v);
-							
-							c1.control();
-							
-							}
-							else{}
-							
-						
-					} catch (ClassNotFoundException | SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} 
-					}
-				
-				
-					 
-				
-			}
-			};v1.getBtnOK().addActionListener(ac);
+			if((JButton)e.getSource()== v1.getBtnOK()){
+                String answer1 = v1.getTxt1().getText();
+				String answer2 = v1.getTxt2().getText();
+
+                boolean res = ma.islegalAuth(answer1, answer2);
+                //System.out.println(res);
+                if(res==true){
+                    v1.dispose();
+                    v1.setVisible(false);
+                    v = new View();
+                    c1 = new Controller(mv, v);
+                    c1.control();
+                } else{
+                    v1.errorDialog(2);
+                }
+            }
+        }
+    };
+    v1.getBtnOK().addActionListener(ac);
 
 }}
 

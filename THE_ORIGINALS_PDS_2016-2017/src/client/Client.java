@@ -1,13 +1,18 @@
 package client;
 
-import repository.ModelVehicle;
+import dto.VehicleDTO;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import repository.ModelAuth;
+import serialization.Deserialzation;
 import server.ControllerAuthentification;
 import view.ViewAuthentification;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 /**
@@ -31,13 +36,15 @@ public class Client{
 
     }
 
+    public Socket getClient(){return client;}
     /**
      * Connect to Server in according to config file and close the file input stream.
      * @throws IOException
      * */
-    public void connectToServer() throws IOException {
+    public boolean connectToServer() throws IOException {
         client = new Socket(localhost, port);
         closeStream();
+        return  client.isConnected();
     }
 
 
@@ -63,23 +70,51 @@ public class Client{
         }
     }
 
+    public void sendToServ(JSONObject jsonObject) throws IOException {
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream(), StandardCharsets.UTF_8));
+        out.write(jsonObject.toString());
+        out.newLine();
+        out.flush();
+        out.close();
+    }
+
+    public VehicleDTO receiveFromServ() throws IOException, ParseException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        String jsonString = in.readLine();
+        Deserialzation ds = new Deserialzation();
+        return ds.deserialAVehicle(ds.parseStringToJson(jsonString));
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ModelVehicle m = new ModelVehicle();
+                ModelAuth m = new ModelAuth();
                 ViewAuthentification v = new ViewAuthentification();
 
                 //Start the client and connect to the server.
                 try {
                     Client client = new Client();
-                    client.connectToServer();
+                    if(client.connectToServer()){
+                        System.out.println("The client connect to the server.");
+                        /*This controller doesn't pass the server, it connects directly to the server!!
+                        * I need an other type of serialization to send object!
+                        * */
+                        ControllerAuthentification c = new ControllerAuthentification(m, v);
+                        c.control();
+
+                        while(client.getClient().isConnected()){
+
+                        }
+                    } else {
+                        v.errorDialog(1);
+                        System.out.println("Can't not to connect to server.");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                ControllerAuthentification c = new ControllerAuthentification(m, v);
-                c.control();
+
+
             }
         });
     }
