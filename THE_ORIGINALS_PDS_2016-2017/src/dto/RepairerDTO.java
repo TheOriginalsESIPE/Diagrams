@@ -1,9 +1,5 @@
 package dto;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 public class RepairerDTO{
 	
 	private String login, password, firstname, lastname, adress;
@@ -78,8 +74,6 @@ public class RepairerDTO{
 	public void setNumTel(int numTel) {
 		this.numTel = numTel;
 	}
-<<<<<<< HEAD
-=======
 
 	@Override
 	public String toString() {
@@ -88,5 +82,4 @@ public class RepairerDTO{
 	}
 	
 	
->>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 }

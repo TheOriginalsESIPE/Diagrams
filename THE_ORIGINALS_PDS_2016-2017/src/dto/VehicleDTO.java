@@ -1,9 +1,5 @@
 package dto;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 public class VehicleDTO{
 	
 	private int numMat;
@@ -53,14 +49,9 @@ public class VehicleDTO{
 		this.vehicle_type = vehicle_type;
 	}
 	
-<<<<<<< HEAD
-	public String toString(){
-		return ("numMat: "+this.getNumMat()+" model: "+this.getModel()+" mark: "+this.getMark()+" vehicle_type: "+this.getVehicle_type());
-=======
 	@Override
 	public String toString() {
 		return "VehicleDTO [numMat=" + numMat + ", model=" + model + ", mark=" + mark + ", vehicle_type=" + vehicle_type
 				+ "]";
->>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 	}
 }
