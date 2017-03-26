@@ -1,16 +1,9 @@
 package dto;
 
 
-<<<<<<< HEAD
-
-public class BreakdownDTO{
-	
-	private int id_breakdown=0; //auto increment
-=======
 public class BreakdownDTO{
 	
 	private int id_breakdown; //auto increment
->>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 	private String name;
 	private VehicleDTO numMat;
 	
@@ -47,8 +40,6 @@ public class BreakdownDTO{
 	public void setNumMat(VehicleDTO numMat) {
 		this.numMat = numMat;
 	}
-<<<<<<< HEAD
-=======
 
 	@Override
 	public String toString() {
@@ -56,5 +47,4 @@ public class BreakdownDTO{
 	}
 	
 	
->>>>>>> 835007e46af7dc4575eb85f9a21231f2be84fdc1
 }
