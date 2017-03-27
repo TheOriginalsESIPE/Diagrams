@@ -2,7 +2,7 @@ package dto;
 
 public class VehicleDTO{
 	
-	private int numMat;
+	private String numMat;
 	private String model;
 	private String mark;
 	private String vehicle_type;
@@ -14,17 +14,17 @@ public class VehicleDTO{
 		this.vehicle_type=vehicle_type;
 	}
 	
-	public VehicleDTO(int nM, String mo, String ma, String vt){
+	public VehicleDTO(String nM, String mo, String ma, String vt){
 		this.numMat=nM;
 		this.model=mo;
 		this.mark=ma;
 		this.vehicle_type=vt;
 	}
 	
-	public int getNumMat() {
+	public String getNumMat() {
 		return numMat;
 	}
-	public void setNumMat(int numMat) {
+	public void setNumMat(String numMat) {
 		this.numMat = numMat;
 	}
 	
