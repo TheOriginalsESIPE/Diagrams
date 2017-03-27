@@ -1,5 +1,7 @@
 package enumeration;
 
+import java.util.Enumeration;
+
 /**
  * Created by tearsyu on 23/03/17.
  * This class is just to create a enumeration for 4 operation, they are
@@ -37,5 +39,18 @@ public enum  EnumOperation {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public static String getNameByIndex(int i) {
+        if(i == 1)
+            return EnumOperation.UPDATE.getName();
+        else if (i == 2)
+            return EnumOperation.DELETE.getName();
+        else if (i == 3)
+            return EnumOperation.SEARCH.getName();
+        else if (i == 4)
+            return EnumOperation.INSERT.getName();
+        else
+            return "Index of action you have asked doesn't exist.";
     }
 }

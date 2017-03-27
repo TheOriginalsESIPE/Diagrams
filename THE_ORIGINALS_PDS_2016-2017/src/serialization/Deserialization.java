@@ -6,7 +6,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class Deserialzation {
+public class Deserialization {
 	/**
 	 * @Add this method is added by tearsyu in according to the demand of client and server.
 	 * This Method used to parse the string to jsonObject.
@@ -35,6 +35,11 @@ public class Deserialzation {
 		VDTO.setVehicle_type((String) jsonObject2.get("vehicle_type"));
 		return VDTO;
 		}
-		
+
+	public int deserialAction(JSONObject jsonObject){
+		Integer integer = (Integer) jsonObject.get("action");
+		return integer.intValue();
 	}
+		
+}
 

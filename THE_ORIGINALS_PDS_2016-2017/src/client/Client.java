@@ -2,10 +2,9 @@ package client;
 
 import dto.VehicleDTO;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import repository.ModelAuth;
-import serialization.Deserialzation;
+import serialization.Deserialization;
 import server.ControllerAuthentification;
 import view.ViewAuthentification;
 
@@ -81,7 +80,7 @@ public class Client{
     public VehicleDTO receiveFromServ() throws IOException, ParseException {
         BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         String jsonString = in.readLine();
-        Deserialzation ds = new Deserialzation();
+        Deserialization ds = new Deserialization();
         return ds.deserialAVehicle(ds.parseStringToJson(jsonString));
     }
 
