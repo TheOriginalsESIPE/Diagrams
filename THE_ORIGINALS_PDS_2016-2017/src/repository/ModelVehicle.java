@@ -29,12 +29,12 @@ import java.text.SimpleDateFormat;
 			
 
 			
-	 public int insert(String answer1, String answer2, int answer3bis) throws ClassNotFoundException , SQLException {
+	 public int insert(String numMat, String date_entrance, int numPlace) throws ClassNotFoundException , SQLException {
 				 
 				 try {
 				
 				 Statement stmt = connect1.createStatement( );
-				 String sql = "insert into vehicule_depot(numMat, date_entrance, numPlace) VALUES ('"+answer1+"','"+answer2+"','"+answer3bis+"')";
+				 String sql = "insert into vehicule_depot(numMat, date_entrance, numPlace) VALUES ('"+numMat+"','"+date_entrance+"','"+numPlace+"')";
 				 int n= stmt.executeUpdate(sql);
 				 stmt.close();
 				 return n;
@@ -44,6 +44,8 @@ import java.text.SimpleDateFormat;
 				 }
 				 
 	}
+
+		//It should return an object DTO
 	public String select(String numMat) throws ClassNotFoundException , SQLException {
 				
 				 try {
@@ -142,103 +144,6 @@ public boolean log(String name, String pwd) throws ClassNotFoundException , SQLE
 				
 				 
 	}
-
-
-
-			public String getNumMat() {
-				return numMat;
-			}
-
-
-
-
-			public String getmodel() {
-				return model;
-			}
-
-
-
-
-			public String getmark() {
-				return mark;
-			}
-
-
-
-
-			public String getvehicle_type() {
-				return vehicle_type;
-			}
-
-
-
-
-			public int getNumPlace() {
-				return numPlace;
-			}
-
-
-
-
-			public String getdate_entrance() {
-				return date_entrance;
-			}
-
-
-
-
-			public String getdate_wayout() {
-				return date_wayout;
-			}
-
-
-
-
-			public void setNumMat(String numMat) {
-				this.numMat = numMat;
-			}
-
-
-
-
-			public void setmodel(String model) {
-				this.model = model;
-			}
-
-
-
-
-			public void setmark(String mark) {
-				this.mark = mark;
-			}
-
-
-
-
-			public void setvehicle_type(String vehicle_type) {
-				this.vehicle_type = vehicle_type;
-			}
-
-
-
-
-			public void setNumPlace(int numPlace) {
-				this.numPlace = numPlace;
-			}
-
-
-
-
-			public void setdate_entrance(String date_entrance) {
-				this.date_entrance = date_entrance;
-			}
-
-
-
-
-			public void setdate_wayout(String date_wayout) {
-				this.date_wayout = date_wayout;
-			}
 			 
 	
 

@@ -69,6 +69,8 @@ public class Client{
         }
     }
 
+    /*
+
     public void sendToServ(JSONObject jsonObject) throws IOException {
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream(), StandardCharsets.UTF_8));
         out.write(jsonObject.toString());
@@ -83,13 +85,14 @@ public class Client{
         Deserialization ds = new Deserialization();
         return ds.deserialAVehicle(ds.parseStringToJson(jsonString));
     }
+    */
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ModelAuth m = new ModelAuth();
-                ViewAuthentification v = new ViewAuthentification();
 
+                ViewAuthentification v = new ViewAuthentification();
+                System.out.println("Client view ");
                 //Start the client and connect to the server.
                 try {
                     Client client = new Client();
@@ -98,17 +101,19 @@ public class Client{
                         /*This controller doesn't pass the server, it connects directly to the server!!
                         * I need an other type of serialization to send object!
                         * */
-                        ControllerAuthentification c = new ControllerAuthentification(m, v);
+                        ModelAuth m = new ModelAuth();
+                        ControllerAuthentification c = new ControllerAuthentification(m, v, client.getClient());
                         c.control();
 
-                        while(client.getClient().isConnected()){
+                        //while(client.getClient().isConnected()){
 
-                        }
+                        //}
                     } else {
                         v.errorDialog(1);
                         System.out.println("Can't not to connect to server.");
                     }
                 } catch (IOException e) {
+                    v.errorDialog(1);
                     e.printStackTrace();
                 }
 

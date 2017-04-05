@@ -1,11 +1,5 @@
 package repository;
 
-import sql.MyConnectionPool;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * Created by tearsyu on 23/03/17.
@@ -15,42 +9,19 @@ import java.sql.Statement;
  * @author tearsyu
  */
 public class ModelAuth {
-    Connection connect = null;
-    MyConnectionPool myConnectionPool;
-    public ModelAuth(){
-        myConnectionPool = new MyConnectionPool();
-        connect = myConnectionPool.getConnectionFromPool();
-    }
 
+    public ModelAuth() {
+    }
     /**
-     * @param name user name
+     * @param login user name
      * @param pwd  password
-     * @return true if it's a legal user.
-     * @return  false if it's a illegal user.
+     * @return a string of query.
      */
-    public boolean islegalAuth(String name, String pwd){
-        boolean isTrue = false;
-        try {
 
-            Statement stmt = connect.createStatement( );
-            ResultSet rs = stmt.executeQuery("select login, password from reparateur" +
-                    " where login='"+name+"' and password='"+pwd+"'");
-
-            while (rs.next()) {
-                String n = rs.getString("login");
-                String m = rs.getString("password");
-                if(n=="" || m==""){
-                    isTrue = false;
-                }
-                else isTrue = true;
-            }
-
-            rs.close();
-            stmt.close();
-            myConnectionPool.returnConnectionPool(connect);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return isTrue;
+    public String authQuery(String login, String pwd){
+        String query = "SELECT * from reparateur " +
+                "where login = '" + login + "' and password='" + pwd + "';";
+        return query;
     }
+
 }

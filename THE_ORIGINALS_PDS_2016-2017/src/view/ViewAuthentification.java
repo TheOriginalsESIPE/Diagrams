@@ -23,7 +23,7 @@ public ViewAuthentification() {
 		GridLayout gl = new GridLayout(5,1);
 		myFrame.getContentPane().setLayout(gl);
 		myFrame.setSize(WIDTH, HEIGHT);
-		myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myFrame.setVisible(true);
 		btnOK = new JButton("OK");
 		txt1 = new JTextField();
@@ -37,20 +37,21 @@ public ViewAuthentification() {
 		myFrame.getContentPane().add(txt2);
 		
 		myFrame.getContentPane().add(btnOK);
-		
+		System.out.println("Auth view");
 
 }
 
 	/**
 	 * This is a view to show to client if there is an error.
-	 *
+	 * If it can't connect to the server, client terminal will dispose.
 	 * @param errorType 1:The client can't connect to the server. 2: username or password incorrect.
      */
 	public void errorDialog(int errorType){
-		if(errorType==1)
+		if(errorType==1) {
 			JOptionPane.showMessageDialog(null, "Can't not connect to the Server." +
-					"\nPlease check if the server is launched.");
-		else if(errorType == 2)
+					"\nPlease check if the server is launched and properties files.");
+			myFrame.dispose();
+		} else if(errorType == 2)
 			JOptionPane.showMessageDialog(null, "Your login or password is incorrect.");
 	}
 

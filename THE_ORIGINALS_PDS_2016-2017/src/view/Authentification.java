@@ -25,6 +25,7 @@ public class Authentification extends JFrame implements ActionListener{
 		JPanel panel = new JPanel();
 		placeComponents(panel);
 		this.getContentPane().add(panel, BorderLayout.CENTER);
+
 		//this.add(bouton, BorderLayout.NORTH);*/
 	
 	}

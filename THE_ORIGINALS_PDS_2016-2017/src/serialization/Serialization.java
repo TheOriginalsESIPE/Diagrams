@@ -26,7 +26,7 @@ public class Serialization {
 	public static void main(String[] arg){
 		Serialization s = new Serialization();
 		VehicleDTO vehicleDTO = new VehicleDTO();
-		vehicleDTO.setNumMat(23423);
+		vehicleDTO.setNumMat("24243JDS");
 		vehicleDTO.setMark("BWM");
 		vehicleDTO.setModel("MDH334 E2J");
 		vehicleDTO.setVehicle_type("voiture");

@@ -23,8 +23,8 @@ public class TestVehicule {
 			ViewAuthentification v = new ViewAuthentification();
 			
 			//Controleur c = new Controleur(m, v);
-			ControllerAuthentification c = new ControllerAuthentification(m, v);
-			c.control();
+			//ControllerAuthentification c = new ControllerAuthentification(m, v);
+			//c.control();
 			
 		
 		}

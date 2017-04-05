@@ -62,11 +62,13 @@
 		 * 
 		 * @return a boolean if the connection pool is full or not
 		 */
-
+		int compte = 0;
 		private synchronized boolean checkIfConnectionPoolIsFull(){
 			final int MAX_POOL_SIZE = 21;
 
 			if(connectionList.size() < MAX_POOL_SIZE){
+				compte++;
+				System.out.println(compte + " " + connectionList.size());
 				return false;
 			}
 
@@ -118,6 +120,7 @@
 			}
 			catch(ClassNotFoundException cnfe){
 				System.err.println("Class introuvable "+cnfe);
+				cnfe.printStackTrace();
 				return null;
 			}
 			try {
@@ -137,7 +140,7 @@
 
 		public synchronized Connection getConnectionFromPool(){
 			Connection connection = null;
-			while(connectionList.size() >= 0){
+//			while(connectionList.size() >= 0){
 				if(connectionList.size() > 0){
 					connection = connectionList.get(0);
 					connectionList.remove(0);
@@ -147,7 +150,7 @@
 					connection = connectionList.get(0);
 					connectionList.remove(0);
 				}
-			}
+//			}
 
 			return connection;
 		}
@@ -172,5 +175,6 @@
 		public synchronized int sizeConnectionPool(){
 			return connectionList.size();
 		}
+
 	}
 

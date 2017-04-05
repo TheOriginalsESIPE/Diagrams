@@ -29,7 +29,7 @@ public class Deserialization {
 		VehicleDTO VDTO = new VehicleDTO();
 		JSONArray msg = (JSONArray) jsonobject.get("VehicleDTO");
 		JSONObject jsonObject2 = (JSONObject) msg.get(0);
-		VDTO.setNumMat( (int) jsonObject2.get("numMat"));
+		VDTO.setNumMat( (String) jsonObject2.get("numMat"));
 		VDTO.setModel((String) jsonObject2.get("model"));
 		VDTO.setMark((String) jsonObject2.get("mark"));
 		VDTO.setVehicle_type((String) jsonObject2.get("vehicle_type"));

@@ -56,6 +56,4 @@ public class Server extends JFrame{
             server.msg.append(String.valueOf(System.err));
         }
     }
-
-
 }
