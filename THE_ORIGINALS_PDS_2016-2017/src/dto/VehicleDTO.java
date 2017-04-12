@@ -1,6 +1,6 @@
 package dto;
 
-public class VehicleDTO{
+public class VehicleDTO {
 	
 	private String numMat;
 	private String model;

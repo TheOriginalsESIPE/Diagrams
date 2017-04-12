@@ -22,7 +22,6 @@ public class ControllerAuthentification {
 	
 	private ModelAuth ma;
 	private ActionListener ac;
-    //private HandlerSQL hsql;
     Socket socket;
     BufferedReader in;
     PrintStream out;
@@ -58,7 +57,7 @@ public void control(){
                     v1.setVisible(false);
                     v = new View();
                     ModelVehicle mv = new ModelVehicle();
-                    c1 = new Controller(mv, v);
+                    c1 = new Controller(mv, v, socket);
                     c1.control();
                 } else{
                     v1.errorDialog(2);

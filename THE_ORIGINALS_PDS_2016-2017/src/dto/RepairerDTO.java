@@ -1,6 +1,6 @@
 package dto;
 
-public class RepairerDTO{
+public class RepairerDTO {
 	
 	private String login, password, firstname, lastname, adress;
 	private int numTel;

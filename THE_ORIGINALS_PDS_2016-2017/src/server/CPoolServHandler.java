@@ -2,6 +2,7 @@ package server;
 
 import dto.VehicleDTO;
 import enumeration.EnumOperation;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import repository.ModelAuth;
 import repository.ModelVehicle;
@@ -43,6 +44,7 @@ public class CPoolServHandler extends Thread {
             BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             PrintStream out = new PrintStream(client.getOutputStream());
             while(true) {
+                //CASE: asking the authentication, here we don't implement the encryption service.
                 if (in.readLine().equals("auth")) {
                     String login = in.readLine();
                     String pwd = in.readLine();
@@ -58,29 +60,24 @@ public class CPoolServHandler extends Thread {
                     //wait for generic json
                     String jsonString = in.readLine();
                     Deserialization des = new Deserialization();
-
-                    VehicleDTO vehicleDTO = des.deserialAVehicle(des.parseStringToJson(jsonString));
-                    int action = des.deserialAction(des.parseStringToJson(jsonString));
+                    JSONObject jo = des.deserialGeneric(jsonString);
+                    int action = des.deserialAction(jo);
                     /**
                      * Now we have action and vehicle, should call the ModelVehicle
                      * */
                     ModelVehicle modelVehicle = new ModelVehicle();
                     if (action == EnumOperation.DELETE.getIndex()) {
-                        modelVehicle.delete(vehicleDTO.getNumMat());
+                        //modelVehicle.delete(vehicleDTO.getNumMat());
                     } else if (action == EnumOperation.INSERT.getIndex()) {
                         //Didn't find the method....
                     } else if (action == EnumOperation.UPDATE.getIndex()) {
-                        modelVehicle.update(vehicleDTO.getNumMat());
+                        //modelVehicle.update(vehicleDTO.getNumMat());
                     } else if (action == EnumOperation.SEARCH.getIndex()) {
-                        modelVehicle.select(vehicleDTO.getNumMat());
+                        //modelVehicle.select(vehicleDTO.getNumMat());
                     }
                 }
             }
         } catch (IOException e) {
-                e.printStackTrace();
-        } catch (ParseException e) {
-                e.printStackTrace();
-        } catch (ClassNotFoundException e) {
                 e.printStackTrace();
         } catch (SQLException e) {
                 e.printStackTrace();

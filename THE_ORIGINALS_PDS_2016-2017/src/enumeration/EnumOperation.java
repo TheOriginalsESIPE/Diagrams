@@ -11,7 +11,8 @@ import java.util.Enumeration;
  * @author tearsyu
  */
 public enum  EnumOperation {
-    UPDATE("Update", 1), DELETE("Delete", 2), SEARCH("Search", 3), INSERT("Insert", 4);
+    UPDATE("Update", 1), DELETE("Delete", 2), SEARCH("Search", 3),
+    INSERT("Insert", 4), RESPONSE("Response", 5);
     private String name;
     private int index;
 

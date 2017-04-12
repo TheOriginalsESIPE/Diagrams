@@ -45,35 +45,47 @@ import java.text.SimpleDateFormat;
 				 
 	}
 
-		//It should return an object DTO
-	public String select(String numMat) throws ClassNotFoundException , SQLException {
-				
-				 try {
-				 
-				 Statement stmt = connect1.createStatement( );
-				 ResultSet rs = stmt.executeQuery("select vehicule.numMat, vehicule_depot.numMat, model, mark, vehicle_type, numPlace, date_entrance, date_wayout from vehicule, vehicule_depot where vehicule.numMat = vehicule_depot.numMat and vehicule_depot.numMat ='"+numMat+"'");
-				 String result="";
-				 while (rs.next()) {
-					 String model = rs.getString("model");
-					 String mark = rs.getString("mark");
-					 String vehicle_type = rs.getString("vehicle_type");
-					 int numPlace = rs.getInt("numPlace");
-					 String numMatr = rs.getString("numMat");
-					 String date_entrance = rs.getString("date_entrance");
-					 String date_wayout = rs.getString("date_wayout");
-					 result =" numero immatriculation : "+numMat+"\r\n" + " type de vehicule : "+vehicle_type+"\r\n"+" model : "+model+"\r\n"+ " mark : "+mark+"\r\n"+ " numero place : "+numPlace+"\r\n"+ " date entree : "+date_entrance+"\r\n"+" date sortie : "+date_wayout;
-					 
-					}
-				 rs.close();
-				 stmt.close();
-				 return result;
-				}
-				 finally { //if (connect1 != null)
-				 //connect1.close(); 
-				 }
-				
-				 
-	}
+
+
+
+		//It must return an object DTO
+
+        /**
+         * @modify by yuxin, this function return a Result Set consisted by 2 DTO
+         * @param numMat
+         * @return
+         */
+    public String select(String numMat){
+        return "SELECT vehicule.numMat, modele, marque, vehicule_type, numPlace, " +
+                "date_entree, date_sortie FROM vehicule, vehicule_depot WHERE" +
+                " vehicule.numMat = vehicule_depot.numMat and vehicule_depot.numMat ='"+ numMat +"'";
+    }
+
+//	public String select(String numMat) throws ClassNotFoundException , SQLException {
+//
+//        try {
+//
+//            Statement stmt = connect1.createStatement( );
+//            ResultSet rs = stmt.executeQuery("select vehicule.numMat, vehicule_depot.numMat, model, mark, vehicle_type, numPlace, date_entrance, date_wayout from vehicule, vehicule_depot where vehicule.numMat = vehicule_depot.numMat and vehicule_depot.numMat ='"+numMat+"'");
+//            String result="";
+//            while (rs.next()) {
+//					 String model = rs.getString("model");
+//					 String mark = rs.getString("mark");
+//					 String vehicle_type = rs.getString("vehicle_type");
+//					 int numPlace = rs.getInt("numPlace");
+//					 String numMatr = rs.getString("numMat");
+//					 String date_entrance = rs.getString("date_entrance");
+//					 String date_wayout = rs.getString("date_wayout");
+//					 result =" numero immatriculation : "+numMat+"\r\n" + " type de vehicule : "+vehicle_type+"\r\n"+" model : "+model+"\r\n"+ " mark : "+mark+"\r\n"+ " numero place : "+numPlace+"\r\n"+ " date entree : "+date_entrance+"\r\n"+" date sortie : "+date_wayout;
+//
+//            }
+//            rs.close();
+//            stmt.close();
+//            return result;
+//        } finally { //if (connect1 != null)
+//				 //connect1.close();
+//        }
+//	}
 			 
 			 public int delete(String numMat) throws ClassNotFoundException , SQLException {
 				 
