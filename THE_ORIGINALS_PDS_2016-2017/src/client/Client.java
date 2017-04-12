@@ -1,17 +1,12 @@
 package client;
 
-import dto.VehicleDTO;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
 import repository.ModelAuth;
-import serialization.Deserialization;
 import server.ControllerAuthentification;
 import view.ViewAuthentification;
 
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 /**
@@ -88,38 +83,36 @@ public class Client{
     */
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+        SwingUtilities.invokeLater(() -> {
 
-                ViewAuthentification v = new ViewAuthentification();
-                System.out.println("Client view ");
-                //Start the client and connect to the server.
-                try {
-                    Client client = new Client();
-                    if(client.connectToServer()){
-                        System.out.println("The client connect to the server.");
-                        /*This controller doesn't pass the server, it connects directly to the server!!
-                        * I need an other type of serialization to send object!
-                        * */
-                        ModelAuth m = new ModelAuth();
-                        ControllerAuthentification c = new ControllerAuthentification(m, v, client.getClient());
-                        c.control();
+            ViewAuthentification v = new ViewAuthentification();
+            System.out.println("Client view ");
+            //Start the client and connect to the server.
+            try {
+                Client client1 = new Client();
+                if(client1.connectToServer()){
+                    System.out.println("The client connect to the server.");
+                    /*This controller doesn't pass the server, it connects directly to the server!!
+                    * I need an other type of serialization to send object!
+                    * */
+                    ModelAuth m = new ModelAuth();
+                    ControllerAuthentification c = new ControllerAuthentification(m, v, client1.getClient());
+                    c.control();
 
-                        //while(client.getClient().isConnected()){
+                    //while(client.getClient().isConnected()){
 
-                        //}
-                    } else {
-                        v.errorDialog(1);
-                        System.out.println("Can't not to connect to server.");
-                    }
-                } catch (IOException e) {
+                    //}
+                } else {
                     v.errorDialog(1);
-                    e.printStackTrace();
+                    System.out.println("Can't not to connect to server.");
                 }
-
-
-
+            } catch (IOException e) {
+                v.errorDialog(1);
+                e.printStackTrace();
             }
+
+
+
         });
     }
 

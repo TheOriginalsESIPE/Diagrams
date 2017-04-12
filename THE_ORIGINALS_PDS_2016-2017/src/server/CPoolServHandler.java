@@ -1,6 +1,8 @@
 package server;
 
+import dto.Piece_detachedDTO;
 import dto.VehicleDTO;
+import enumeration.EnumDTO;
 import enumeration.EnumOperation;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -43,6 +45,7 @@ public class CPoolServHandler extends Thread {
         try{
             BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             PrintStream out = new PrintStream(client.getOutputStream());
+            HandlerSQL hsql = new HandlerSQL();
             while(true) {
                 //CASE: asking the authentication, here we don't implement the encryption service.
                 if (in.readLine().equals("auth")) {
@@ -50,7 +53,6 @@ public class CPoolServHandler extends Thread {
                     String pwd = in.readLine();
                     server.msg.append("\n auth = " + login + " " + pwd);
                     ModelAuth ma = new ModelAuth();
-                    HandlerSQL hsql = new HandlerSQL();
                     boolean bool = hsql.selectQuery(ma.authQuery(login, pwd)).next();
                     String res = bool == true ? "true" : "false";
                     server.msg.append("\n query = " + ma.authQuery(login, pwd));
@@ -65,15 +67,27 @@ public class CPoolServHandler extends Thread {
                     /**
                      * Now we have action and vehicle, should call the ModelVehicle
                      * */
-                    ModelPiece modelVehicle = new ModelPiece();
-                    if (action == EnumOperation.DELETE.getIndex()) {
-                        //modelVehicle.delete(vehicleDTO.getNumMat());
-                    } else if (action == EnumOperation.INSERT.getIndex()) {
-                        //Didn't find the method....
-                    } else if (action == EnumOperation.UPDATE.getIndex()) {
-                        //modelVehicle.update(vehicleDTO.getNumMat());
-                    } else if (action == EnumOperation.SEARCH.getIndex()) {
-                        //modelVehicle.select(vehicleDTO.getNumMat());
+                    if(des.deserialObject(jo,EnumDTO.ADMIN.getName()) != null){
+
+                    }
+                    if(des.deserialObject(jo, EnumDTO.PIECE_DETACHED.getName()) != null){
+                        ModelPiece modelPiece = new ModelPiece();
+                        Piece_detachedDTO dto = (Piece_detachedDTO) des.deserialObject(jo, EnumDTO.PIECE_DETACHED.getName());
+                        if (action == EnumOperation.DELETE.getIndex()){
+                            int nb = hsql.updateQuery(modelPiece.delete(dto.getRef_piece_detached()));
+                            server.msg.append("\n");
+                            out.println(nb);
+                        } else if (action == EnumOperation.INSERT.getIndex()) {
+                            //Didn't find the method....
+                        } else if (action == EnumOperation.UPDATE.getIndex()) {
+                            //modelVehicle.update(vehicleDTO.getNumMat());
+                        } else if (action == EnumOperation.SEARCH.getIndex()) {
+                            //modelVehicle.select(vehicleDTO.getNumMat());
+                        }
+                    }
+
+                    if(des.deserialObject(jo, EnumDTO.VEHICLE.getName()) != null){
+
                     }
                 }
             }
