@@ -123,21 +123,44 @@ public class Controller{
                 if((JButton) e1.getSource()== v.getBtnOK1()){
                     answer = v.getTxt1().getText();
                     answer1 = v.getTxt3().getText();
+                    float answer1Bis=Float.parseFloat(answer1);
                     int result=0;
                     try {
+                    	
+                    	 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                         out = new PrintStream(socket.getOutputStream());
+                         Piece_detachedDTO pieceSearch = new Piece_detachedDTO();
+                         pieceSearch.setRef_piece_detached(answer);
+                         pieceSearch.setPrice(answer1Bis);
+                         Serialization serial = new Serialization();
+                         out.print(serial.serialToStr(serial.serialGeneric(EnumOperation.UPDATE.getIndex(), "Piece_detachedDTO",pieceSearch)));
+                         
+                         //result = mv.update(answer, answer1);
+                         //Response
+                         String res = in.readLine();
+                         
+                         v.getTxtU().setVisible(true);
+                         v.getTxtA().setText("");
+                         v.getTxtU().setText(result+"ligne modifiee");
 
-                        result = mv.update(answer, answer1);
-                        v.getTxtU().setVisible(true);
-                        v.getTxtA().setText("");
-                        v.getTxtU().setText(result+"ligne modifiee");
-
-                        v.getTxtD().setVisible(false);
-                        //v.getTxtA().setText(result+"ligne modifiee");
-
-                    } catch (ClassNotFoundException error) {
-                        // TODO Auto-generated catch block
-                        error.printStackTrace();
-                    } catch (SQLException error) {
+                         v.getTxtD().setVisible(false);
+                         //v.getTxtA().setText(result+"ligne modifiee");
+                         
+                         Deserialization deserial = new Deserialization();
+                         /**
+                          * @Attention Here I consider it returns just an object, but in fact it returns
+                          * often a list of object. So the view may should be changed at the end of project.
+                          * Like for (Object o : listVehicle)
+                          *          vehicleSearch = (VehicleDTO)o
+                          *          v.getTxtA().append("\n" + vehicleSearch.toString())
+                          */
+                         pieceSearch = (Piece_detachedDTO) deserial.deserialObject(deserial.deserialGeneric(res), pieceSearch.getClass().getName());
+                         v.getTxtA().setText(pieceSearch.toString());
+                         v.getTxtU().setVisible(false);
+                         v.getTxtD().setVisible(false);
+                    	
+                    	
+                } catch (IOException error) {
                         // TODO Auto-generated catch block
                         error.printStackTrace();
                     }
@@ -162,18 +185,34 @@ public class Controller{
 
                     int result=0;
                     try {
-                        result = mv.delete(answer);
-                        v.getTxtD().setVisible(true);
-                        v.getTxtA().setText("");
-                        v.getTxtD().setText(result+"ligne supprimee");
-                        v.getTxtU().setVisible(false);
+                    	
+                    	 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                         out = new PrintStream(socket.getOutputStream());
+                         Piece_detachedDTO pieceSearch = new Piece_detachedDTO();
+                         pieceSearch.setRef_piece_detached(answer);
+                         Serialization serial = new Serialization();
+                         out.print(serial.serialToStr(serial.serialGeneric(EnumOperation.DELETE.getIndex(), "Piece_detachedDTO",pieceSearch)));
+                         //result = mv.delete(answer);
+                         
+                         //Response
+                         String res = in.readLine();
 
-                        //v.getTxtA().setText(result+"ligne supprimee");
+                         Deserialization deserial = new Deserialization();
+                         /**
+                          * @Attention Here I consider it returns just an object, but in fact it returns
+                          * often a list of object. So the view may should be changed at the end of project.
+                          * Like for (Object o : listVehicle)
+                          *          vehicleSearch = (VehicleDTO)o
+                          *          v.getTxtA().append("\n" + vehicleSearch.toString())
+                          */
+                         pieceSearch = (Piece_detachedDTO) deserial.deserialObject(deserial.deserialGeneric(res), pieceSearch.getClass().getName());
+                         v.getTxtD().setVisible(true);
+                         v.getTxtA().setText("");
+                         v.getTxtD().setText(result+"ligne supprimee");
+                         v.getTxtU().setVisible(false);
 
-                    } catch (ClassNotFoundException error) {
-                        // TODO Auto-generated catch block
-                        error.printStackTrace();
-                    } catch (SQLException error) {
+             
+                    } catch (IOException error) {
                         // TODO Auto-generated catch block
                         error.printStackTrace();
                     }
