@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -67,27 +68,36 @@ public class CPoolServHandler extends Thread {
                     /**
                      * Now we have action and vehicle, should call the ModelVehicle
                      * */
-                    if(des.deserialObject(jo,EnumDTO.ADMIN.getName()) != null){
-
-                    }
                     if(des.deserialObject(jo, EnumDTO.PIECE_DETACHED.getName()) != null){
                         ModelPiece modelPiece = new ModelPiece();
                         Piece_detachedDTO dto = (Piece_detachedDTO) des.deserialObject(jo, EnumDTO.PIECE_DETACHED.getName());
                         if (action == EnumOperation.DELETE.getIndex()){
                             int nb = hsql.updateQuery(modelPiece.delete(dto.getRef_piece_detached()));
-                            server.msg.append("\n");
+                            server.msg.append("\n Query DELETE= " + modelPiece.delete(dto.getRef_piece_detached()) );
                             out.println(nb);
                         } else if (action == EnumOperation.INSERT.getIndex()) {
-                            //Didn't find the method....
+                            String query = modelPiece.insert(dto.getRef_piece_detached(), dto.getName(), dto.getMark(), dto
+                            .getModel(), dto.getPrice());
+                            int nb = hsql.updateQuery(query);
+                            server.msg.append("\n Query INSERT= " + query);
+                            out.println(nb);
                         } else if (action == EnumOperation.UPDATE.getIndex()) {
-                            //modelVehicle.update(vehicleDTO.getNumMat());
+                            String query = modelPiece.update(dto.getRef_piece_detached(),dto.getPrice());
+                            int nb = hsql.updateQuery(query);
+                            server.msg.append("\nQuery UPDATE=" + query);
+                            out.println(nb);
                         } else if (action == EnumOperation.SEARCH.getIndex()) {
-                            //modelVehicle.select(vehicleDTO.getNumMat());
+                            String query = modelPiece.select(dto.getRef_piece_detached());
+                            ResultSet rs = hsql.selectQuery(query);
+                            while (rs.next()){
+                                dto.setModel(rs.getString("model"));
+                                dto.setName(rs.getString("name"));
+                                dto.setMark(rs.getString("mark"));
+                                dto.setPrice(rs.getFloat("price"));
+                            }
+                            server.msg.append("\n Result search = " + dto.toString());
+                            out.println(dto.toString());
                         }
-                    }
-
-                    if(des.deserialObject(jo, EnumDTO.VEHICLE.getName()) != null){
-
                     }
                 }
             }

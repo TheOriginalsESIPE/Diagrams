@@ -36,8 +36,8 @@ package repository;
 			 }
 			
 			
-			 public String update(String ref_piece_detached, String answer1) {
-				 String sql ="update piece_detached set price ='"+answer1+"' where ref_piece_detached='"+ref_piece_detached+"'";
+			 public String update(String ref_piece_detached, float price) {
+				 String sql ="update piece_detached set price = "+ price +" where ref_piece_detached='"+ref_piece_detached+"'";
 				 return sql;
 			 }
 
