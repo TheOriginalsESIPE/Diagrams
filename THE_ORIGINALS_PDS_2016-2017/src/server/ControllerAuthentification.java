@@ -2,7 +2,7 @@ package server;
 import repository.ModelAuth;
 import sql.HandlerSQL;
 import view.ViewAuthentification;
-import repository.ModelVehicle;
+import repository.ModelPiece;
 import view.View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,7 +56,7 @@ public void control(){
                     v1.dispose();
                     v1.setVisible(false);
                     v = new View();
-                    ModelVehicle mv = new ModelVehicle();
+                    ModelPiece mv = new ModelPiece();
                     c1 = new Controller(mv, v, socket);
                     c1.control();
                 } else{

@@ -9,7 +9,7 @@ import java.util.Date;
 
 import javax.swing.SwingUtilities;
 
-import repository.ModelVehicle;
+import repository.ModelPiece;
 import server.ControllerAuthentification;
 
 public class TestVehicule {
@@ -19,7 +19,7 @@ public class TestVehicule {
 			
 		public void run(){
 			
-			ModelVehicle m = new ModelVehicle();
+			ModelPiece m = new ModelPiece();
 			ViewAuthentification v = new ViewAuthentification();
 			
 			//Controleur c = new Controleur(m, v);

@@ -33,14 +33,16 @@ public class View extends JFrame{
 	private static JTextArea txtA;
 	private static JTextField txtF;
 	private static JLabel txtU;
+	private static JLabel txtU2;
 	private static JLabel txtD;
 	private JTextField txt1;
 	private JTextField txt2;
+	private JTextField txt3;
 	
 	
 	public View() {
 		
-		myFrame = new JFrame("VEHICULES");
+		myFrame = new JFrame("PIECE");
 		
 		FlowLayout fl = new FlowLayout();
 		
@@ -60,7 +62,9 @@ public class View extends JFrame{
 		txtF = new JTextField("");
 		txt1 = new JTextField("");
 		txt2 = new JTextField("");
+		txt3 = new JTextField("");
 		txtU = new JLabel("");
+		txtU2 = new JLabel("");
 		txtD = new JLabel("");
 		
 		btnSelect.setPreferredSize(new Dimension(150, 50));
@@ -72,6 +76,8 @@ public class View extends JFrame{
 		txtF.setPreferredSize(new Dimension(180, 30));
 		txt1.setPreferredSize(new Dimension(180, 30));
 		txt2.setPreferredSize(new Dimension(180, 30));
+		txtU2.setPreferredSize(new Dimension(180, 30));
+		txt3.setPreferredSize(new Dimension(180, 30));
 		txtU.setPreferredSize(new Dimension(180, 30));
 		txtD.setPreferredSize(new Dimension(180, 30));
 		
@@ -112,6 +118,8 @@ public class View extends JFrame{
 		panel1.add(txtF);
 		panel1.add(btnOK);
 		panel2.add(btnUpdate);
+		panel2.add(txtU2);
+		panel2.add(txt3);
 		panel2.add(txtU);
 		panel2.add(txt1);
 		panel2.add(btnOK1);
@@ -275,6 +283,38 @@ public class View extends JFrame{
 
 	public void setTxt2(JTextField txt2) {
 		this.txt2 = txt2;
+	}
+
+
+
+
+
+	public static JLabel getTxtU2() {
+		return txtU2;
+	}
+
+
+
+
+
+	public static void setTxtU2(JLabel txtU2) {
+		View.txtU2 = txtU2;
+	}
+
+
+
+
+
+	public JTextField getTxt3() {
+		return txt3;
+	}
+
+
+
+
+
+	public void setTxt3(JTextField txt3) {
+		this.txt3 = txt3;
 	}
 
 

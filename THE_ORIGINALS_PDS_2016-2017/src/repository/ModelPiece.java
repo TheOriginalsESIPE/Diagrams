@@ -6,20 +6,19 @@ import java.util.Date;
 import sql.MyConnectionPool;
 import java.text.SimpleDateFormat;
 
-	public class ModelVehicle {
+	public class ModelPiece {
 	
 		java.sql.Connection connect1 = null;
  		
-		    private String numMat;
-		    private String model;
+		    private String ref_piece_detached;
+		    private String name;
 		    private String mark;
-		    private String vehicle_type;
-		    private int numPlace;
-		    private String date_entrance;
-		    private String date_wayout;
+		    private String model;
+		    private float price;
+		   
 		    
 
-		    public ModelVehicle(){
+		    public ModelPiece(){
 		    	
 		    	MyConnectionPool myConnectionPool = new MyConnectionPool();
 		 		connect1 = myConnectionPool.getConnectionFromPool();
@@ -29,12 +28,12 @@ import java.text.SimpleDateFormat;
 			
 
 			
-	 public int insert(String numMat, String date_entrance, int numPlace) throws ClassNotFoundException , SQLException {
+	 public int insert(String ref_piece_detached, String name, String mark, String model, float answer3bis) throws ClassNotFoundException , SQLException {
 				 
 				 try {
 				
 				 Statement stmt = connect1.createStatement( );
-				 String sql = "insert into vehicule_depot(numMat, date_entrance, numPlace) VALUES ('"+numMat+"','"+date_entrance+"','"+numPlace+"')";
+				 String sql = "insert into piece_detached(ref_piece_detached, name, mark, model, price) VALUES ('"+ref_piece_detached+"','"+name+"','"+mark+"','"+model+"','"+answer3bis+"')";
 				 int n= stmt.executeUpdate(sql);
 				 stmt.close();
 				 return n;
@@ -52,16 +51,15 @@ import java.text.SimpleDateFormat;
 
         /**
          * @modify by yuxin, this function return a Result Set consisted by 2 DTO
-         * @param numMat
+         * @param ref_piece_detached
          * @return
          */
-    public String select(String numMat){
-        return "SELECT vehicule.numMat, modele, marque, vehicule_type, numPlace, " +
-                "date_entree, date_sortie FROM vehicule, vehicule_depot WHERE" +
-                " vehicule.numMat = vehicule_depot.numMat and vehicule_depot.numMat ='"+ numMat +"'";
+    public String select(String ref_piece_detached){
+        return "SELECT piece_detached.ref_piece_detached, model, mark, price, name FROM piece_detached";
+          
     }
 
-//	public String select(String numMat) throws ClassNotFoundException , SQLException {
+//	public String select(String ref_piece_detached) throws ClassNotFoundException , SQLException {
 //
 //        try {
 //
@@ -87,13 +85,13 @@ import java.text.SimpleDateFormat;
 //        }
 //	}
 			 
-			 public int delete(String numMat) throws ClassNotFoundException , SQLException {
+			 public int delete(String ref_piece_detached) throws ClassNotFoundException , SQLException {
 				 
 				 
 				 try {
 				 
 				 Statement stmt = connect1.createStatement( );
-				 String sql ="delete from vehicule_depot where numMat='"+numMat+"'";
+				 String sql ="delete from piece_detached where ref_piece_detached='"+ref_piece_detached+"'";
 				 int n= stmt.executeUpdate(sql);
 				 stmt.close();
 				 return n;
@@ -105,17 +103,13 @@ import java.text.SimpleDateFormat;
 			 }
 			
 			
-			 public int update(String numMat) throws ClassNotFoundException , SQLException {
+			 public int update(String ref_piece_detached, String answer1) throws ClassNotFoundException , SQLException {
 				 
 				 
 				 try {
 				 
 				 Statement stmt = connect1.createStatement( );
-				 SimpleDateFormat formater = null;
-				 Date aujourdhui = new Date();
-				 formater = new SimpleDateFormat("yy-MM-dd");
-				 String date_sort= formater.format(aujourdhui);
-				 String sql ="update vehicule_depot set date_wayout ='"+date_sort+"' where numMat='"+numMat+"'";
+				 String sql ="update piece_detached set price ='"+answer1+"' where ref_piece_detached='"+ref_piece_detached+"'";
 				 int n= stmt.executeUpdate(sql);
 				 stmt.close();
 				 return n;

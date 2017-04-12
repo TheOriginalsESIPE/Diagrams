@@ -5,8 +5,8 @@ package dto;
 public class Piece_detachedDTO{
 	
 	private String name, mark, model;
-	private Piece_purchaseDTO price;
-	private Piece_purchaseDTO ref_piece_detached;
+	private float price;
+	private String ref_piece_detached;
 	
 	public Piece_detachedDTO(){
 		this.name=name;
@@ -16,7 +16,7 @@ public class Piece_detachedDTO{
 		this.ref_piece_detached=ref_piece_detached;
 	}
 	
-	public Piece_detachedDTO(String nm,String ma,String mo,Piece_purchaseDTO p,Piece_purchaseDTO rpd){
+	public Piece_detachedDTO(String nm,String ma,String mo,float p,String rpd){
 		this.name=nm;
 		this.mark=ma;
 		this.model=mo;
@@ -24,11 +24,11 @@ public class Piece_detachedDTO{
 		this.ref_piece_detached=rpd;
 	}
 
-	public Piece_purchaseDTO getRef_piece_detached() {
+	public String getRef_piece_detached() {
 		return ref_piece_detached;
 	}
 
-	public void setRef_piece_detached(Piece_purchaseDTO ref_piece_detached) {
+	public void setRef_piece_detached(String ref_piece_detached) {
 		this.ref_piece_detached = ref_piece_detached;
 	}
 
@@ -60,11 +60,11 @@ public class Piece_detachedDTO{
 	}
 
 	
-	public Piece_purchaseDTO getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(Piece_purchaseDTO price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 

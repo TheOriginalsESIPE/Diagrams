@@ -5,7 +5,7 @@ import enumeration.EnumOperation;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import repository.ModelAuth;
-import repository.ModelVehicle;
+import repository.ModelPiece;
 import serialization.Deserialization;
 import sql.HandlerSQL;
 
@@ -65,7 +65,7 @@ public class CPoolServHandler extends Thread {
                     /**
                      * Now we have action and vehicle, should call the ModelVehicle
                      * */
-                    ModelVehicle modelVehicle = new ModelVehicle();
+                    ModelPiece modelVehicle = new ModelPiece();
                     if (action == EnumOperation.DELETE.getIndex()) {
                         //modelVehicle.delete(vehicleDTO.getNumMat());
                     } else if (action == EnumOperation.INSERT.getIndex()) {

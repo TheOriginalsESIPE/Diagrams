@@ -10,9 +10,10 @@ import java.net.Socket;
 import java.sql.SQLException;
 import javax.swing.JButton;
 
+import dto.Piece_detachedDTO;
 import dto.VehicleDTO;
 import enumeration.EnumOperation;
-import repository.ModelVehicle;
+import repository.ModelPiece;
 import serialization.Deserialization;
 import serialization.Serialization;
 import view.View;
@@ -24,7 +25,7 @@ public class Controller{
 	
 	private ControllerInsert c1;
 	private View v;
-	private ModelVehicle mv;
+	private ModelPiece mv;
 	private ActionListener ac;
 	private ActionListener ac1;
 	private ActionListener ac2;
@@ -38,7 +39,7 @@ public class Controller{
     BufferedReader in;
     PrintStream out;
 	
-	public Controller(ModelVehicle mv, View v, Socket socket){
+	public Controller(ModelPiece mv, View v, Socket socket){
 		this.mv=mv;
 		this.v=v;
 		this.socket = socket;
@@ -51,14 +52,14 @@ public class Controller{
             v.getTxtF().setText(null);
             v.getTxtU().setText(null);
             v.getTxtD().setText(null);
-            v.getTxtA().setText("Entrez le numero d'immatriculation du vehicule a selectionner");
+            v.getTxtA().setText("Entrez la reference de la piece a selectionner");
 
                 ac2 = e1 -> {
 
                      if((JButton) e1.getSource()== v.getBtnOK()){
-                         //answer is the numero d'immatriculation
+                         //answer is the reference of the piece
                             String answer = v.getTxtF().getText();
-
+                           
                             try {
                                 /**
                                  * @Modify by Yuxin. Here we can't use directly model, it must be created a DTO
@@ -67,10 +68,10 @@ public class Controller{
                                  * */
                                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                                 out = new PrintStream(socket.getOutputStream());
-                                VehicleDTO vehicleSearch = new VehicleDTO();
-                                vehicleSearch.setNumMat(answer);
+                                Piece_detachedDTO pieceSearch = new Piece_detachedDTO();
+                                pieceSearch.setRef_piece_detached(answer);
                                 Serialization serial = new Serialization();
-                                out.print(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "VehicleDTO",vehicleSearch)));
+                                out.print(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "Piece_detachedDTO",pieceSearch)));
                                 //String res = mv.select(answer);
 
                                 //Response
@@ -84,8 +85,8 @@ public class Controller{
                                  *          vehicleSearch = (VehicleDTO)o
                                  *          v.getTxtA().append("\n" + vehicleSearch.toString())
                                  */
-                                vehicleSearch = (VehicleDTO) deserial.deserialObject(deserial.deserialGeneric(res), vehicleSearch.getClass().getName());
-                                v.getTxtA().setText(vehicleSearch.toString());
+                                pieceSearch = (Piece_detachedDTO) deserial.deserialObject(deserial.deserialGeneric(res), pieceSearch.getClass().getName());
+                                v.getTxtA().setText(pieceSearch.toString());
                                 v.getTxtU().setVisible(false);
                                 v.getTxtD().setVisible(false);
 
@@ -113,17 +114,19 @@ public class Controller{
             //v.getTxtA().setText("Entrez le numero d'immatriculation du vehicule a modifier");
 
             v.getTxtU().setText(null);
+            v.getTxtU2().setText(null);
             v.getTxt1().setText(null);
             v.getTxtD().setText(null);
             ac5 = e1 -> {
                 String answer="";
+                String answer1="";
                 if((JButton) e1.getSource()== v.getBtnOK1()){
                     answer = v.getTxt1().getText();
-
+                    answer1 = v.getTxt3().getText();
                     int result=0;
                     try {
 
-                        result = mv.update(answer);
+                        result = mv.update(answer, answer1);
                         v.getTxtU().setVisible(true);
                         v.getTxtA().setText("");
                         v.getTxtU().setText(result+"ligne modifiee");
