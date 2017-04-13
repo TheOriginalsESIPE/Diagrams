@@ -6,12 +6,7 @@ public class RepairerDTO {
 	private int numTel;
 	
 	public RepairerDTO(){
-		this.login=login;
-		this.password=password;
-		this.firstname=firstname;
-		this.lastname=lastname;
-		this.adress=adress;
-		this.numTel=numTel;
+
 	}
 	
 	public RepairerDTO(String lo,String psw,String fn,String ln,String ad,int nT){
@@ -77,8 +72,9 @@ public class RepairerDTO {
 
 	@Override
 	public String toString() {
-		return "RepairerDTO [login=" + login + ", password=" + password + ", firstname=" + firstname + ", lastname="
-				+ lastname + ", adress=" + adress + ", numTel=" + numTel + "]";
+		return "[{\"login\":\"" + login + "\",\"password\":\"" + password + "\",\"firstname\":\""
+				+ firstname + "\",\"lastname\":\""
+				+ lastname + "\",\"adress\":\"" + adress + "\",\"numTel\":\"" + numTel + "\"}]";
 	}
 	
 	

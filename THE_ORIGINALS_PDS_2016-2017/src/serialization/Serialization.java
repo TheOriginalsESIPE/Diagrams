@@ -1,11 +1,9 @@
 package serialization;
 
-import dto.VehicleDTO;
+import dto.*;
 import enumeration.EnumOperation;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,26 +45,11 @@ public class Serialization {
 	public JSONObject serialGeneric(int action, String dtoName, Object o){
 		JSONObject root = new JSONObject();
 		root.put("action", action);
-		root.put(dtoName, o);
-		return root;
-	}
+        JSONObject j = new JSONObject();
+        JSONArray jlist = new JSONArray();
 
-	/**
-	 * If we have multiple list have to serialize, for example:
-	 * I want to return a list of vehicle and it's depot date and it's repairer.
-	 * @param action
-	 * @param dtoList
-	 * @param listName
-     * @return
-     */
-	public JSONObject serialGeneric(int action, String[] listName, List ... dtoList){
-		JSONObject root = new JSONObject();
-		root.put("action", action);
-		int i = 0;
-		for (List list : dtoList){
-			String str = listName[i]+ i;
-			root.put(str, list);
-		}
+        jlist.add(j);
+		root.put(dtoName, o);
 		return root;
 	}
 
@@ -105,20 +88,13 @@ public class Serialization {
 		vehicleDTO.setModel("MDH334 E2J");
 		vehicleDTO.setVehicle_type("voiture");
 		VehicleDTO V2 = vehicleDTO;
-		List list = new ArrayList<>();
-		list.add(vehicleDTO);
-		list.add(V2);
-		System.out.println(vehicleDTO.getClass().getSimpleName());
-		JSONObject j = s.serialGeneric(EnumOperation.DELETE.getIndex(), vehicleDTO.getClass().getSimpleName(),vehicleDTO);
-		JSONObject j2 = s.serialGeneric(EnumOperation.SEARCH.getIndex(), "vehicleDTO",list);
 
-		System.out.println(j2.toJSONString()+ "\n Size "+j2.size());
-
-
-		System.out.println("Action is " + EnumOperation.getNameByIndex(d.deserialAction(j)));
-		System.out.println("Object without list is " + d.deserialObject(j, vehicleDTO.getClass().getSimpleName()).toString());
-		System.out.println("Object with list is " + d.deserialObject(j2, "vehicleDTO").toString());
-		System.out.println(s.serialToStr(j));
+        Piece_detachedDTO pd = new Piece_detachedDTO("xxx", "xer d", "renault", (float) 125.3, "erwfsdf");
+        String str = s.serialToStr(s.serialGeneric(EnumOperation.UPDATE.getIndex(), pd.getClass().getSimpleName(), pd));
+        d.deserialGeneric(str);
+        JSONObject jo = d.deserialGeneric(str);
+        JSONArray ja = (JSONArray) d.deserialObject(jo, "Piece_detachedDTO");
+        jo = (JSONObject) ja.get(0);
 
 	}
 	

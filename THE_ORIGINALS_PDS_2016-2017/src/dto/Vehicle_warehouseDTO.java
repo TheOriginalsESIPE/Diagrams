@@ -10,10 +10,7 @@ public class Vehicle_warehouseDTO {
 	private VehicleDTO model;
 	
 	public Vehicle_warehouseDTO(){
-		this.date_entrance=date_entrance;
-		this.date_wayout=date_wayout;
-		this.numMat=numMat;
-		this.model=model;
+
 	}
 	
 	public Vehicle_warehouseDTO(String da,String dw,VehicleDTO nM,VehicleDTO mo ){
@@ -57,8 +54,8 @@ public class Vehicle_warehouseDTO {
 
 	@Override
 	public String toString() {
-		return "Vehicle_warehouseDTO [date_entrance=" + date_entrance + ", date_wayout=" + date_wayout + ", numMat="
-				+ numMat + ", model=" + model + "]";
+		return "[{\"date_entrance\":\"" + date_entrance + "\",\"date_wayout\":\"" + date_wayout + "\",\"numMat\":\""
+				+ numMat + "\",\"model\":\"" + model + "\"}]";
 	}
 	
 	

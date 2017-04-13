@@ -2,18 +2,14 @@ package dto;
 
 
 
-public class Piece_detachedDTO{
+public class Piece_detachedDTO extends DTO{
 	
 	private String name, mark, model;
 	private float price;
 	private String ref_piece_detached;
 	
 	public Piece_detachedDTO(){
-		this.name=name;
-		this.mark=mark;
-		this.model=model;
-		this.price=price;
-		this.ref_piece_detached=ref_piece_detached;
+
 	}
 	
 	public Piece_detachedDTO(String nm,String ma,String mo,float p,String rpd){
@@ -70,8 +66,8 @@ public class Piece_detachedDTO{
 
 	@Override
 	public String toString() {
-		return "Piece_detachedDTO [name=" + name + ", mark=" + mark + ", model=" + model + ", price=" + price
-				+ ", ref_piece_detached=" + ref_piece_detached + "]";
+		return "[{\"name\":\"" + name + "\",\"mark\":\"" + mark + "\",\"model\":\"" + model + "\",\"price\":\"" + price
+				+ "\",\"ref_piece_detached\":\"" + ref_piece_detached + "\"}]";
 	}
 	
 	

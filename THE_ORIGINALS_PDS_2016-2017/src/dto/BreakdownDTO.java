@@ -8,9 +8,8 @@ public class BreakdownDTO{
 	private VehicleDTO numMat;
 	
 	public BreakdownDTO(){
-		this.id_breakdown=id_breakdown;
-		this.name=name;
-		this.numMat=numMat;}
+
+	}
 	
 	public BreakdownDTO(int ib,String nm,VehicleDTO nM){
 		this.id_breakdown=ib;
@@ -43,7 +42,7 @@ public class BreakdownDTO{
 
 	@Override
 	public String toString() {
-		return "BreakdownDTO [id_breakdown=" + id_breakdown + ", name=" + name + ", numMat=" + numMat + "]";
+		return "[{\"id_breakdown\":\"" + id_breakdown + "\",\"name\":\"" + name + "\",\"numMat\":\"" + numMat + "\"}]";
 	}
 	
 	

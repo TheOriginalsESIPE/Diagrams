@@ -8,8 +8,6 @@ public class ParkingDTO {
 	private WarehouseDTO id_warehouse;
 	
 	public ParkingDTO(){
-		this.numPlace=numPlace;
-		this.id_warehouse=id_warehouse;
 	}
 	
 	public ParkingDTO(int nP,WarehouseDTO iw){
@@ -35,7 +33,7 @@ public class ParkingDTO {
 
 	@Override
 	public String toString() {
-		return "ParkingDTO [numPlace=" + numPlace + ", id_warehouse=" + id_warehouse + "]";
+		return "[{\"numPlace\":\"" + numPlace + "\",\"id_warehouse\":\"" + id_warehouse + "\"}]";
 	}
 	
 	

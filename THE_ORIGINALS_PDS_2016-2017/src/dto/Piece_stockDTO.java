@@ -7,10 +7,6 @@ public class Piece_stockDTO{
 	private String ref_piece_stock;
 	
 	public Piece_stockDTO(){
-		this.login_administrator=login_administrator;
-		this.counter=counter;
-		this.date_reception=date_reception;
-		this.ref_piece_stock=ref_piece_stock;
 	}
 	
 	public Piece_stockDTO(String la,String dr,int c,String rps){
@@ -58,8 +54,8 @@ public class Piece_stockDTO{
 
 	@Override
 	public String toString() {
-		return "Piece_stockDTO [login_administrator=" + login_administrator + ", date_reception=" + date_reception
-				+ ", counter=" + counter + ", ref_piece_stock=" + ref_piece_stock + "]";
+		return "[{\"login_administrator\":\"" + login_administrator + "\", \"date_reception\":\"" + date_reception
+				+ "\",\"counter\":\"" + counter + "\",\"ref_piece_stock\":\"" + ref_piece_stock + "\"}]";
 	}
 	
 	

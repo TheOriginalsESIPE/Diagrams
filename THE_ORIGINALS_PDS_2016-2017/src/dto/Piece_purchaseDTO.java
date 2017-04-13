@@ -6,11 +6,6 @@ public class Piece_purchaseDTO{
 	private int price,number,id_achat;
 	
 	public Piece_purchaseDTO(){
-		this.ref_piece_detached=ref_piece_detached;
-		this.date_purchase=date_purchase;
-		this.price=price;
-		this.number=number;
-		this.id_achat=id_achat;
 	}
 	
 	public Piece_purchaseDTO(String rpd,String dp,int p,int nb,int ia){
@@ -67,8 +62,8 @@ public class Piece_purchaseDTO{
 
 	@Override
 	public String toString() {
-		return "Piece_purchaseDTO [ref_piece_detached=" + ref_piece_detached + ", date_purchase=" + date_purchase
-				+ ", price=" + price + ", number=" + number + ", id_achat=" + id_achat + "]";
+		return "[{\"ref_piece_detached\":\"" + ref_piece_detached + "\",\"date_purchase\":\"" + date_purchase
+				+ "\",\"price\":\"" + price + "\",\"number\":\"" + number + "\",\"id_achat\":\"" + id_achat + "\"}]";
 	}
 	
 	

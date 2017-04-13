@@ -18,15 +18,21 @@ public class Server extends JFrame{
     public static final int PORT = 20012;
     public static final int MAX_CONNECTION = 21;
     public JTextArea msg;
+    public JScrollPane scrollp;
 
     public Server(){
         super("Server Log");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        setSize(400,300);
+        setSize(600,600);
         msg = new JTextArea("Log:\n");
-        msg.setBounds(10,10,10,10);
-        this.getContentPane().add(msg);
+        scrollp = new JScrollPane(msg);
+        scrollp.setBounds(20, 20, 400, 400);
+        //msg.setBounds(10, 10, 40, 50);
+        msg.setEditable(false);
+        scrollp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        this.getContentPane().add(scrollp);
+        this.pack();
     }
 
     public static void main(String[] arg){

@@ -6,12 +6,7 @@ public class AdministratorDTO{
 	private int numTel;
 	
 	public AdministratorDTO(){
-		this.login=login;
-		this.password=password;
-		this.firstname=firstname;
-		this.lastname=lastname;
-		this.adress=adress;
-		this.numTel=numTel;
+
 	}
 	
 	public AdministratorDTO(String lo,String psw,String fn,String ln,String ad,int nT){
@@ -73,8 +68,8 @@ public class AdministratorDTO{
 
 	@Override
 	public String toString() {
-		return "AdministratorDTO [login=" + login + ", password=" + password + ", firstname=" + firstname
-				+ ", lastname=" + lastname + ", adress=" + adress + ", numTel=" + numTel + "]";
+		return "[{\"login\":\"" + login + "\",\"password\":\"" + password + "\",\"firstname\":\"" + firstname
+				+ "\",\"lastname\":\"" + lastname + "\",\"adress\":\"" + adress + "\",\"numTel=\":\"" + numTel + "\"}]";
 	}
 	
 	

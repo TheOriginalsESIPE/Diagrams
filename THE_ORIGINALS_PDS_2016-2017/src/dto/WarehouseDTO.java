@@ -10,16 +10,11 @@ public class WarehouseDTO{
 	private String login_director;
 	
 	public WarehouseDTO(){
-		this.id_warehouse=id_warehouse;
-		this.name=name;
-		this.adress=adress;
-		this.volum=volum;
-		this.numTel=numTel;
-		this.login_director=login_director;
+
 	}
 	
-	public WarehouseDTO(int iw,String nm,int vol,String ad,int nT,String lg){
-		this.id_warehouse=iw;
+	public WarehouseDTO(String nm,int vol,String ad,int nT,String lg){
+		//this.id_warehouse=iw;
 		this.name=nm;
 		this.adress=ad;
 		this.volum=vol;
@@ -71,7 +66,8 @@ public class WarehouseDTO{
 	
 	@Override
 	public String toString() {
-		return "WarehouseDTO [id_warehouse=" + id_warehouse + ", name=" + name + ", volum=" + volum + ", adress="
-				+ adress + ", numTel=" + numTel + ", login_director=" + login_director + "]";
+		return "[{\"id_warehouse\":\"" + id_warehouse + "\", \"name\":\"" + name + "\",\"volum\":\""
+                + volum + "\",\"adress\":\"" + adress + "\", \"numTel\":\"" +
+                numTel + "\",\"login_director\":\"" + login_director + "\"}]";
 	}
 }

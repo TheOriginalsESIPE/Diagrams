@@ -9,9 +9,6 @@ public class Piece_consumptionDTO{
 	private OperationDTO id_operation;
 	
 	public Piece_consumptionDTO(){
-		this.ref_piece_stock=ref_piece_stock;
-		this.number=number;
-		this.id_operation=id_operation;
 	}
 	
 	public Piece_consumptionDTO(Piece_stockDTO rps,int nb, OperationDTO io){
@@ -48,8 +45,8 @@ public class Piece_consumptionDTO{
 
 	@Override
 	public String toString() {
-		return "Piece_consumptionDTO [ref_piece_stock=" + ref_piece_stock + ", number=" + number + ", id_operation="
-				+ id_operation + "]";
+		return "[{\"ref_piece_stock\":\"" + ref_piece_stock + "\",\"number\":\"" + number + "\",\"id_operation\":\""
+				+ id_operation + "\"}]";
 	}
 	
 	

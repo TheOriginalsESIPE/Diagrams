@@ -51,7 +51,7 @@ public class VehicleDTO {
 	
 	@Override
 	public String toString() {
-		return "VehicleDTO [numMat=" + numMat + ", model=" + model + ", mark=" + mark + ", vehicle_type=" + vehicle_type
-				+ "]";
+		return "[{\"numMat\":\"" + numMat + "\",\"model\":\"" + model + "\",\"mark\":\"" + mark + "\",\"vehicle_type\":\"" + vehicle_type
+				+"\"}]";
 	}
 }

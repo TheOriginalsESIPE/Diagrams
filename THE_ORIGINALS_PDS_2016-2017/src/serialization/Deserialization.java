@@ -1,10 +1,12 @@
 package serialization;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import dto.DTO;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.util.*;
 
 /**
  *
@@ -13,7 +15,6 @@ import java.util.*;
  * @author tearsyu
  */
 public class Deserialization {
-
 	/**
 	 * This function deserialize a string of json
 	 * @param str the string of json
@@ -36,9 +37,10 @@ public class Deserialization {
 	 * @return An action in the enumOperation
      */
 	public int deserialAction(JSONObject jsonObject){
-		Integer i = (Integer) jsonObject.get("action");
-		return i;
+		long i = (long) jsonObject.get("action");
+		return (int) i;
 	}
+
 
 	/**
 	 * deserialObject return the object of jsonObject.
@@ -48,14 +50,5 @@ public class Deserialization {
 	public Object deserialObject(JSONObject jsonObject, String dtoName){
 		return jsonObject.get(dtoName);
 	}
-/*
-	public List deserialMultiObject(JSONObject jsonObject){
-		List reList = new ArrayList<>();
-		int size = jsonObject.size();
-		for(int i = 0; i < size; ++i){
-
-		}
-	}*/
-		
 }
 

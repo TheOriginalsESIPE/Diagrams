@@ -10,12 +10,6 @@ public class DirectorDTO{
 	private int numTel;
 	
 	public DirectorDTO(){
-		this.login=login;
-		this.password=password;
-		this.firstname=firstname;
-		this.lastname=lastname;
-		this.adress=adress;
-		this.numTel=numTel;
 	}
 	
 	public DirectorDTO(String lg,String psw,String fn,String ln,String ad,int nT){
@@ -71,8 +65,8 @@ public class DirectorDTO{
 
 	@Override
 	public String toString() {
-		return "DirectorDTO [login=" + login + ", password=" + password + ", firstname=" + firstname + ", lastname="
-				+ lastname + ", adress=" + adress + ", numTel=" + numTel + "]";
+		return "[{\"login\":\"" + login + "\",\"password\":\"" + password + "\",\"firstname\":\"" + firstname + "\"," +
+				"\"lastname\":\"" + lastname + "\",\"adress\":\""+ adress + "\",\"numTel\":\"" + numTel + "\"}]";
 	}
 	
 	

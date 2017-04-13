@@ -9,14 +9,7 @@ public class OperationDTO{
 	private BreakdownDTO id_breakdown;
 	
 	public OperationDTO(){
-		this.id_operation=id_operation;
-		this.name=name;
-		this.date_begin=date_begin;
-		this.date_end=date_end;
-		this.time=time;
-		this.degre_emergency=degre_emergency;
-		this.login_repairer=login_repairer;
-		this.id_breakdown=id_breakdown;}
+	}
 	
 	public OperationDTO(int io,String nm,String db,String de,String t,String dem,String lr,BreakdownDTO ib){
 		this.id_operation=io;
@@ -97,9 +90,9 @@ public class OperationDTO{
 
 	@Override
 	public String toString() {
-		return "OperationDTO [id_operation=" + id_operation + ", name=" + name + ", date_begin=" + date_begin
-				+ ", date_end=" + date_end + ", time=" + time + ", degre_emergency=" + degre_emergency
-				+ ", login_repairer=" + login_repairer + ", id_breakdown=" + id_breakdown + "]";
+		return "[{\"id_operation\":\"" + id_operation + "\",\"name\":\"" + name + "\",\"date_begin\":\"" + date_begin
+				+ "\",\"date_end\":\"" + date_end + "\",\"time\":\"" + time + "\",\"degre_emergency\":\"" + degre_emergency
+				+ "\",\"login_repairer\":\"" + login_repairer + "\",\"id_breakdown\":\"" + id_breakdown + "\"}]";
 	}
 	
 	

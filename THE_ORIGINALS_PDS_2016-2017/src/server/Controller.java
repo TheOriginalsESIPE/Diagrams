@@ -1,17 +1,14 @@
 package server;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.sql.SQLException;
 import javax.swing.JButton;
 
 import dto.Piece_detachedDTO;
-import dto.VehicleDTO;
 import enumeration.EnumOperation;
 import repository.ModelPiece;
 import serialization.Deserialization;
@@ -34,8 +31,7 @@ public class Controller{
 	
 	private ActionListener ac5;
 	private ActionListener ac6;
-	private int cpt=0;
-    private Socket socket;
+    Socket socket;
     BufferedReader in;
     PrintStream out;
 	
@@ -43,6 +39,7 @@ public class Controller{
 		this.mv=mv;
 		this.v=v;
 		this.socket = socket;
+        System.out.println("controller principal");
 	}
 	public void control(){
 		ac = e -> {
@@ -66,12 +63,17 @@ public class Controller{
                                  * and serialized in String or an object and send it to server.
                                  * Then the server invoke the model in using the connection pool
                                  * */
+                                System.out.println("select");
                                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                                 out = new PrintStream(socket.getOutputStream());
                                 Piece_detachedDTO pieceSearch = new Piece_detachedDTO();
                                 pieceSearch.setRef_piece_detached(answer);
                                 Serialization serial = new Serialization();
-                                out.print(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "Piece_detachedDTO",pieceSearch)));
+                                out.println("piece");
+                                out.flush();
+                                out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "Piece_detachedDTO", pieceSearch)));
+                                out.flush();
+                                System.out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "Piece_detachedDTO", pieceSearch)));
                                 //String res = mv.select(answer);
 
                                 //Response
@@ -85,8 +87,8 @@ public class Controller{
                                  *          vehicleSearch = (VehicleDTO)o
                                  *          v.getTxtA().append("\n" + vehicleSearch.toString())
                                  */
-                                pieceSearch = (Piece_detachedDTO) deserial.deserialObject(deserial.deserialGeneric(res), pieceSearch.getClass().getName());
-                                v.getTxtA().setText(pieceSearch.toString());
+                                //pieceSearch = deserial.deserialObject(deserial.deserialGeneric(res), pieceSearch.getClass().getName());
+                                v.getTxtA().setText(res);
                                 v.getTxtU().setVisible(false);
                                 v.getTxtD().setVisible(false);
 
@@ -103,7 +105,7 @@ public class Controller{
                 v.getTxtU().setText(null);
                 v.getTxtD().setText(null);
                 v1 = new ViewInsert();
-                c1 = new ControllerInsert(mv, v1);
+                c1 = new ControllerInsert(mv, v1, socket);
                 c1.control();
             }};v.getBtnInsert().addActionListener(ac3);
 		
@@ -124,7 +126,6 @@ public class Controller{
                     answer = v.getTxt1().getText();
                     answer1 = v.getTxt3().getText();
                     float answer1Bis=Float.parseFloat(answer1);
-                    int result=0;
                     try {
                     	
                     	 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -133,32 +134,17 @@ public class Controller{
                          pieceSearch.setRef_piece_detached(answer);
                          pieceSearch.setPrice(answer1Bis);
                          Serialization serial = new Serialization();
-                         out.print(serial.serialToStr(serial.serialGeneric(EnumOperation.UPDATE.getIndex(), "Piece_detachedDTO",pieceSearch)));
-                         
-                         //result = mv.update(answer, answer1);
-                         //Response
+                         out.println("piece");
+                         out.flush();
+                         out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.UPDATE.getIndex(), "Piece_detachedDTO",pieceSearch)));
+                         out.flush();
                          String res = in.readLine();
                          
                          v.getTxtU().setVisible(true);
                          v.getTxtA().setText("");
-                         v.getTxtU().setText(result+"ligne modifiee");
-
+                         v.getTxtU().setText(res+"ligne modifiee");
                          v.getTxtD().setVisible(false);
                          //v.getTxtA().setText(result+"ligne modifiee");
-                         
-                         Deserialization deserial = new Deserialization();
-                         /**
-                          * @Attention Here I consider it returns just an object, but in fact it returns
-                          * often a list of object. So the view may should be changed at the end of project.
-                          * Like for (Object o : listVehicle)
-                          *          vehicleSearch = (VehicleDTO)o
-                          *          v.getTxtA().append("\n" + vehicleSearch.toString())
-                          */
-                         pieceSearch = (Piece_detachedDTO) deserial.deserialObject(deserial.deserialGeneric(res), pieceSearch.getClass().getName());
-                         v.getTxtA().setText(pieceSearch.toString());
-                         v.getTxtU().setVisible(false);
-                         v.getTxtD().setVisible(false);
-                    	
                     	
                 } catch (IOException error) {
                         // TODO Auto-generated catch block
@@ -166,8 +152,6 @@ public class Controller{
                     }
                 }
             };v.getBtnOK1().addActionListener(ac5);
-
-
          }};v.getBtnUpdate().addActionListener(ac1);
 		
 		//SUPPRESSION
@@ -183,7 +167,6 @@ public class Controller{
                 if((JButton) e1.getSource()== v.getBtnOK2()){
                     String answer = v.getTxt2().getText();
 
-                    int result=0;
                     try {
                     	
                     	 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -191,24 +174,15 @@ public class Controller{
                          Piece_detachedDTO pieceSearch = new Piece_detachedDTO();
                          pieceSearch.setRef_piece_detached(answer);
                          Serialization serial = new Serialization();
-                         out.print(serial.serialToStr(serial.serialGeneric(EnumOperation.DELETE.getIndex(), "Piece_detachedDTO",pieceSearch)));
-                         //result = mv.delete(answer);
-                         
+                         out.println("piece");
+                         out.flush();
+                         out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.DELETE.getIndex(), "Piece_detachedDTO",pieceSearch)));
+                         out.flush();
                          //Response
                          String res = in.readLine();
-
-                         Deserialization deserial = new Deserialization();
-                         /**
-                          * @Attention Here I consider it returns just an object, but in fact it returns
-                          * often a list of object. So the view may should be changed at the end of project.
-                          * Like for (Object o : listVehicle)
-                          *          vehicleSearch = (VehicleDTO)o
-                          *          v.getTxtA().append("\n" + vehicleSearch.toString())
-                          */
-                         pieceSearch = (Piece_detachedDTO) deserial.deserialObject(deserial.deserialGeneric(res), pieceSearch.getClass().getName());
                          v.getTxtD().setVisible(true);
                          v.getTxtA().setText("");
-                         v.getTxtD().setText(result+"ligne supprimee");
+                         v.getTxtD().setText(res+"ligne supprimee");
                          v.getTxtU().setVisible(false);
 
              
