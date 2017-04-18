@@ -51,6 +51,7 @@ public class CPoolServHandler extends Thread {
                 //CASE: asking the authentication, here we don't implement the encryption service.
                 String cmd = in.readLine();
                 System.out.println(cmd);
+
                 if (cmd.equals("auth")) {
                     String login = in.readLine();
                     String pwd = in.readLine();
@@ -72,6 +73,7 @@ public class CPoolServHandler extends Thread {
                     Deserialization des = new Deserialization();
                     JSONObject jo = des.deserialGeneric(jsonString);
                     int action = des.deserialAction(jo);//get action
+
                     /**
                      * Now we have action and vehicle, should call the Model
                      * */
@@ -82,19 +84,18 @@ public class CPoolServHandler extends Thread {
                         JSONArray jsonArray = (JSONArray) des.deserialObject(jo, EnumDTO.PIECE_DETACHED.getName());
                         jo = (JSONObject) jsonArray.get(0);
                         Piece_detachedDTO dto = new Piece_detachedDTO();
+                        dto.setModel((String) jo.get("model"));
+                        dto.setMark((String) jo.get("mark"));
+                        dto.setPrice(Float.parseFloat((String) jo.get("price")));
+                        dto.setName((String) jo.get("name"));
+                        dto.setRef_piece_detached((String) jo.get("ref_piece_detached"));
 
                         if (action == EnumOperation.DELETE.getIndex()){
-                            dto.setRef_piece_detached((String) jo.get("ref_piece_detached"));
                             int nb = hsql.updateQuery(modelPiece.delete(dto.getRef_piece_detached()));
                             server.msg.append("\n Query DELETE= " + modelPiece.delete(dto.getRef_piece_detached()) );
                             out.println(nb);
 
                         } else if (action == EnumOperation.INSERT.getIndex()) {
-                            dto.setModel((String) jo.get("model"));
-                            dto.setMark((String) jo.get("mark"));
-                            dto.setPrice(Float.parseFloat((String) jo.get("price")));
-                            dto.setName((String) jo.get("name"));
-                            dto.setRef_piece_detached((String) jo.get("ref_piece_detached"));
                             String query = modelPiece.insert(dto.getRef_piece_detached(), dto.getName(), dto.getMark(), dto
                             .getModel(), dto.getPrice());
                             int nb = hsql.updateQuery(query);
@@ -102,16 +103,14 @@ public class CPoolServHandler extends Thread {
                             out.println(nb);
 
                         } else if (action == EnumOperation.UPDATE.getIndex()) {
-                            dto.setRef_piece_detached((String) jo.get("ref_piece_detached"));
-                            dto.setPrice(Float.parseFloat((String) jo.get("price")));
                             String query = modelPiece.update(dto.getRef_piece_detached(),dto.getPrice());
                             int nb = hsql.updateQuery(query);
                             server.msg.append("\nQuery UPDATE=" + query);
                             out.println(nb);
 
                         } else if (action == EnumOperation.SEARCH.getIndex()) {
-                            dto.setRef_piece_detached((String) jo.get("ref_piece_detached"));
                             String query = modelPiece.select(dto.getRef_piece_detached());
+                            server.msg.append("\nQuery SELECT=" + query);
                             ResultSet rs = hsql.selectQuery(query);
                             while (rs.next()){
                                 dto.setModel(rs.getString("model"));

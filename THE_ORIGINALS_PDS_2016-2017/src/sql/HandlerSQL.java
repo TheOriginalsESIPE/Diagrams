@@ -59,18 +59,4 @@ public class HandlerSQL {
 
         return rs;
     }
-
-    public static void main(String[] arg){
-        HandlerSQL h = new HandlerSQL();
-        ResultSet r = h.selectQuery("Select * from reparateur where login = 'xxx';");
-        if(r == null){
-            System.out.println("r is null");
-        }else {
-            try {
-                System.out.println("r is  not null" + r.next());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

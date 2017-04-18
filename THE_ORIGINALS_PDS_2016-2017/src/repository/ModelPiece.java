@@ -2,12 +2,6 @@ package repository;
 
 
 	public class ModelPiece {
-	
-		    private String ref_piece_detached;
-		    private String name;
-		    private String mark;
-		    private String model;
-		    private float price;
 
 		public ModelPiece(){
         }
@@ -26,7 +20,8 @@ package repository;
          * @return
          */
         public String select(String ref_piece_detached){
-            return "SELECT piece_detached.ref_piece_detached, model, mark, price, name FROM piece_detached";
+            return "SELECT piece_detached.ref_piece_detached, model, mark, price, name FROM piece_detached" +
+					" WHERE ref_piece_detached= '" + ref_piece_detached + "';" ;
         }
 
 
@@ -42,7 +37,6 @@ package repository;
 			 }
 
     }
-
 
 
 

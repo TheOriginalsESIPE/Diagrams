@@ -1,7 +1,6 @@
 package serialization;
 
 import dto.*;
-import enumeration.EnumOperation;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.util.List;
@@ -78,24 +77,5 @@ public class Serialization {
 		return str;
 	}
 
-	public static void main(String[] arg){
-		Serialization s = new Serialization();
-		Deserialization d = new Deserialization();
 
-		VehicleDTO vehicleDTO = new VehicleDTO();
-		vehicleDTO.setNumMat("24243JDS");
-		vehicleDTO.setMark("BWM");
-		vehicleDTO.setModel("MDH334 E2J");
-		vehicleDTO.setVehicle_type("voiture");
-		VehicleDTO V2 = vehicleDTO;
-
-        Piece_detachedDTO pd = new Piece_detachedDTO("xxx", "xer d", "renault", (float) 125.3, "erwfsdf");
-        String str = s.serialToStr(s.serialGeneric(EnumOperation.UPDATE.getIndex(), pd.getClass().getSimpleName(), pd));
-        d.deserialGeneric(str);
-        JSONObject jo = d.deserialGeneric(str);
-        JSONArray ja = (JSONArray) d.deserialObject(jo, "Piece_detachedDTO");
-        jo = (JSONObject) ja.get(0);
-
-	}
-	
 }
