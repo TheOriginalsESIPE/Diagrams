@@ -21,8 +21,6 @@ public class Serialization {
      * @return JSONObject
      */
 	public JSONObject serialisAVehicle(int action, VehicleDTO VDTO){
-		JSONObject V1 = new JSONObject();
-		V1.put("numMat", VDTO.getNumMat());
 		V1.put("model", VDTO.getModel());
 		V1.put("mark",VDTO.getMark());
 		V1.put("vehicle_type",VDTO.getVehicle_type());
