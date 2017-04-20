@@ -8,10 +8,7 @@ public class VehicleDTO {
 	private String vehicle_type;
 	
 	public VehicleDTO(){
-		this.numMat=numMat;
-		this.model=model;
-		this.mark=mark;
-		this.vehicle_type=vehicle_type;
+
 	}
 	
 	public VehicleDTO(String nM, String mo, String ma, String vt){
