@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS `piece_detached` (
    `mark` varchar(100) NOT NULL, 
    `model` varchar(100) NOT NULL, 
    `price` decimal(7,2) NOT NULL, 
-   `date_purchase` date NOT NULL, 
    PRIMARY KEY (`ref_piece_detached`) 
 ); 
  
@@ -28,6 +27,6 @@ CREATE TABLE IF NOT EXISTS `piece_detached` (
 
 
 
-INSERT INTO `piece_detached` (`ref_piece_detached`, `name`, `mark`, `model`, `price`) VALUES
-('DG909DG', 'moteur', 'Renault', 'XXXX','545,02');
+INSERT INTO piece_detached (`ref_piece_detached`, `name`, `mark`, `model`, `price`) VALUES
+('DG909DG', 'moteur', 'Renault', 'XXXX', 545.02);
 
