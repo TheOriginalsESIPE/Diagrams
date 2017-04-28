@@ -2,7 +2,7 @@ package dto;
 
 
 
-public class Piece_detachedDTO extends DTO{
+public class Piece_detachedDTO{
 	
 	private String name, mark, model;
 	private float price;

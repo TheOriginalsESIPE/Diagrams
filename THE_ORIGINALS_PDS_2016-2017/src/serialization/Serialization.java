@@ -20,18 +20,18 @@ public class Serialization {
 	 * @param VDTO
      * @return JSONObject
      */
-	public JSONObject serialisAVehicle(int action, VehicleDTO VDTO){
-		JSONObject root = new JSONObject();
-		root.put("action", action);
+	public JSONObject serialisationDTO(int action , Object dto ) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		JSONObject k = new JSONObject();
+		k.put("action", action);
 		JSONObject V1 = new JSONObject();
-		V1.put("numMat", VDTO.getNumMat());
-		V1.put("model", VDTO.getModel());
-		V1.put("mark",VDTO.getMark());
-		V1.put("vehicle_type",VDTO.getVehicle_type());
+		Field [] fields = dto.getClass().getDeclaredFields();
+		for (Field field : fields){
+		V1.put(field.getName(), dto.getClass().getDeclaredMethod("get"+field.getName(), null).invoke(dto, null));
+	}
 		JSONArray listDTO = new JSONArray();
 		listDTO.add(V1);
-		root.put("VehicleDTO", listDTO);
-		return root;
+		k.put("DTO", listDTO);
+		return k;
 	}
 
 	/**
