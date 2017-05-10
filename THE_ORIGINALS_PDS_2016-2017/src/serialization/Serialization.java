@@ -18,26 +18,19 @@ import java.util.Map;
  */
 public class Serialization {
 
-	/**
-	 * This function is not generic, should be deleted.
-	 * @deprecated
-	 * @param action
-	 * @param dto
-     * @return JSONObject
-     */
-    public JSONObject serialisationDTO(int action , Object dto ) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        JSONObject root = new JSONObject();
-         root.put("action", action);
-        JSONObject V1 = new JSONObject();
-        Field [] fields = dto.getClass().getDeclaredFields();
-        for (Field field : fields){
-            V1.put(field.getName(), dto.getClass().getDeclaredMethod("get"+field.getName(), null).invoke(dto, null));
-        }
-        JSONArray listDTO = new JSONArray();
-        listDTO.add(V1);
-         root.put("DTO", listDTO);
-        return  root;
-    }
+    public JSONObject serialisationDTO(int action , Object dto ) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		JSONObject k = new JSONObject();
+		k.put("action", action);
+		JSONObject V1 = new JSONObject();
+		Field [] fields = dto.getClass().getDeclaredFields();
+		for (Field field : fields){
+		V1.put(field.getName(), dto.getClass().getDeclaredMethod("get"+field.getName(), null).invoke(dto, null));
+	}
+		JSONArray listDTO = new JSONArray();
+		listDTO.add(V1);
+		k.put("DTO", listDTO);
+		return k;
+	}
 
 
 	/**
