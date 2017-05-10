@@ -16,16 +16,14 @@ import view.ViewInsert;
 
 public class ControllerInsert{
 	
-	private ViewInsert v; 
-	private ModelPiece mv;
+	private ViewInsert v;
 	private ActionListener ac;
 	private ActionListener ac1;
 	private BufferedReader in;
 	private PrintStream out;
 	private Socket socket;
 	
-	public ControllerInsert(ModelPiece mv, ViewInsert v, Socket socket){
-		this.mv=mv;
+	public ControllerInsert(ViewInsert v, Socket socket){
 		this.v=v;
         this.socket = socket;
 	}
