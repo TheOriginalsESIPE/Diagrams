@@ -3,7 +3,12 @@ package serialization;
 import dto.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tearsyu on 07/04/17.
@@ -13,14 +18,7 @@ import java.util.List;
  */
 public class Serialization {
 
-	/**
-	 * This function is not generic, should be deleted.
-	 * @deprecated
-	 * @param action
-	 * @param VDTO
-     * @return JSONObject
-     */
-	public JSONObject serialisationDTO(int action , Object dto ) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+    public JSONObject serialisationDTO(int action , Object dto ) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		JSONObject k = new JSONObject();
 		k.put("action", action);
 		JSONObject V1 = new JSONObject();
@@ -34,35 +32,51 @@ public class Serialization {
 		return k;
 	}
 
+
 	/**
 	 * This function used to serial an action with an object dto.
-	 * @param action
-	 * @param o
-	 * @param dtoName
+	 * @param map
      * @return JSONObject
      */
-	public JSONObject serialGeneric(int action, String dtoName, Object o){
+	public JSONObject serialMap(Map map){
 		JSONObject root = new JSONObject();
-		root.put("action", action);
+        root.putAll(map);
+		return root;
+	}
+
+
+    public JSONObject serialGeneric(int action, String dtoName, Object o){
+        JSONObject root = new JSONObject();
+        root.put("action", action);
         JSONObject j = new JSONObject();
         JSONArray jlist = new JSONArray();
 
         jlist.add(j);
-		root.put(dtoName, o);
-		return root;
-	}
+        root.put(dtoName, o);
+        return root;
+    }
 
-	/**
+
+    /**
 	 * This function used to serialize an action with a list of dto to JSONObject.
 	 * @param action
 	 * @param dtoList
-	 * @param listName
-     * @return
+	 * @param
+     * @return JSONObject
      */
-	public JSONObject serialGeneric(int action, String listName, List dtoList){
+	public JSONObject serialGeneric(int action, String dtoName, List dtoList){
 		JSONObject root = new JSONObject();
+        Deserialization d = new Deserialization();
 		root.put("action", action);
-		root.put(listName, dtoList);
+
+		JSONArray array = new JSONArray();
+		for (int i = 0; i < dtoList.size(); ++i){
+            String str = dtoList.get(i).toString();
+            JSONObject ele = new JSONObject();
+            ele.put(dtoName, dtoList.get(i));
+            array.add(ele);
+		}
+		root.put("list", array);
 		return root;
 	}
 
@@ -77,5 +91,28 @@ public class Serialization {
 		return str;
 	}
 
+
+    public static void main(String[] args){
+        RepairerDTO r = null;
+        List<RepairerDTO> list = new ArrayList<>();
+        for(int i = 0; i < 4; ++i){
+            r = new RepairerDTO();
+            r.setLogin("mary"+ i);
+            r.setAdress("44 route helsinki");
+            r.setLastname("Ouvik" + i);
+            list.add(r);
+        }
+        Serialization s = new Serialization();
+        Deserialization d = new Deserialization();
+        JSONObject j = s.serialGeneric(2, "RepaireDTO", list);
+        System.out.println(s.serialToStr(j));
+
+        JSONObject jlist = d.deserialGeneric(s.serialToStr(j));
+        JSONArray dlist = (JSONArray) jlist.get("list");
+
+
+
+
+    }
 
 }

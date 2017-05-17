@@ -22,7 +22,6 @@ public class Controller{
 	
 	private ControllerInsert c1;
 	private View v;
-	private ModelPiece mv;
 	private ActionListener ac;
 	private ActionListener ac1;
 	private ActionListener ac2;
@@ -35,8 +34,7 @@ public class Controller{
     BufferedReader in;
     PrintStream out;
 	
-	public Controller(ModelPiece mv, View v, Socket socket){
-		this.mv=mv;
+	public Controller(View v, Socket socket){
 		this.v=v;
 		this.socket = socket;
         System.out.println("controller principal");
@@ -105,7 +103,7 @@ public class Controller{
                 v.getTxtU().setText(null);
                 v.getTxtD().setText(null);
                 v1 = new ViewInsert();
-                c1 = new ControllerInsert(mv, v1, socket);
+                c1 = new ControllerInsert(v1, socket);
                 c1.control();
             }};v.getBtnInsert().addActionListener(ac3);
 		

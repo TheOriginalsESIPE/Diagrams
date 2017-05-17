@@ -1,6 +1,5 @@
 package client;
 
-import repository.ModelAuth;
 import server.ControllerAuthentification;
 import view.ViewAuthentification;
 
@@ -64,23 +63,6 @@ public class Client{
         }
     }
 
-    /*
-
-    public void sendToServ(JSONObject jsonObject) throws IOException {
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream(), StandardCharsets.UTF_8));
-        out.write(jsonObject.toString());
-        out.newLine();
-        out.flush();
-        out.close();
-    }
-
-    public VehicleDTO receiveFromServ() throws IOException, ParseException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-        String jsonString = in.readLine();
-        Deserialization ds = new Deserialization();
-        return ds.deserialAVehicle(ds.parseStringToJson(jsonString));
-    }
-    */
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -95,8 +77,7 @@ public class Client{
                     /*This controller doesn't pass the server, it connects directly to the server!!
                     * I need an other type of serialization to send object!
                     * */
-                    ModelAuth m = new ModelAuth();
-                    ControllerAuthentification c = new ControllerAuthentification(m, v, client1.getClient());
+                    ControllerAuthentification c = new ControllerAuthentification(v, client1.getClient());
                     c.control();
 
                     //while(client.getClient().isConnected()){
