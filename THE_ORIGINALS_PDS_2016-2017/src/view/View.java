@@ -1,6 +1,5 @@
 package view;
 
-import  server.ControllerInsert;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -128,12 +127,6 @@ public class View extends JFrame{
 		panel3.add(txt2);
 		panel3.add(btnOK2);
 		panel4.add(btnInsert, b4);
-		
-		
-		
-		
-		
-		
 
 }
 	

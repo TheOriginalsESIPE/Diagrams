@@ -1,7 +1,5 @@
 package enumeration;
 
-import java.util.Enumeration;
-
 /**
  * Created by tearsyu on 23/03/17.
  * This class is just to create a enumeration for 4 operation, they are

@@ -1,12 +1,9 @@
 package serialization;
 
-import dto.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +14,19 @@ import java.util.Map;
  * @author tearsyu
  */
 public class Serialization {
-
-    public JSONObject serialisationDTO(int action , Object dto ) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+	/**
+	 *
+	 * @param action
+	 * @param dto
+	 * @deprecated
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+     * @throws InvocationTargetException
+     */
+    public JSONObject serialisationDTO(int action , Object dto ) throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		JSONObject k = new JSONObject();
 		k.put("action", action);
 		JSONObject V1 = new JSONObject();
@@ -73,7 +81,7 @@ public class Serialization {
 		for (int i = 0; i < dtoList.size(); ++i){
             String str = dtoList.get(i).toString();
             JSONObject ele = new JSONObject();
-            ele.put(dtoName, dtoList.get(i));
+            ele.put("",dtoList.get(i));
             array.add(ele);
 		}
 		root.put("list", array);
@@ -93,24 +101,6 @@ public class Serialization {
 
 
     public static void main(String[] args){
-        RepairerDTO r = null;
-        List<RepairerDTO> list = new ArrayList<>();
-        for(int i = 0; i < 4; ++i){
-            r = new RepairerDTO();
-            r.setLogin("mary"+ i);
-            r.setAdress("44 route helsinki");
-            r.setLastname("Ouvik" + i);
-            list.add(r);
-        }
-        Serialization s = new Serialization();
-        Deserialization d = new Deserialization();
-        JSONObject j = s.serialGeneric(2, "RepaireDTO", list);
-        System.out.println(s.serialToStr(j));
-
-        JSONObject jlist = d.deserialGeneric(s.serialToStr(j));
-        JSONArray dlist = (JSONArray) jlist.get("list");
-
-
 
 
     }

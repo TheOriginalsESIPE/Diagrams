@@ -16,7 +16,7 @@ import static java.lang.System.in;
  * This is the server, it uses the mechanism of Executors to create a pool connection
  * between the client and the server, when a client connect to the server, the server
  * transfer the client socket to the object of CPoolServHandle.
- * I add a GUI to show the status of all the clients which connect to this server.
+ * I add a GUI to show the manutentionnaire of all the clients which connect to this server.
  * @author tearsyu
  */
 public class Server extends JFrame{
@@ -39,17 +39,13 @@ public class Server extends JFrame{
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        setSize(600,600);
+        setSize(500,500);
         msg = new JTextArea("Log:\n");
         scrollp = new JScrollPane(msg);
         scrollp.setBounds(20, 20, 400, 400);
-        //msg.setBounds(10, 10, 40, 50);
         msg.setEditable(false);
         scrollp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        //getContentPane().add(msg);
         this.getContentPane().add(scrollp);
-
-        //this.pack();
     }
 
     public static void main(String[] arg){
