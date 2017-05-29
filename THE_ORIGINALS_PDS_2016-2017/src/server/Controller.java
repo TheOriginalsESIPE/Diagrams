@@ -1,5 +1,6 @@
 package server;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import javax.swing.JButton;
 
 import dto.Piece_detachedDTO;
 import enumeration.EnumOperation;
+import enumeration.EnumService;
 import repository.ModelPiece;
 import serialization.Deserialization;
 import serialization.Serialization;
@@ -67,7 +69,7 @@ public class Controller{
                                 Piece_detachedDTO pieceSearch = new Piece_detachedDTO();
                                 pieceSearch.setRef_piece_detached(answer);
                                 Serialization serial = new Serialization();
-                                out.println("piece");
+                                out.println(EnumService.PIECE.name());
                                 out.flush();
                                 out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "Piece_detachedDTO", pieceSearch)));
                                 out.flush();

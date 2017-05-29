@@ -1,4 +1,5 @@
 package server;
+import enumeration.EnumService;
 import repository.ModelAuth;
 import view.ViewAuthentification;
 import repository.ModelPiece;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import javax.swing.JButton;
+import javax.swing.*;
 
 public class ControllerAuthentification {
 	
@@ -39,7 +40,7 @@ public void control(){
 			String compte = v1.getTxt1().getText();
             String password = String.valueOf(v1.getTxt2().getPassword());
 
-			out.println("auth");
+			out.println(EnumService.AUTH.name());
 			out.flush();
 			out.println(compte);
 			out.flush();
@@ -49,10 +50,11 @@ public void control(){
 
 			if(!res.equals("false")){
 				v1.disposeView();
-				v1.setVisible(false);
-                v = new View();
-                c1 = new Controller(v, socket);
-                c1.control();
+				SwingUtilities.invokeLater(() -> {
+							v = new View();
+							c1 = new Controller(v, socket);
+							c1.control();
+						});
             } else{
                 v1.errorDialog(2);
             }
