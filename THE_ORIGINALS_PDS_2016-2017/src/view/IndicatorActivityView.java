@@ -89,7 +89,7 @@ public class IndicatorActivityView extends JFrame{
         setLayout(null);
         setSize(900, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        df = new DecimalFormat("#.000");
+        df = new DecimalFormat("#.##");
 
         //Rapport area
         pRapport = new JPanel();
@@ -224,7 +224,7 @@ public class IndicatorActivityView extends JFrame{
      * @param errorCode 1-> date end < date begin 2-> week, date end - date begin > 8 weeks
      *                  3-> month, date end - date begin > 12 month, 4-> year, date end - date begin > 5 years
      */
-    public void errorDialog(int errorCode){
+    public void msgDialog(int errorCode){
         String msg = "";
         switch(errorCode) {
             case 1:
@@ -239,6 +239,10 @@ public class IndicatorActivityView extends JFrame{
             case 4:
                 msg = "La distance des date que vous avez choisi est superieur a 5 years! \n" +
                         "Veuillez vous choisir les dates tel que date end - date begin <= 5 years"; break;
+            case 5:
+                msg = "La date que vous avez choisi est une duree magnifique, il n'y a aucune operation."; break;
+            case 6:
+                msg = "Le fichier de rapport a ete cree sous resutls/Rapport_Indicator.pdf"; break;
         }
         JOptionPane.showMessageDialog(null, msg);
     }
@@ -282,7 +286,7 @@ public class IndicatorActivityView extends JFrame{
                     pConsoEach += ele.getPieceConso();
                     java.sql.Date end = java.sql.Date.valueOf(ele.getDateE());
                     java.sql.Date begin = java.sql.Date.valueOf(ele.getDateB());
-                    days += (end.getTime() - begin.getTime()) /(24*60*60*1000);
+                    days = (end.getTime() - begin.getTime()) /(24*60*60*1000);
 
                     if(maxDay < days) {
                         maxDay = days;
