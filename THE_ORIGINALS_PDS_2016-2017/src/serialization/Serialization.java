@@ -1,10 +1,11 @@
 package serialization;
 
-import dto.*;
-import enumeration.EnumOperation;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tearsyu on 07/04/17.
@@ -13,57 +14,77 @@ import java.util.List;
  * @author tearsyu
  */
 public class Serialization {
-
 	/**
-	 * This function is not generic, should be deleted.
-	 * @deprecated
+	 *
 	 * @param action
-	 * @param VDTO
-     * @return JSONObject
+	 * @param dto
+	 * @deprecated
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+     * @throws InvocationTargetException
      */
-	public JSONObject serialisAVehicle(int action, VehicleDTO VDTO){
-		JSONObject root = new JSONObject();
-		root.put("action", action);
+    public JSONObject serialisationDTO(int action , Object dto ) throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		JSONObject k = new JSONObject();
+		k.put("action", action);
 		JSONObject V1 = new JSONObject();
-		V1.put("numMat", VDTO.getNumMat());
-		V1.put("model", VDTO.getModel());
-		V1.put("mark",VDTO.getMark());
-		V1.put("vehicle_type",VDTO.getVehicle_type());
+		Field [] fields = dto.getClass().getDeclaredFields();
+		for (Field field : fields){
+		V1.put(field.getName(), dto.getClass().getDeclaredMethod("get"+field.getName(), null).invoke(dto, null));
+	}
 		JSONArray listDTO = new JSONArray();
 		listDTO.add(V1);
-		root.put("VehicleDTO", listDTO);
-		return root;
+		k.put("DTO", listDTO);
+		return k;
 	}
+
 
 	/**
 	 * This function used to serial an action with an object dto.
-	 * @param action
-	 * @param o
-	 * @param dtoName
+	 * @param map
      * @return JSONObject
      */
-	public JSONObject serialGeneric(int action, String dtoName, Object o){
+	public JSONObject serialMap(Map map){
 		JSONObject root = new JSONObject();
-		root.put("action", action);
+        root.putAll(map);
+		return root;
+	}
+
+
+    public JSONObject serialGeneric(int action, String dtoName, Object o){
+        JSONObject root = new JSONObject();
+        root.put("action", action);
         JSONObject j = new JSONObject();
         JSONArray jlist = new JSONArray();
 
         jlist.add(j);
-		root.put(dtoName, o);
-		return root;
-	}
+        root.put(dtoName, o);
+        return root;
+    }
 
-	/**
+
+    /**
 	 * This function used to serialize an action with a list of dto to JSONObject.
 	 * @param action
 	 * @param dtoList
-	 * @param listName
-     * @return
+	 * @param
+     * @return JSONObject
      */
-	public JSONObject serialGeneric(int action, String listName, List dtoList){
+	public JSONObject serialGeneric(int action, String dtoName, List dtoList){
 		JSONObject root = new JSONObject();
+        Deserialization d = new Deserialization();
 		root.put("action", action);
-		root.put(listName, dtoList);
+
+		JSONArray array = new JSONArray();
+		for (int i = 0; i < dtoList.size(); ++i){
+            String str = dtoList.get(i).toString();
+            JSONObject ele = new JSONObject();
+            ele.put("",dtoList.get(i));
+            array.add(ele);
+		}
+		root.put("list", array);
 		return root;
 	}
 
@@ -78,24 +99,10 @@ public class Serialization {
 		return str;
 	}
 
-	public static void main(String[] arg){
-		Serialization s = new Serialization();
-		Deserialization d = new Deserialization();
 
-		VehicleDTO vehicleDTO = new VehicleDTO();
-		vehicleDTO.setNumMat("24243JDS");
-		vehicleDTO.setMark("BWM");
-		vehicleDTO.setModel("MDH334 E2J");
-		vehicleDTO.setVehicle_type("voiture");
-		VehicleDTO V2 = vehicleDTO;
+    public static void main(String[] args){
 
-        Piece_detachedDTO pd = new Piece_detachedDTO("xxx", "xer d", "renault", (float) 125.3, "erwfsdf");
-        String str = s.serialToStr(s.serialGeneric(EnumOperation.UPDATE.getIndex(), pd.getClass().getSimpleName(), pd));
-        d.deserialGeneric(str);
-        JSONObject jo = d.deserialGeneric(str);
-        JSONArray ja = (JSONArray) d.deserialObject(jo, "Piece_detachedDTO");
-        jo = (JSONObject) ja.get(0);
 
-	}
-	
+    }
+
 }

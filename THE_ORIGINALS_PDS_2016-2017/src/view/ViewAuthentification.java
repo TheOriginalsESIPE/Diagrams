@@ -55,6 +55,8 @@ public ViewAuthentification() {
 			JOptionPane.showMessageDialog(null, "Your login or password is incorrect.");
 	}
 
+	public void disposeView(){this.dispose();}
+
 	public JButton getBtnOK() {
 	return btnOK;
 }

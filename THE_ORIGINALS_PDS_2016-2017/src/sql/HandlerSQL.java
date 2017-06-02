@@ -43,6 +43,7 @@ public class HandlerSQL {
             st = connection.createStatement();
             nbData = st.executeUpdate(query);
             st.close();
+            myConn.returnConnectionPool(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,24 +54,11 @@ public class HandlerSQL {
         try {
             st = connection.createStatement();
             rs = st.executeQuery(query);
+            myConn.returnConnectionPool(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return rs;
-    }
-
-    public static void main(String[] arg){
-        HandlerSQL h = new HandlerSQL();
-        ResultSet r = h.selectQuery("Select * from reparateur where login = 'xxx';");
-        if(r == null){
-            System.out.println("r is null");
-        }else {
-            try {
-                System.out.println("r is  not null" + r.next());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
