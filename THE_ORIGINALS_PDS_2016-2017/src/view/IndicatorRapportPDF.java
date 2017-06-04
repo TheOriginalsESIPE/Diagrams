@@ -17,10 +17,10 @@ import java.util.*;
  * Created by tearsyu on 30/05/17.
  */
 public class IndicatorRapportPDF {
-    public String dest;
+    private String dest;
     private String timeScale;
-    BaseColor colorRed;
-    BaseColor colorGreen;
+    private BaseColor colorRed;
+    private BaseColor colorGreen;
     public IndicatorRapportPDF(String fileName, String timeScale){
         this.dest = fileName + ".pdf";
         this.timeScale = timeScale;

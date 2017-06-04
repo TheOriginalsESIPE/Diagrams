@@ -56,7 +56,7 @@ public class ControllerIndicatorActivity {
                 //          "to":"2017-03-09",
                 //          "vtype":"car",
                 //          "btype":"crevaison",
-                //          "manutentionnaire": "waiting"
+                //          "statu": "waiting"
                 //          };
 
                 Map indicatorRequest = new HashMap<String,String>(5);
@@ -87,7 +87,7 @@ public class ControllerIndicatorActivity {
                 else
                     vehicleType = "all";
                 indicatorRequest.put("vtype", vehicleType);
-                indicatorRequest.put("manutentionnaire", indicatorView.manutentionnaire.getSelectedItem().toString());
+                indicatorRequest.put("statu", indicatorView.statu.getSelectedItem().toString());
                 indicatorRequest.put("btype", indicatorView.typeBreakdown.getSelectedItem().toString());
                 this.mapIndict = indicatorRequest;
                 //serialize the map to json
@@ -150,8 +150,8 @@ public class ControllerIndicatorActivity {
 
                 indicatorView.itable.data = data;
                 indicatorView.itable.fireTableDataChanged();
-                indicatorView.table.repaint();
-                indicatorView.table.updateUI();
+                indicatorView.getTable().repaint();
+                indicatorView.getTable().updateUI();
 
                 //show data analysed here
                 Map<java.util.Date, List<IndicatorDTO>> dataRe = analyseData(bm.getActionCommand(), arrIndicator);
@@ -164,7 +164,6 @@ public class ControllerIndicatorActivity {
                 //Export as PDF
                 if(e.getSource() == indicatorView.getbOk()){
                     System.out.println("Create pdf");
-                    String fileName = "results/Rapport_Indicator";
                     ButtonModel bm = indicatorView.timeScale.getSelection();
                     IndicatorRapportPDF exportPDF = new IndicatorRapportPDF("results/Rapport_Indicator", bm.getActionCommand());
                     exportPDF.createPDF(mapdata, mapIndict);

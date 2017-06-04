@@ -11,9 +11,6 @@ public class IndicatorTable extends AbstractTableModel{
     public String[][] data;
     public IndicatorTable(){
     }
-    public void setData(String[][] data){
-        this.data = data;
-    }
 
     /**
      * Returns the number of rows in the model. A
