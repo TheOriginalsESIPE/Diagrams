@@ -16,7 +16,7 @@ import static java.lang.System.in;
  * This is the server, it uses the mechanism of Executors to create a pool connection
  * between the client and the server, when a client connect to the server, the server
  * transfer the client socket to the object of CPoolServHandle.
- * I add a GUI to show the manutentionnaire of all the clients which connect to this server.
+ * I add a GUI to show the statu of all the clients which connect to this server.
  * @author tearsyu
  */
 public class Server extends JFrame{

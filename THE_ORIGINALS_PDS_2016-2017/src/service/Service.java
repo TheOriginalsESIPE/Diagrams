@@ -22,6 +22,13 @@ import java.util.List;
 
 
 /**
+ * The class service is using for reacting with HandleSQL, like CPoolHandle deal with the command that
+ * the client send, this class Service offers a bundle of methods that executing the code according to the command.
+ * And it receives the result from sql server, and give a response to CPoolServHandler(For example, if it was a
+ * "Select", Service generates an object of DTO or a list of DTO and serialize it to String json
+ * and send it as the response to CPoolServHandler. If it was a "UPDATE" or "DELETE", it easier to manipulate,
+ * Service just give a number as an indicator to response to CPoolServHandler.) Then CPoolServHandler send this
+ * response to Client.
  * Created by tearsyu on 18/05/17.
  */
 public class Service {
@@ -126,7 +133,9 @@ public class Service {
                 arrIndicator.add(idc);
             }
             System.out.println("finish adding result of part operation. Size is :" + numRes);
-
+            if(arrIndicator.size() == 0){
+                return "None";
+            }
             rs = hsql.selectQuery(modelIA.pieceConso());
             //There is a n*n complexity!!! it could be better if I use Map<Integer, IndicatorDTO>
             // But I don't want to rewrite my code. Let it be!
@@ -142,7 +151,7 @@ public class Service {
             System.out.println("With a calculate of n*n complexity, finaly I finish my service.");
 
             SerializationGson s = new SerializationGson();
-            res = s.serialGeneric(arrIndicator);
+            res = s.serialIndict(arrIndicator);
         } catch (SQLException e) {
             e.printStackTrace();
         }

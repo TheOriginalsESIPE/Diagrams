@@ -20,7 +20,7 @@ import java.util.List;
  * "Destiné au chef du dépôt.
  * Celui-ci peut calculer et afficher de nombreux indicateurs tels que le nombre d'opérations, leur durée moyenne,
  * le nombre de pièces consommées, etc.
- * Il pourra les décliner dynamiquement suivant plusieurs axes combinables: par type de véhicule, par manutentionnaire,
+ * Il pourra les décliner dynamiquement suivant plusieurs axes combinables: par type de véhicule, par statu,
  * par période de temps (semaine, mois, année), etc.  Exemples:
  * nombre total de réparations pour crevaison effectuées au cours du mois passé, sur des vélos en libre service
  * évolution semaine par semaine sur l'année en cours du nombre total d'opérations effectuées au sein du dépôt"
@@ -35,9 +35,9 @@ public class IndicatorActivityView extends JFrame{
     public JCheckBox bike, car;
     private Border border;
     private JPanel pRapport, pVehicle, pTimeChooser, pTimeScale;
-    public JComboBox typeBreakdown, manutentionnaire;
+    public JComboBox typeBreakdown, statu;
     public JXDatePicker from, to;
-    public JTable table;
+    private JTable table;
     public IndicatorTable itable;
     private DecimalFormat df; // To define the double number
 
@@ -52,44 +52,17 @@ public class IndicatorActivityView extends JFrame{
         return bApply;
     }
 
-    public JLabel getGetLnbOp() {
-        return getLnbOp;
-    }
-
-    public void setGetLnbOp(JLabel getLnbOp) {
-        this.getLnbOp = getLnbOp;
-    }
-
-    public JLabel getGetlDuring() {
-        return getlDuring;
-    }
-
-    public void setGetlDuring(JLabel getlDuring) {
-        this.getlDuring = getlDuring;
-    }
-
-    public JLabel getGetlConso() {
-        return getlConso;
-    }
-
-    public void setGetlConso(JLabel getlConso) {
-        this.getlConso = getlConso;
-    }
-
     public JButton getbExit() {
         return bExit;
     }
 
-    public void setbExit(JButton bExit) {
-        this.bExit = bExit;
-    }
-
+    public JTable getTable(){return table;}
     public IndicatorActivityView(){
         super("Operation Indicator");
         setLayout(null);
         setSize(900, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        df = new DecimalFormat("#.000");
+        df = new DecimalFormat("#.##");
 
         //Rapport area
         pRapport = new JPanel();
@@ -114,7 +87,7 @@ public class IndicatorActivityView extends JFrame{
         pRapport.add(scrollText);
 
 
-        // Constraint manutentionnaire, type, time, timeScale, and type vehicle
+        // Constraint statu, type, time, timeScale, and type vehicle
 
         //Time scale radio button
         pTimeScale = new JPanel();
@@ -139,20 +112,19 @@ public class IndicatorActivityView extends JFrame{
 
 
         typeBreakdown = new JComboBox();
-        manutentionnaire = new JComboBox();
-        //Add diff type breakdown and manutentionnaire
-        manutentionnaire.addItem("wait for repairing");
-        manutentionnaire.addItem("repairing");
-        manutentionnaire.addItem("checking");
+        statu = new JComboBox();
+        //Add diff type breakdown and statu
+        statu.addItem("operation finie");
+        statu.addItem("operation non finie");
 
         for(BreakdownType ele : BreakdownType.values()){
             typeBreakdown.addItem(ele.name().toLowerCase());
         }
 
-        manutentionnaire.setBounds(400, 500, 200, 30);
+        statu.setBounds(400, 500, 200, 30);
         typeBreakdown.setBounds(400, 550, 200, 30);
         this.add(typeBreakdown);
-        this.add(manutentionnaire);
+        this.add(statu);
 
         //Vehicle RadioButton Area
         pVehicle = new JPanel();
@@ -200,7 +172,7 @@ public class IndicatorActivityView extends JFrame{
 
         //Button
         bApply = new JButton("Confirmer");
-        bApply.setBounds(20, 630, 100, 30);
+        bApply.setBounds(20, 630, 150, 30);
         bOk = new JButton("Exporter en PDF");
         bOk.setEnabled(false);
         bOk.setBounds(250, 630, 180, 30);
@@ -224,7 +196,7 @@ public class IndicatorActivityView extends JFrame{
      * @param errorCode 1-> date end < date begin 2-> week, date end - date begin > 8 weeks
      *                  3-> month, date end - date begin > 12 month, 4-> year, date end - date begin > 5 years
      */
-    public void errorDialog(int errorCode){
+    public void msgDialog(int errorCode){
         String msg = "";
         switch(errorCode) {
             case 1:
@@ -239,6 +211,10 @@ public class IndicatorActivityView extends JFrame{
             case 4:
                 msg = "La distance des date que vous avez choisi est superieur a 5 years! \n" +
                         "Veuillez vous choisir les dates tel que date end - date begin <= 5 years"; break;
+            case 5:
+                msg = "La date que vous avez choisi est une duree magnifique, il n'y a aucune operation."; break;
+            case 6:
+                msg = "Le fichier de rapport a ete cree sous resutls/Rapport_Indicator.pdf"; break;
         }
         JOptionPane.showMessageDialog(null, msg);
     }
@@ -282,7 +258,7 @@ public class IndicatorActivityView extends JFrame{
                     pConsoEach += ele.getPieceConso();
                     java.sql.Date end = java.sql.Date.valueOf(ele.getDateE());
                     java.sql.Date begin = java.sql.Date.valueOf(ele.getDateB());
-                    days += (end.getTime() - begin.getTime()) /(24*60*60*1000);
+                    days = (end.getTime() - begin.getTime()) /(24*60*60*1000);
 
                     if(maxDay < days) {
                         maxDay = days;

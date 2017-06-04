@@ -11,7 +11,7 @@ import java.util.Map;
  * Created by tearsyu on 27/04/17.
  */
 public class ModelIndicatorActivity {
-    private String vtype, from, to, btype, manutentionnaire;
+    private String vtype, from, to, btype, statu;
     public ModelIndicatorActivity(Map<String, String> indocatorMap){
         if (indocatorMap.get("vtype").equals("all"))
             this.vtype = "velo' or vehicle.vehicle_type = 'voiture";
@@ -23,7 +23,10 @@ public class ModelIndicatorActivity {
         this.from = indocatorMap.get("from");
         this.to = indocatorMap.get("to");
         this.btype = indocatorMap.get("btype");
-        this.manutentionnaire = indocatorMap.get("manutentionnaire");
+        this.statu = indocatorMap.get("statu");
+        if(statu.equals("operation finie"))
+            statu = "operation.done = 1";
+        else statu = "operation.done = 2";
 
         if(btype.equals("ralenti"))
             btype = "and (breakdown_type.name = 'ralenti irregulier')";
@@ -51,7 +54,7 @@ public class ModelIndicatorActivity {
                 " vehicle_warehouse.id_vehicle_warehouse = operation.id_vehicle_warehouse INNER JOIN vehicle" +
                 " ON vehicle.numMat = vehicle_warehouse.numMat" +
                 " INNER JOIN repairer ON operation.login_repairer = repairer.login" +
-                " WHERE (vehicle.vehicle_type='" + vtype + "') and (operation.date_begin >= '"+ from +
+                " WHERE "+ statu + " and (vehicle.vehicle_type='" + vtype + "') and (operation.date_begin >= '"+ from +
                 "' and operation.date_end <= '" + to +"') " + btype + ";";
     }
 
@@ -66,7 +69,7 @@ public class ModelIndicatorActivity {
         map.put("to", "2017-08-09");
         map.put("vtype", "all");
         map.put("btype", "all");
-        map.put("manutentionnaire", "1");
+        map.put("statu", "operation finie");
         ModelIndicatorActivity m = new ModelIndicatorActivity(map);
         System.out.println(m.getOperation());
         System.out.println(m.pieceConso());

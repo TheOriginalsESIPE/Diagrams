@@ -5,6 +5,7 @@ import enumeration.EnumService;
 import serialization.DeserializationGson;
 import serialization.Serialization;
 import view.IndicatorActivityView;
+import view.IndicatorRapportPDF;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -23,12 +24,15 @@ public class ControllerIndicatorActivity {
     private Socket socket;
     private BufferedReader in;
     private PrintStream out;
+    private Map<java.util.Date, List<IndicatorDTO>> mapdata;
+    private Map<String, String> mapIndict;
     public ControllerIndicatorActivity(IndicatorActivityView indicatorView, Socket client){
         this.indicatorView = indicatorView;
         this.socket = client;
         control();
         indicatorView.getbApply().addActionListener(alForIndicatorView);
         indicatorView.getbOk().addActionListener(alForIndicatorView);
+        indicatorView.getbExit().addActionListener(alForIndicatorView);
     }
 
     /**
@@ -52,7 +56,7 @@ public class ControllerIndicatorActivity {
                 //          "to":"2017-03-09",
                 //          "vtype":"car",
                 //          "btype":"crevaison",
-                //          "manutentionnaire": "waiting"
+                //          "statu": "waiting"
                 //          };
 
                 Map indicatorRequest = new HashMap<String,String>(5);
@@ -67,7 +71,7 @@ public class ControllerIndicatorActivity {
 
                     //get time scale and check the time chosen is logic
                     if(sqlDateFrom.after(sqlDateTo)){
-                        indicatorView.errorDialog(1);
+                        indicatorView.msgDialog(1);
                         return;
                     } else if (!isGoodDate(bm.getActionCommand(), sqlDateFrom, sqlDateTo)){
                         return;
@@ -83,9 +87,9 @@ public class ControllerIndicatorActivity {
                 else
                     vehicleType = "all";
                 indicatorRequest.put("vtype", vehicleType);
-                indicatorRequest.put("manutentionnaire", indicatorView.manutentionnaire.getSelectedItem().toString());
+                indicatorRequest.put("statu", indicatorView.statu.getSelectedItem().toString());
                 indicatorRequest.put("btype", indicatorView.typeBreakdown.getSelectedItem().toString());
-
+                this.mapIndict = indicatorRequest;
                 //serialize the map to json
                 Serialization s = new Serialization();
                 String mapJson = s.serialToStr(s.serialMap(indicatorRequest));
@@ -97,8 +101,14 @@ public class ControllerIndicatorActivity {
                 out.println(mapJson);
                 out.flush();
 
-                //get response from server(arraylist)
+
                 String resultOprt = in.readLine();
+                //If there is no operation ... between the date chosen
+                if(resultOprt.equals("None")){
+                    indicatorView.msgDialog(5);
+                     return;
+                }
+                //get response from server(arraylist)
                 DeserializationGson dg = new DeserializationGson();
                 List<IndicatorDTO> arrIndicator = dg.deIndicatorDTO(resultOprt);
                 int pieceConso = 0;
@@ -140,22 +150,28 @@ public class ControllerIndicatorActivity {
 
                 indicatorView.itable.data = data;
                 indicatorView.itable.fireTableDataChanged();
-                indicatorView.table.repaint();
-                indicatorView.table.updateUI();
+                indicatorView.getTable().repaint();
+                indicatorView.getTable().updateUI();
 
                 //show data analysed here
                 Map<java.util.Date, List<IndicatorDTO>> dataRe = analyseData(bm.getActionCommand(), arrIndicator);
                 indicatorView.showInfoAnalyse(dataRe, bm.getActionCommand());
+                this.mapdata = dataRe;
                 //enable to click export as pdf
                 indicatorView.getbOk().setEnabled(true);
             }
 
                 //Export as PDF
                 if(e.getSource() == indicatorView.getbOk()){
-                    indicatorView.disposeView();
+                    System.out.println("Create pdf");
+                    ButtonModel bm = indicatorView.timeScale.getSelection();
+                    IndicatorRapportPDF exportPDF = new IndicatorRapportPDF("results/Rapport_Indicator", bm.getActionCommand());
+                    exportPDF.createPDF(mapdata, mapIndict);
+                    indicatorView.msgDialog(6);
                 }
 
                 if(e.getSource() == indicatorView.getbExit()){
+                    System.out.println("[DEBUG] go out");
                     socket.close();
                     indicatorView.disposeView();
                     System.exit(0);
@@ -242,18 +258,24 @@ public class ControllerIndicatorActivity {
             }
         } else if (timeScale.equals("year")){
             System.out.println("year analyse.");
-            int yearB = from.getYear();
-            int yearE = to.getYear();
+            calendar.setTime(from);
+            int yearB = calendar.get(Calendar.YEAR);
+            calendar.setTime(to);
+            int yearE = calendar.get(Calendar.YEAR);
+            System.out.println(yearB + " " + yearE);
             int i = 0;
             Date[] years = new Date[5];
-            while(yearE - yearB > 0){
+            while(yearE - yearB >= 0){
                 data.put(Date.valueOf(yearB+"-01-01"), null);
                 years[i] = Date.valueOf(yearB+"-01-01");
                 yearB++;
+                System.out.println("[DEBUG] years:" + years[i]);
             }
 
             for(IndicatorDTO ele : arrIndicator){
                 Date fromEach = Date.valueOf(ele.getDateB());
+                calendar.setTime(fromEach);
+                fromEach = Date.valueOf(calendar.get(Calendar.YEAR) + "-01-01");
                 java.util.Date key = getKeyDate(years,fromEach);
                 if(data.get(key) == null){
                     List<IndicatorDTO> listIndict = new ArrayList<>();
@@ -287,18 +309,18 @@ public class ControllerIndicatorActivity {
         System.out.println("Day scale:" + day);
         if (timeScale.equals("week")){
             if (day > 56) {
-                indicatorView.errorDialog(2);
+                indicatorView.msgDialog(2);
                 b = false;
             }
         }  else if (timeScale.equals("month")) {
             if (day > 365){
                 b = false;
-                indicatorView.errorDialog(3);
+                indicatorView.msgDialog(3);
             }
         } else if (timeScale.equals("year")){
             if (end.getYear() - end.getYear() > 5){
                 b = false;
-                indicatorView.errorDialog(4);
+                indicatorView.msgDialog(4);
             }
         }
         return b;
