@@ -1,4 +1,5 @@
 package server;
+import enumeration.EnumManut;
 import enumeration.EnumService;
 import service.Service;
 import java.io.BufferedReader;
@@ -68,6 +69,24 @@ public class CPoolServHandler extends Thread {
                     System.out.println(strRe);
                     out.println(strRe);
                     out.flush();
+                }else if (cmd.equals(EnumService.BREAKDOWNLOAD.name())){
+                	String jsonString = in.readLine();
+                	
+                	 System.out.println(jsonString);
+                     server.msg.append("\n" + jsonString);
+                	String strListName = serv.breakdownServices(jsonString);
+                	System.out.println(strListName);
+                	out.println(strListName);
+                	out.flush();
+                }else if(cmd.equals(EnumService.VEHICLEDOWNLOAD.name())){
+                	String vehicle = in.readLine();
+               
+                	//server.msg.append("\n vehicle information : " + vehicle);
+                	
+                	String vehicleInfo = serv.vehicleNumMatService(vehicle);
+                	System.out.println(vehicleInfo);
+                	out.println(vehicleInfo);
+                	out.flush();
                 }
             }
         } catch (IOException e) {

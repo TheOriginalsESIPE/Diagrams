@@ -1,7 +1,9 @@
 package service;
 
+import dto.BreakdownDTO;
 import dto.IndicatorDTO;
 import dto.Piece_detachedDTO;
+import dto.VehicleDTO;
 import enumeration.EnumDTO;
 import enumeration.EnumOperation;
 import org.json.simple.JSONArray;
@@ -9,6 +11,7 @@ import org.json.simple.JSONObject;
 import repository.ModelAuth;
 import repository.ModelIndicatorActivity;
 import repository.ModelPiece;
+import repository.ZDialogVehicleInfoRepository;
 import serialization.Deserialization;
 import serialization.Serialization;
 import serialization.SerializationGson;
@@ -19,6 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 
 /**
@@ -51,6 +55,9 @@ public class Service {
         Deserialization des = new Deserialization();
         JSONObject jo = des.deserialGeneric(strJson);
         int action = des.deserialAction(jo);//get action
+        
+        Object nom = des.deserialObject(jo, EnumDTO.PIECE_DETACHED.getName());
+    	System.out.println("le nom de l'objet"+nom);
 
         if(des.deserialObject(jo, EnumDTO.PIECE_DETACHED.getName()) != null) {
             ModelPiece modelPiece = new ModelPiece();
@@ -147,6 +154,85 @@ public class Service {
             e.printStackTrace();
         }
         return res;
+    }
+    
+    
+    public String breakdownServices(String strJson){
+    	Deserialization deserial = new Deserialization();
+    	Vector<BreakdownDTO> vectorList = new Vector<BreakdownDTO>();
+    	JSONObject listBreakdown = deserial.deserialGeneric(strJson); 
+    	String listNameBreakdown = null;
+    	
+    	try{
+    		ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
+    		//hsql = new HandlerSQL();
+    		
+    		ResultSet resultSet = hsql.selectQuery(zdvr.getBreakdown());
+    		
+    		while(resultSet.next()){
+    			BreakdownDTO breakdownDTO = new BreakdownDTO();
+    			breakdownDTO.setName(resultSet.getString("name"));
+    			vectorList.add(breakdownDTO);
+    		} 
+    		
+    		SerializationGson serial = new SerializationGson();
+    		listNameBreakdown = serial.serialGenericBreakdown(vectorList);
+    		
+    	}catch(SQLException sqle){
+    		sqle.printStackTrace();
+    	}
+    	return listNameBreakdown;
+    }
+    
+    
+    
+    public String vehicleNumMatService(String strJson){
+    	
+    	Deserialization deserial = new Deserialization();
+    	JSONObject jsonObject = deserial.deserialGeneric(strJson);
+    	int action = deserial.deserialAction(jsonObject);
+    	
+    	Vector<VehicleDTO> vectorList = new Vector<VehicleDTO>();
+    	String vehicleInfo = null;
+    	 VehicleDTO vehicledto = new VehicleDTO();
+    	System.out.println(vehicledto.getNumMat());
+    	Object nom = deserial.deserialObject(jsonObject, EnumDTO.VEHICLE.getName());
+    	System.out.println("le nom de l'objet"+nom);
+    	
+    	if(nom != null){
+    		ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
+    		
+    		JSONArray jsonArray = (JSONArray) deserial.deserialObject(jsonObject, EnumDTO.VEHICLE.getName());
+    		jsonObject = (JSONObject) jsonArray.get(0);
+           // VehicleDTO vehicledto = new VehicleDTO();
+            
+            vehicledto.setNumMat((String) jsonObject.get("numMat"));
+            System.out.println((String) jsonObject.get("numMat"));
+            vehicledto.setModel((String) jsonObject.get("model"));
+            vehicledto.setMark((String) jsonObject.get("mark"));
+            vehicledto.setVehicle_type((String) jsonObject.get("vehicle_type"));
+            
+            if(action == EnumOperation.SEARCH.getIndex()){
+            	System.out.println(vehicledto.getNumMat());
+            	ResultSet resultSet = hsql.selectQuery(zdvr.getVehicle(vehicledto.getNumMat()));
+        		try{
+        		while(resultSet.next()){
+        			vehicledto.setNumMat(resultSet.getString("numMat"));
+        			vehicledto.setModel(resultSet.getString("model"));
+        			vehicledto.setMark(resultSet.getString("mark"));
+        			vehicledto.setVehicle_type(resultSet.getString("vehicle_type"));
+        			vectorList.add(vehicledto);
+        		}
+            }catch(SQLException sqle){
+        		sqle.printStackTrace();
+        	}
+    		
+    		SerializationGson serial = new SerializationGson();
+    		vehicleInfo = serial.serialGenericVehicle(vectorList);
+    		
+    	}
+           }else System.out.println("je suis pas dans le If");
+    	return vehicleInfo;
     }
 
 
