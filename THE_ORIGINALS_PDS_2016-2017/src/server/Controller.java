@@ -1,5 +1,6 @@
 package server;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import javax.swing.JButton;
 
 import dto.Piece_detachedDTO;
 import enumeration.EnumOperation;
+import enumeration.EnumService;
 import repository.ModelPiece;
 import serialization.Deserialization;
 import serialization.Serialization;
@@ -22,7 +24,6 @@ public class Controller{
 	
 	private ControllerInsert c1;
 	private View v;
-	private ModelPiece mv;
 	private ActionListener ac;
 	private ActionListener ac1;
 	private ActionListener ac2;
@@ -35,8 +36,7 @@ public class Controller{
     BufferedReader in;
     PrintStream out;
 	
-	public Controller(ModelPiece mv, View v, Socket socket){
-		this.mv=mv;
+	public Controller(View v, Socket socket){
 		this.v=v;
 		this.socket = socket;
         System.out.println("controller principal");
@@ -69,7 +69,7 @@ public class Controller{
                                 Piece_detachedDTO pieceSearch = new Piece_detachedDTO();
                                 pieceSearch.setRef_piece_detached(answer);
                                 Serialization serial = new Serialization();
-                                out.println("piece");
+                                out.println(EnumService.PIECE.name());
                                 out.flush();
                                 out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "Piece_detachedDTO", pieceSearch)));
                                 out.flush();
@@ -105,7 +105,7 @@ public class Controller{
                 v.getTxtU().setText(null);
                 v.getTxtD().setText(null);
                 v1 = new ViewInsert();
-                c1 = new ControllerInsert(mv, v1, socket);
+                c1 = new ControllerInsert(v1, socket);
                 c1.control();
             }};v.getBtnInsert().addActionListener(ac3);
 		

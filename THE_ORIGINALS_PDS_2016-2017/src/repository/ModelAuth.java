@@ -18,9 +18,13 @@ public class ModelAuth {
      */
 
     public String authQuery(String login, String pwd){
-        String query = "SELECT * from repairer " +
-                "where login = '" + login + "' and password='" + pwd + "';";
+        String query = "SELECT * " +
+                "FROM administrator, director, repairer " +
+                "WHERE (repairer.login='" + login + "' and repairer.password='" + pwd + "')" +
+                " OR (administrator.login='" + login + "' and administrator.password='" + pwd + "')" +
+                " OR (director.login='" +login + "' and director.password='" + pwd + "');";
         return query;
     }
+
 
 }

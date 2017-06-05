@@ -43,6 +43,7 @@ public class HandlerSQL {
             st = connection.createStatement();
             nbData = st.executeUpdate(query);
             st.close();
+            myConn.returnConnectionPool(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,6 +54,7 @@ public class HandlerSQL {
         try {
             st = connection.createStatement();
             rs = st.executeQuery(query);
+            myConn.returnConnectionPool(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }

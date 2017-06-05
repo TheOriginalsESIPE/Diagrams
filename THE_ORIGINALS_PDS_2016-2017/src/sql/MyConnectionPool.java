@@ -46,7 +46,6 @@
 		
 		private void initializeConnexionPool(){
 			while(!checkIfConnectionPoolIsFull()){
-				System.out.println("Connection Pool is not full. Proceeding with add new connection");
 				/*
 				Adding a new connection instance 
 				until the pool is full
@@ -68,7 +67,6 @@
 
 			if(connectionList.size() < MAX_POOL_SIZE){
 				compte++;
-				System.out.println(compte + " " + connectionList.size());
 				return false;
 			}
 
@@ -112,7 +110,6 @@
 			try{
 				Class.forName(driverName);
 				connection = DriverManager.getConnection(dburl, userName, userPasswd);
-				System.out.println("Connection: "+connection);
 			}
 			catch(SQLException sqle){
 				System.err.println("Une erreur SQL "+sqle);

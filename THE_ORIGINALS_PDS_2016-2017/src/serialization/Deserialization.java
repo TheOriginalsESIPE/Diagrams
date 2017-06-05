@@ -1,8 +1,12 @@
 package serialization;
 
+import dto.DTO;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import java.lang.reflect.Field;
 
 
 /**
@@ -19,7 +23,7 @@ public class Deserialization {
 		JSONArray msg = (JSONArray) jsonobject.get("DTO");
 		JSONObject jsonObject2 = (JSONObject) msg.get(0);
 		@SuppressWarnings("null")
-		Field [] fields = dto.getClass().getDeclaredFields();
+		Field[] fields = dto.getClass().getDeclaredFields();
 		for (Field field : fields){
 			dto.getClass().getDeclaredMethod("set"+field.getName(), field.getType()).invoke(dto,(String)jsonObject2.get(field.getName()));
 		}
