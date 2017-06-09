@@ -7,17 +7,22 @@ public class Vehicle_warehouseDTO {
 	private String date_entrance;
 	private String date_wayout;
 	private VehicleDTO numMat;
-	private VehicleDTO model;
+	private String numPlace;
+	private String status;
+	private VehicleDTO id_warehouse;
 	
 	public Vehicle_warehouseDTO(){
 
 	}
 	
-	public Vehicle_warehouseDTO(String da,String dw,VehicleDTO nM,VehicleDTO mo ){
-		this.date_entrance=da;
-		this.date_wayout=dw;
-		this.numMat=nM;
-		this.model=mo;
+	public Vehicle_warehouseDTO(String date_entrance,String date_wayout,VehicleDTO numMat, String numPlace, String status, VehicleDTO id_warehouse ){
+		this.date_entrance=date_entrance;
+		this.date_wayout=date_wayout;
+		this.numMat=numMat;
+		this.numPlace=numPlace;
+		this.status=status;
+		this.id_warehouse=id_warehouse;
+		
 	}
 	
 	public String getDate_entrance() {
@@ -43,20 +48,38 @@ public class Vehicle_warehouseDTO {
 		this.numMat = numMat;
 	}
 
-	
-	public VehicleDTO getModel() {
-		return model;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setModel(VehicleDTO model) {
-		this.model = model;
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public VehicleDTO getId_warehouse() {
+		return id_warehouse;
+	}
+
+	public void setId_warehouse(VehicleDTO id_warehouse) {
+		this.id_warehouse = id_warehouse;
+	}
+
+	public String getNumPlace() {
+		return numPlace;
+	}
+
+	public void setNumPlace(String numPlace) {
+		this.numPlace = numPlace;
 	}
 
 	@Override
 	public String toString() {
-		return "[{\"date_entrance\":\"" + date_entrance + "\",\"date_wayout\":\"" + date_wayout + "\",\"numMat\":\""
-				+ numMat + "\",\"model\":\"" + model + "\"}]";
+		return "Vehicle_warehouseDTO [date_entrance=" + date_entrance + ", date_wayout=" + date_wayout + ", numMat="
+				+ numMat + ", numPlace=" + numPlace + ", status=" + status + ", id_warehouse=" + id_warehouse + "]";
 	}
+
+	
+
 	
 	
 }

@@ -1,7 +1,9 @@
 package service;
 
+import dto.BreakdownDTO;
 import dto.IndicatorDTO;
 import dto.Piece_detachedDTO;
+import dto.VehicleDTO;
 import enumeration.EnumDTO;
 import enumeration.EnumOperation;
 import org.json.simple.JSONArray;
@@ -9,6 +11,7 @@ import org.json.simple.JSONObject;
 import repository.ModelAuth;
 import repository.ModelIndicatorActivity;
 import repository.ModelPiece;
+import repository.ZDialogVehicleInfoRepository;
 import serialization.Deserialization;
 import serialization.Serialization;
 import serialization.SerializationGson;
@@ -19,16 +22,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 
 /**
- * The class service is using for reacting with HandleSQL, like CPoolHandle deal with the command that
- * the client send, this class Service offers a bundle of methods that executing the code according to the command.
- * And it receives the result from sql server, and give a response to CPoolServHandler(For example, if it was a
- * "Select", Service generates an object of DTO or a list of DTO and serialize it to String json
- * and send it as the response to CPoolServHandler. If it was a "UPDATE" or "DELETE", it easier to manipulate,
- * Service just give a number as an indicator to response to CPoolServHandler.) Then CPoolServHandler send this
- * response to Client.
  * Created by tearsyu on 18/05/17.
  */
 public class Service {
@@ -58,6 +55,9 @@ public class Service {
         Deserialization des = new Deserialization();
         JSONObject jo = des.deserialGeneric(strJson);
         int action = des.deserialAction(jo);//get action
+        
+        Object nom = des.deserialObject(jo, EnumDTO.PIECE_DETACHED.getName());
+    	System.out.println("le nom de l'objet"+nom);
 
         if(des.deserialObject(jo, EnumDTO.PIECE_DETACHED.getName()) != null) {
             ModelPiece modelPiece = new ModelPiece();
@@ -133,9 +133,7 @@ public class Service {
                 arrIndicator.add(idc);
             }
             System.out.println("finish adding result of part operation. Size is :" + numRes);
-            if(arrIndicator.size() == 0){
-                return "None";
-            }
+
             rs = hsql.selectQuery(modelIA.pieceConso());
             //There is a n*n complexity!!! it could be better if I use Map<Integer, IndicatorDTO>
             // But I don't want to rewrite my code. Let it be!
@@ -151,11 +149,90 @@ public class Service {
             System.out.println("With a calculate of n*n complexity, finaly I finish my service.");
 
             SerializationGson s = new SerializationGson();
-            res = s.serialIndict(arrIndicator);
+            res = s.serialGeneric(arrIndicator);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return res;
+    }
+    
+    
+    public String breakdownServices(String strJson){
+    	Deserialization deserial = new Deserialization();
+    	Vector<BreakdownDTO> vectorList = new Vector<BreakdownDTO>();
+    	JSONObject listBreakdown = deserial.deserialGeneric(strJson); 
+    	String listNameBreakdown = null;
+    	
+    	try{
+    		ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
+    		//hsql = new HandlerSQL();
+    		
+    		ResultSet resultSet = hsql.selectQuery(zdvr.getBreakdown());
+    		
+    		while(resultSet.next()){
+    			BreakdownDTO breakdownDTO = new BreakdownDTO();
+    			breakdownDTO.setName(resultSet.getString("name"));
+    			vectorList.add(breakdownDTO);
+    		} 
+    		
+    		SerializationGson serial = new SerializationGson();
+    		listNameBreakdown = serial.serialGenericBreakdown(vectorList);
+    		
+    	}catch(SQLException sqle){
+    		sqle.printStackTrace();
+    	}
+    	return listNameBreakdown;
+    }
+    
+    
+    
+    public String vehicleNumMatService(String strJson){
+    	
+    	Deserialization deserial = new Deserialization();
+    	JSONObject jsonObject = deserial.deserialGeneric(strJson);
+    	int action = deserial.deserialAction(jsonObject);
+    	
+    	Vector<VehicleDTO> vectorList = new Vector<VehicleDTO>();
+    	String vehicleInfo = null;
+    	 VehicleDTO vehicledto = new VehicleDTO();
+    	System.out.println(vehicledto.getNumMat());
+    	Object nom = deserial.deserialObject(jsonObject, EnumDTO.VEHICLE.getName());
+    	System.out.println("le nom de l'objet"+nom);
+    	
+    	if(nom != null){
+    		ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
+    		
+    		JSONArray jsonArray = (JSONArray) deserial.deserialObject(jsonObject, EnumDTO.VEHICLE.getName());
+    		jsonObject = (JSONObject) jsonArray.get(0);
+           // VehicleDTO vehicledto = new VehicleDTO();
+            
+            vehicledto.setNumMat((String) jsonObject.get("numMat"));
+            System.out.println((String) jsonObject.get("numMat"));
+            vehicledto.setModel((String) jsonObject.get("model"));
+            vehicledto.setMark((String) jsonObject.get("mark"));
+            vehicledto.setVehicle_type((String) jsonObject.get("vehicle_type"));
+            
+            if(action == EnumOperation.SEARCH.getIndex()){
+            	System.out.println(vehicledto.getNumMat());
+            	ResultSet resultSet = hsql.selectQuery(zdvr.getVehicle(vehicledto.getNumMat()));
+        		try{
+        		while(resultSet.next()){
+        			vehicledto.setNumMat(resultSet.getString("numMat"));
+        			vehicledto.setModel(resultSet.getString("model"));
+        			vehicledto.setMark(resultSet.getString("mark"));
+        			vehicledto.setVehicle_type(resultSet.getString("vehicle_type"));
+        			vectorList.add(vehicledto);
+        		}
+            }catch(SQLException sqle){
+        		sqle.printStackTrace();
+        	}
+    		
+    		SerializationGson serial = new SerializationGson();
+    		vehicleInfo = serial.serialGenericVehicle(vectorList);
+    		
+    	}
+           }else System.out.println("je suis pas dans le If");
+    	return vehicleInfo;
     }
 
 

@@ -9,7 +9,7 @@ public class ModelVehicle {
 	
 	public String select (String numMat){
 		
-		String sql="select vehicle_warehouse.numMat, model, mark, vehicle_type, numPlace, date_entrance, date_wayout, status, id_vehicle_warehouse from vehicle, vehicle_warehouse where vehicle.numMat = vehicle_warehouse.numMat and vehicle_warehouse.numMat ='"+numMat+"'";
+		String sql="select vehicle.numMat, vehicle_warehouse.numMat, model, mark, vehicle_type, numPlace, date_entrance, date_wayout, status from vehicle, vehicle_warehouse where vehicle.numMat = vehicle_warehouse.numMat and vehicle_warehouse.numMat ='"+numMat+"'";
 		return sql;
 	}
 	
@@ -19,7 +19,7 @@ public class ModelVehicle {
 	}
 	
 	public String selectAll(String date_end){
-		String sql="select vehicle_warehouse.numMat from operation,vehicle_warehouse where operation.id_vehicle_warehouse=vehicle_warehouse.id_vehicle_warehouse and operation.date_end='"+date_end+"'and vehicle_warehouse.status<>'en circulation'";
+		String sql="select vehicle_warehouse.numMat from operation,vehicle_warehouse where operation.numMat=vehicle_warehouse.numMat and operation.date_end='"+date_end+"'and vehicle_warehouse.status<>'en circulation'";
 		return sql;
 	}
 	
