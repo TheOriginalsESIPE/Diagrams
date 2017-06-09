@@ -171,7 +171,6 @@ public class ControllerIndicatorActivity {
                 }
 
                 if(e.getSource() == indicatorView.getbExit()){
-                    System.out.println("[DEBUG] go out");
                     socket.close();
                     indicatorView.disposeView();
                     System.exit(0);
