@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `administrateur` (
+CREATE TABLE IF NOT EXISTS `administrator` (
   `login` varchar(20) NOT NULL,
   `password` varchar(20) NOT NULL,
   `nom` varchar(50) NOT NULL,
