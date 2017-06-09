@@ -107,4 +107,9 @@ public class ViewVehicleRepaired extends JFrame{
 	public void setOk1(JButton ok1) {
 		this.ok1 = ok1;
 	}
+	public static void main(String[] args){
+		
+		ViewVehicleRepaired vvr=new ViewVehicleRepaired();
+		
+	}
 }
