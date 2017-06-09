@@ -109,7 +109,38 @@ public class CPoolServHandler extends Thread {
                     out.println(res);
                     out.flush();
 
-                } 
+                }
+                
+                else if(cmd.equals(EnumService.SEARCHVEHICLE.name())){
+                	//System.out.println("debug");
+                	String date_end=in.readLine();//partie rajoutée
+                	System.out.println(date_end);
+                	Vector<Vehicle_warehouseDTO> d=serv.VehiclenumMatServiceAll(date_end);
+                	System.out.println("get vector " + d.size());
+                	out.println(d.size());
+                	for(int i=0; i<d.size(); i++){
+                		out.println(d.get(i).getNumMat());
+                		out.flush();
+                	}
+                	
+                }
+                
+                else if(cmd.equals(EnumService.SEARCHInfoVEHICLE.name())){
+                	server.msg.append("service serch vehicle.\n");
+                	String numMat=in.readLine();
+                	String d=serv.Vehiclenumat(numMat);
+                	out.println(d);
+                	out.flush();
+               }
+                else if(cmd.equals(EnumService.VEHICLERELOCATE.name())){
+                	server.msg.append("service serch vehicle.\n");
+                	String numMat=in.readLine();
+                	int id_warehouse = Integer.parseInt(in.readLine());
+                	String d=serv.relocate(numMat,id_warehouse);
+                	out.println(d);
+                	out.flush();
+                }
+            
 ////////////////////////////////////////////////////////////////////                
                 else if(cmd.equals("chef1")){
 
@@ -212,6 +243,9 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.Vector;
+
+import dto.Vehicle_warehouseDTO;
 
 public class CPoolServHandler extends Thread {
     private Socket client;
