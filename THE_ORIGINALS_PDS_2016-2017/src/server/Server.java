@@ -1,78 +1,59 @@
-package server;
+package Serveur;
 
-import javax.swing.*;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static java.lang.System.in;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
-/**
- * Created by tearsyu on 15/03/17.
- * This is the server, it uses the mechanism of Executors to create a pool connection
- * between the client and the server, when a client connect to the server, the server
- * transfer the client socket to the object of CPoolServHandle.
- * I add a GUI to show the statu of all the clients which connect to this server.
- * @author tearsyu
- */
-public class Server extends JFrame{
-    //public static final int PORT = 20012;
-    public static int port = 0;
-    public static final int MAX_CONNECTION = 21;
-    public JTextArea msg;
-    public JScrollPane scrollp;
+	public class Server extends JFrame{
+		public static final int PORT = 20012;
+	    public static final int MAX_CONNECTION = 21;
+	    public JTextArea msg;
+	    public JScrollPane scrollp;
 
-    public Server(){
-        super("Server Log");
-        Properties properties = new Properties();
-        InputStream in = getClass().getClassLoader().getResourceAsStream("properties/configServer.properties");
-        try {
-            properties.load(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        port = Integer.parseInt(properties.getProperty("port"));
+	    public Server(){
+	        super("Server Log");
+	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        setVisible(true);
+	        setSize(600,600);
+	        msg = new JTextArea("Log:\n");
+	        scrollp = new JScrollPane(msg);
+	        scrollp.setBounds(20, 20, 400, 400);
+	        //msg.setBounds(10, 10, 40, 50);
+	        msg.setEditable(false);
+	        scrollp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	        this.getContentPane().add(scrollp);
+	        this.pack();
+	    }
+	    public static void main(String[] arg){
+	        ServerSocket serverSocket;
+	        ExecutorService executorService = Executors.newFixedThreadPool(MAX_CONNECTION);
+	        Server server = new Server();
+              try{
+	            serverSocket = new ServerSocket(PORT);
+	            Socket client;
+	            CPoolServHandler handler;
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-        setSize(500,500);
-        msg = new JTextArea("Log:\n");
-        scrollp = new JScrollPane(msg);
-        scrollp.setBounds(20, 20, 400, 400);
-        msg.setEditable(false);
-        scrollp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        this.getContentPane().add(scrollp);
-    }
+	            while(true){
+	                server.msg.append("\n Waiting for client connect...");
 
-    public static void main(String[] arg){
-        ServerSocket serverSocket;
-        ExecutorService executorService = Executors.newFixedThreadPool(MAX_CONNECTION);
-        Server server = new Server();
+	                client = serverSocket.accept();
 
-        try{
-            serverSocket = new ServerSocket(port);
-            Socket client;
-            CPoolServHandler handler;
+	                server.msg.append("\n Connexion successfully! \nClient is " + client.getInetAddress().getHostAddress());
 
-            while(true){
-                server.msg.append("\nWaiting for client connect...");
-
-                client = serverSocket.accept();
-
-                server.msg.append("\nConnexion successfully! \nClient is " + client.getInetAddress().getHostAddress());
-
-                handler = new CPoolServHandler(client, server);
-                executorService.execute(handler);
-
-                server.msg.append("\nThread active ID "+String.valueOf(handler.getId())+" state is " + handler.getState());
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            server.msg.append(String.valueOf(System.err));
-        }
-    }
-}
+	                handler = new CPoolServHandler(client, server);
+	                executorService.execute(handler);
+	                server.msg.append("\n Thread active ID "+String.valueOf(handler.getId())+" state is " + handler.getState());
+	            }
+	        }catch (Exception e){
+	            e.printStackTrace();
+	            server.msg.append(String.valueOf(System.err));
+	        }
+	    }
+	}
+	
