@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 
 		// déclenchement de l'algo après ces méthodes
 		public class ModelAnais {
-			java.sql.Connection connect1 = null;
+			static java.sql.Connection connect1 = null;
 
 			    public ModelAnais(){
 			    	MyConnectionPool myConnectionPool = new MyConnectionPool();
@@ -136,6 +136,8 @@ import java.text.SimpleDateFormat;
 			}
 		}
 		
+
+		
 		public int[] selectCriteres() {
 			int[] criteresValues = new int[4];
 			try {
@@ -146,12 +148,19 @@ import java.text.SimpleDateFormat;
 					criteresValues[1] = rs.getInt("emergency_level");
 					criteresValues[2] = rs.getInt("date_entrance");
 					criteresValues[3] = rs.getInt("time");
+	
 				}
 			} catch(SQLException e) {
 				e.printStackTrace();
 			}
+			
 			return criteresValues;
+			
 		}
+	
+		
+	
+		
 		
 		public int selectDone(int id_operation) {
 			int done = 0;

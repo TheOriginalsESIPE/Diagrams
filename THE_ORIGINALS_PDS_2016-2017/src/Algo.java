@@ -53,6 +53,7 @@ public class Algo {
 		
 		// criteresValues[0] -> critere piece stock | criteresValues[1] -> critere emergency_level | criteresValues[2] -> critere date_entrance | criteresValues[3] -> critere duree
 		int [] criteresValues = controller.selectCriteres();
+		
 		tmp = controller.selectAll();
 		
 		// On commence le traitement pour chaque operation
@@ -75,28 +76,37 @@ public class Algo {
 			Instant now = Instant.now();
 			Timestamp today = Timestamp.from(now); // date actuelle
 			long difference = Math.round((today.getTime() - date.getTime()) * 1.16 * Math.pow(10, -8));
-			if(difference <= 90)
+			if(difference <= 5)
 				note += criteresValues[2];
-			else if(difference > 90 && difference <= 110)
+				
+			else if(difference > 5 && difference <= 10)
 				note += criteresValues[2] + 2;
-			else if(difference > 110 && difference <= 120)
+				
+			else if(difference > 10 && difference <= 15)
 				note += criteresValues[2] + 4;
+			
 			else
 				note += criteresValues[2] + 6;
+			
 			
 			// Traitement des degrés d'urgence des opérations
 			
 			int emergency_level = controller.selectEmergencyLevel(tmp.get(i).getId_breakdown());
 			if(emergency_level <= 2)
 				note += criteresValues[1]/2;
-			else if(emergency_level > 2 && emergency_level <= 4) 
+			
+			else if(emergency_level > 2 && emergency_level <= 4)
 				note += criteresValues[1];
+		
 			else if(emergency_level > 4 && emergency_level <= 6)
 				note += criteresValues[1] + 2;
+				
 			else if(emergency_level > 6 && emergency_level <= 8)
 				note += criteresValues[1] + 4;
+			
 			else
 				note += criteresValues[1] + 6;
+				
 			
 			// Traitement de la duree de l'operation
 			
@@ -108,23 +118,32 @@ public class Algo {
 			Time duree = controller.selectDuree(tmp.get(i));
 			if(duree.compareTo(seuil0) <= 0) 
 				note += criteresValues[3] + 10;
+			
 			else if(duree.compareTo(seuil0) >= 0 && duree.compareTo(seuil1) < 0)
 				note += criteresValues[3] + 6;
+			
 			else if(duree.compareTo(seuil1) >= 0 && duree.compareTo(seuil2) < 0)
 				note += criteresValues[3] + 2;
+				
 			else if(duree.compareTo(seuil2) >= 0 && duree.compareTo(seuil3) < 0)
 				note += criteresValues[3] + 1;
+				
 			else if(duree.compareTo(seuil3) >= 0 && duree.compareTo(seuil4) < 0)
 				note += criteresValues[3];
-			else
+				
+			else{
 				note += 0;
+				
 			
 			// On cree un objet OperationSort qui contient la note calculee
-			
+		
 			OperationSortAnais oper = new OperationSortAnais(tmp.get(i), note);
+			//ModelAnais.insertCritere(ca,cb,cc, oper, cd);
+			
+			
 			
 			//On ajoute cet objet a notre liste d'operation qu'on va trier
-			
+	
 			sort.add(oper);
 		}
 		
@@ -135,7 +154,7 @@ public class Algo {
 		// Toutes les 20 operations effectuees, on prend en charge une grosse operation en terme de duree (on la met en premiere position)
 		
 		if(cpt%20 == 0) {
-			for(int i = 0 ; i < sort.size(); i++) {
+			for(int j = 0 ; i < sort.size(); j++) {
 				if(controller.selectDuree(sort.get(i).getOperation()).compareTo(Time.valueOf("01:10:00")) > 0) {
 					OperationSortAnais op = sort.remove(i);
 					sort.addFirst(op);
@@ -146,7 +165,7 @@ public class Algo {
 		
 		// On insert la nouvelle liste priorisee en verifiant que la table a bien ete videe avant
 		if(delete == true) {
-			for(int i = 0 ; i < sort.size() ; i++) {
+			for(int z = 0 ; z < sort.size() ; z++) {
 				controller.insertOperationSort(sort.get(i), i+1);
 			}
 		}

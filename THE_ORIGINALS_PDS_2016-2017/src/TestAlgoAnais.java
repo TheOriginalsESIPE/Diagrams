@@ -4,7 +4,7 @@ public class TestAlgoAnais {
 
 	public static void main(String[] args) {
 		Algo a = new Algo();
-		int nb_lancements = 4;
+		int nb_lancements = 1;
 		
 		try {
 			for(int i = 0 ; i < nb_lancements ; i++) {
