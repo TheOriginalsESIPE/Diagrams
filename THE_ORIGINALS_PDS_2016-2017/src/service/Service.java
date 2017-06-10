@@ -4,6 +4,8 @@ import dto.BreakdownDTO;
 import dto.IndicatorDTO;
 import dto.Piece_detachedDTO;
 import dto.VehicleDTO;
+import dto.Vehicle_warehouseDTO;
+import dto.WarehouseDTO;
 import enumeration.EnumDTO;
 import enumeration.EnumOperation;
 import org.json.simple.JSONArray;
@@ -11,6 +13,7 @@ import org.json.simple.JSONObject;
 import repository.ModelAuth;
 import repository.ModelIndicatorActivity;
 import repository.ModelPiece;
+import repository.ModelVehicle;
 import repository.ZDialogVehicleInfoRepository;
 import serialization.Deserialization;
 import serialization.Serialization;
@@ -234,6 +237,80 @@ public class Service {
            }else System.out.println("je suis pas dans le If");
     	return vehicleInfo;
     }
+    
+    public Vector<Vehicle_warehouseDTO> VehiclenumMatServiceAll(String date_end){
+    	System.out.println("vehicle num sevice");
+    	Vector<Vehicle_warehouseDTO> list=new Vector<Vehicle_warehouseDTO>();
+    	//String date_end1="";
+    	
+    	try{
+    		ModelVehicle mv=new ModelVehicle();
+    		 hsql = new HandlerSQL();
+    		 ResultSet rs=hsql.selectQuery(mv.selectAll(date_end));
+    		 System.out.println("get rs");
+    		 while(rs.next()){
+    			 Vehicle_warehouseDTO vh=new Vehicle_warehouseDTO();
+    			 vh.setNumMat(rs.getString("numMat"));
+    			 list.add(vh);
+    		 }
+    	}
+    	catch(SQLException sql){}
+    	return list;
+    }
+    
+    public String Vehiclenumat(String numMat){
+  
+    	System.out.println("le nom de l'objet"+numMat);
+
+        ModelVehicle mv=new ModelVehicle();
+        //Vehicle_warehouseDTO vh=new Vehicle_warehouseDTO();
+        VehicleDTO v=new VehicleDTO();
+            
+       
+    	
+    	try{
+    		 hsql = new HandlerSQL();
+    		 ResultSet rs=hsql.selectQuery(mv.select(numMat));
+    		 
+    		 while(rs.next()){
+    			 v.setNumMat(rs.getString("numMat"));
+    			 v.setModel(rs.getString("model"));
+    			 v.setMark(rs.getString("mark"));
+    			 v.setVehicle_type(rs.getString("vehicle_type"));
+    			 v.setNumPlace(rs.getInt("numPlace"));
+    			 v.setStatus(rs.getString("status"));
+    			
+    		}
+    	}
+    	catch(SQLException sql){}
+    	Serialization s=new Serialization();
+    	return s.serialToStr(s.serialGeneric(EnumOperation.RESPONSE.getIndex(), v.getClass().getSimpleName(), v));
+    }
+    
+    public String relocate(String numMat,int id_warehouse){
+    	
+    	 ModelVehicle mv=new ModelVehicle();
+    	 WarehouseDTO w=new WarehouseDTO();
+    	 String res = "";
+    	 try{
+    		 hsql = new HandlerSQL();
+    		 ResultSet rs=hsql.selectQuery(mv.select1(numMat));
+    		 int update=hsql.updateQuery(mv.update(numMat, id_warehouse));
+    		 System.out.println(mv.select1(numMat));
+    		 System.out.println(mv.select1(numMat));
+    		 System.out.println(mv.select1(numMat));
+    		 res = update + " ";
+    		 while(rs.next()){
+    			 res += rs.getString("adress") + " ";
+    			 res += rs.getString("id_warehouse");
+    		}
+    		 
+    	}
+    	catch(SQLException sql){}
+    	 
+    	 return res;
+    }
+
 
 
 }

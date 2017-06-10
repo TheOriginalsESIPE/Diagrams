@@ -1,6 +1,8 @@
 package view;
 
-public class InfoSysteme {
+import javax.swing.JDialog;
+
+public class InfoSysteme extends JDialog{
 	  private String numPlaceParcking, duree;
 
 	  public InfoSysteme(){}

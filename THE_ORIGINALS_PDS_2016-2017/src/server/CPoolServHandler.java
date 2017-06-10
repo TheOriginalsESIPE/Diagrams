@@ -80,12 +80,23 @@ public class CPoolServHandler extends Thread {
                 	out.flush();
                 }else if(cmd.equals(EnumService.VEHICLEDOWNLOAD.name())){
                 	String vehicle = in.readLine();
-               
-                	//server.msg.append("\n vehicle information : " + vehicle);
                 	
                 	String vehicleInfo = serv.vehicleNumMatService(vehicle);
                 	System.out.println(vehicleInfo);
                 	out.println(vehicleInfo);
+                	out.flush();
+                }else if(cmd.equals(EnumService.MOTIFDOWNLOAD.name())){
+                	String motif = in.readLine();
+                               	
+                	String listVisitingMotif = serv.visitingMotifService(motif);
+                	System.out.println(listVisitingMotif);
+                	out.println(listVisitingMotif);
+                	out.flush();
+                }else if(cmd.equals(EnumService.SAVEVEHICLE.name())){
+                	String infoV = in.readLine();
+                               	
+                	String res = serv.saveHehicle(infoV);
+                	out.println(res);
                 	out.flush();
                 }
             }
