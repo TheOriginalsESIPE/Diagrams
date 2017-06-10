@@ -1,6 +1,4 @@
 package server;
-
-
 import enumeration.EnumManut;
 import enumeration.EnumService;
 import service.Service;
@@ -128,3 +126,4 @@ public class CPoolServHandler extends Thread {
         }
     }
 }
+

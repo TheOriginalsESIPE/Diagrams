@@ -1,4 +1,6 @@
-package server;
+
+package Serveur;
+
 
 import java.io.BufferedReader;
 
@@ -13,11 +15,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import Serialisation.Deserialization;
-
+import Serveur.Modelpiece;
 import dto.Piece_stockDTO;
 import enumeration.EnumDTO;
 import enumeration.EnumOperation;
 import sql.HandlerSQL;
+
 
 public class CPoolServHandlerKarim implements Runnable {
 	   private Socket client;
