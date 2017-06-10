@@ -41,7 +41,7 @@ public class Server2 extends JFrame {
         try{
             serverSocket = new ServerSocket(PORT);
             Socket client;
-            CPoolServHandler handler;
+            CPoolServHandlerKarim handler;
 
             while(true){
                 server.msg.append("\nWaiting for client connect...");
@@ -50,7 +50,7 @@ public class Server2 extends JFrame {
 
                 server.msg.append("\nConnexion successfully! \nClient is " + client.getInetAddress().getHostAddress());
 
-                handler = new CPoolServHandler(client, server);
+                handler = new CPoolServHandlerKarim(client, server);
                 executorService.execute( handler);
 
              
