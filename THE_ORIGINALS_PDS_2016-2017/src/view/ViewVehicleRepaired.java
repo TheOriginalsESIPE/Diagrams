@@ -1,7 +1,13 @@
 package view;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 import javax.swing.*;
+
+import server.Controller_vehicle_repaired;
 
 public class ViewVehicleRepaired extends JFrame{
 	
@@ -16,10 +22,10 @@ public class ViewVehicleRepaired extends JFrame{
 	
 	public ViewVehicleRepaired(){
 		
-		fenetre1=new JFrame("recherche de véhicules");
-		
+		fenetre1=new JFrame("recherche de vehicules");
+		this.setSize(500, 500);
 		FlowLayout fl=new FlowLayout();
-		
+		System.out.println("DEBUG");
 		fenetre1.getContentPane().setLayout(fl);
 		fenetre1.setSize(WIDTH, HEIGHT);
 		fenetre1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -107,9 +113,21 @@ public class ViewVehicleRepaired extends JFrame{
 	public void setOk1(JButton ok1) {
 		this.ok1 = ok1;
 	}
-	public static void main(String[] args){
+	public static void main(String[]args){
+		Socket s;
+		try {
+			s = new Socket("127.0.0.1",20012);
+			ViewVehicleRepaired vvr=new ViewVehicleRepaired();
+			Controller_vehicle_repaired c=new Controller_vehicle_repaired(s,vvr);
+			c.control();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		ViewVehicleRepaired vvr=new ViewVehicleRepaired();
-		
+
 	}
 }
