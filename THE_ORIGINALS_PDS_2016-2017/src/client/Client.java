@@ -1,81 +1,88 @@
 package Client;
 
-import java.io.IOException;
-import java.io.InputStream;
+
+import ViewAuthentification.ControllerAuthentificationChef;
+import ViewAuthentification.ControllerAuthentificationPersonel;
+import ViewAuthentification.ControllerPersonel;
+import ViewAuthentification.Identifier;
+
+import ViewAuthentification.ViewAuthentificationPersonel;
+import ViewAuthentification.ViewPersonel;
+import javax.swing.*;
+
+import java.awt.event.ActionListener;
+import java.io.*;
 import java.net.Socket;
-import java.util.Properties;
 
-import javax.swing.SwingUtilities;
-
-import View.Controleur;
-import View.View;
-
-
-public class Client {
-	private Properties properties;
-    private InputStream in;
+/**
+ *  Created by tearsyu on 15/03/17.
+ *  This is client class, it will auto connect to the server when we launch the app.
+ *  @author tearsyu
+ */
+public class Client{
+ 
     private Socket client;
-    private static String localhost;
-    private static int port;
-
+    private static String localhost ="127.0.0.1";
+    private static int port=20012;
+    private Identifier v1;
+    private static ActionListener ac;
+    private static ActionListener ac2;
     public Client() throws IOException {
-            properties = new Properties();
-            in = getClass().getClassLoader().getResourceAsStream("properties/configServer.properties");
-            properties.load(in);
-            localhost = properties.getProperty("serverIP");
-            port = Integer.parseInt(properties.getProperty("port"));
-
     }
 
     public Socket getClient(){return client;}
-   
     public boolean connectToServer() throws IOException {
         client = new Socket(localhost, port);
-        closeStream();
-        return  client.isConnected();
-    }
-
-    public void closeStream(){
-        try {
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
+        return  client.isConnected(); }
     public void closeSocket(){
-        try {
-            client.close();
+        try { client.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            e.printStackTrace();}
     }
-
     
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-
-            View v = new View();
-            System.out.println("Client view ");
-            //Start the client and connect to the server.
-            try {
-                Client client1 = new Client();
-                if(client1.connectToServer()){
-                    System.out.println("The client connect to the server.");
-                    
-                    Controleur c = new Controleur( v, client1.getClient());
-                    c.Control();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-
-        });
-    }
+public static void main(String [] arg) throws IOException{
+	Client client1 = new Client();
+	Identifier v1 = new Identifier();
+	
+		ac = e -> {
+		try{
+			if((JButton)e.getSource()== v1.getBPersonel()){
+				ViewAuthentificationPersonel v = new ViewAuthentificationPersonel();
+				
+					if(client1.connectToServer()){
+							System.out.println("The client connect to the server.");
+							ControllerAuthentificationPersonel c = new ControllerAuthentificationPersonel(v, client1.getClient());
+							c.control();
+												}
+					else System.out.println("personel n'arrive pas a connecter");}
+			else if ((JButton)e.getSource()== v1.getBChef()){
+							ViewAuthentificationPersonel v = new ViewAuthentificationPersonel();
+							if(client1.connectToServer()){
+									System.out.println("personel connect to the server.");
+									ControllerAuthentificationChef c = new ControllerAuthentificationChef(v, client1.getClient());
+									c.control();
+				}
+				else {
+					System.out.println("chef n'arrive pas a connecter");
+				}
+			}
+	    
+		}catch(Exception e2){
+			e2.printStackTrace();
+		}};v1.getBPersonel().addActionListener(ac);
+		
+		
+		ac2 = e1 -> {
+		try{	if((JButton)e1.getSource()== v1.getBChef()){
+				ViewAuthentificationPersonel v = new ViewAuthentificationPersonel();
+				if(client1.connectToServer()){
+						System.out.println("chef est connect to the server.");
+						ControllerAuthentificationChef c = new ControllerAuthentificationChef(v, client1.getClient());
+						c.control();}
+				else System.out.println("chef n'arrive pas a connecter");
+				}}catch(Exception e3){
+					e3.printStackTrace();
+				}};v1.getBChef().addActionListener(ac2);	
+ }
 
 }
-
