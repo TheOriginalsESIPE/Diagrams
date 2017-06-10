@@ -6,12 +6,13 @@ public class OperationDTO{
 	
 	private int id_operation; //auto-increment
 	private String name, date_begin, date_end, time, degre_emergency, login_repairer;
-	private BreakdownDTO id_breakdown;
+	private int id_breakdown;
+	private String numMat;
 	
 	public OperationDTO(){
 	}
 	
-	public OperationDTO(int io,String nm,String db,String de,String t,String dem,String lr,BreakdownDTO ib){
+	public OperationDTO(int io,String nm,String db,String de,String t,String dem,String lr,int ib, String numMat){
 		this.id_operation=io;
 		this.name=nm;
 		this.date_begin=db;
@@ -20,6 +21,7 @@ public class OperationDTO{
 		this.degre_emergency=dem;
 		this.login_repairer=lr;
 		this.id_breakdown=ib;
+		this.numMat = numMat;
 	}
 
 	public int getId_operation() {
@@ -80,19 +82,34 @@ public class OperationDTO{
 
 	
 
-	public BreakdownDTO getId_breakdown() {
+	public int getId_breakdown() {
 		return id_breakdown;
 	}
 
-	public void setId_breakdown(BreakdownDTO id_breakdown) {
+	public void setId_breakdown(int id_breakdown) {
 		this.id_breakdown = id_breakdown;
+	}
+	
+
+	/**
+	 * @return the numMat
+	 */
+	public String getNumMat() {
+		return numMat;
+	}
+
+	/**
+	 * @param numMat2 the numMat to set
+	 */
+	public void setNumMat(String numMat2) {
+		this.numMat = numMat2;
 	}
 
 	@Override
 	public String toString() {
-		return "[{\"id_operation\":\"" + id_operation + "\",\"name\":\"" + name + "\",\"date_begin\":\"" + date_begin
+		return "[{\"id_operation\":\"" + id_operation + "\",\"date_begin\":\"" + date_begin
 				+ "\",\"date_end\":\"" + date_end + "\",\"time\":\"" + time + "\",\"degre_emergency\":\"" + degre_emergency
-				+ "\",\"login_repairer\":\"" + login_repairer + "\",\"id_breakdown\":\"" + id_breakdown + "\"}]";
+				+ "\",\"login_repairer\":\"" + login_repairer + "\",\"id_breakdown\":\"" + id_breakdown + "\",\"numMat\":\"" + numMat + "\"}]";
 	}
 	
 	
