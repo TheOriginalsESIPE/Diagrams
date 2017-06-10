@@ -1,20 +1,20 @@
 package dto;
 
-
-
 public class Piece_consumptionDTO{
 	
 	private Piece_stockDTO ref_piece_stock;
+	private Piece_stockDTO name;
 	private int number; 
-	private OperationDTO id_operation;
+
 	
 	public Piece_consumptionDTO(){
 	}
 	
-	public Piece_consumptionDTO(Piece_stockDTO rps,int nb, OperationDTO io){
+	public Piece_consumptionDTO(Piece_stockDTO rps,Piece_stockDTO n,int nb){
 		this.ref_piece_stock=rps;
 		this.number=nb;
-		this.id_operation=io;
+		this.name=n ; 
+
 	}
 
 	public Piece_stockDTO getRef_piecce_stock() {
@@ -33,20 +33,20 @@ public class Piece_consumptionDTO{
 	public void setNumber(int number) {
 		this.number = number;
 	}
-
-
-	public OperationDTO getId_operation() {
-		return id_operation;
+	
+	public Piece_stockDTO getname() {
+		return name;
 	}
 
-	public void setId_operation(OperationDTO id_operation) {
-		this.id_operation = id_operation;
+	public void setname(Piece_stockDTO name) {
+		this.name = name;
 	}
+
 
 	@Override
 	public String toString() {
-		return "[{\"ref_piece_stock\":\"" + ref_piece_stock + "\",\"number\":\"" + number + "\",\"id_operation\":\""
-				+ id_operation + "\"}]";
+		return "[{\"ref_piece_stock\":\"" + ref_piece_stock + "\",\"name\":\"" + name + "\",\"number\":\"" + number + "\",\"id_operation\":\""
+				 + "\"}]";
 	}
 	
 	
