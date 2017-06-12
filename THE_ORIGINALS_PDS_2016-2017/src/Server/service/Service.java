@@ -316,6 +316,7 @@ public class Service {
     		 while(rs.next()){
     			 res += rs.getString("adress") + " ";
     			 res += rs.getString("id_warehouse");
+    			 
     		}
     		 
     	}
