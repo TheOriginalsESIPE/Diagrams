@@ -28,7 +28,7 @@ public class Client{
             port = Integer.parseInt(properties.getProperty("port"));
 
     }
-//sdfsjfsdjhsdjh
+
     public Socket getClient(){return client;}
     /**
      * Connect to Server in according to config file and close the file input stream.
