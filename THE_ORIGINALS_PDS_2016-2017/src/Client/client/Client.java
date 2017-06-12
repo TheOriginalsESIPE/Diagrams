@@ -1,5 +1,5 @@
 package Client.client;
-/llkjkjkjjkkjkj
+
 import Client.controller.ControllerAuthentification;
 import Client.view.ViewAuthentification;
 
