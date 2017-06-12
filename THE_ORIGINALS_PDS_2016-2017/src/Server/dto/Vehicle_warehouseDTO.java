@@ -1,12 +1,12 @@
 package Server.dto;
 
-
+//import dto.VehicleDTO;
 
 public class Vehicle_warehouseDTO {
 	
 	private String date_entrance;
 	private String date_wayout;
-	private VehicleDTO numMat;
+	private String numMat;
 	private String numPlace;
 	private String status;
 	private VehicleDTO id_warehouse;
@@ -15,7 +15,7 @@ public class Vehicle_warehouseDTO {
 
 	}
 	
-	public Vehicle_warehouseDTO(String date_entrance,String date_wayout,VehicleDTO numMat, String numPlace, String status, VehicleDTO id_warehouse ){
+	public Vehicle_warehouseDTO(String date_entrance,String date_wayout,String numMat, String numPlace, String status, VehicleDTO id_warehouse ){
 		this.date_entrance=date_entrance;
 		this.date_wayout=date_wayout;
 		this.numMat=numMat;
@@ -40,11 +40,11 @@ public class Vehicle_warehouseDTO {
 	}
 	
 	
-	public VehicleDTO getNumMat() {
+	public String getNumMat() {
 		return numMat;
 	}
 
-	public void setNumMat(VehicleDTO numMat) {
+	public void setNumMat(String numMat) {
 		this.numMat = numMat;
 	}
 

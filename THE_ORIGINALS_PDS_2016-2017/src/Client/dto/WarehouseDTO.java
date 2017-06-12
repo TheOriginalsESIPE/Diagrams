@@ -8,6 +8,7 @@ public class WarehouseDTO{
 	private String adress;
 	private int numTel;
 	private String login_director;
+	private String numMat;
 	
 	public WarehouseDTO(){
 
@@ -64,10 +65,18 @@ public class WarehouseDTO{
 		this.login_director = login_director;
 	}
 	
+	public String getNumMat() {
+		return numMat;
+	}
+
+	public void setNumMat(String numMat) {
+		this.numMat = numMat;
+	}
+
 	@Override
 	public String toString() {
 		return "[{\"id_warehouse\":\"" + id_warehouse + "\", \"name\":\"" + name + "\",\"volum\":\""
                 + volum + "\",\"adress\":\"" + adress + "\", \"numTel\":\"" +
-                numTel + "\",\"login_director\":\"" + login_director + "\"}]";
+                numTel + "\",\"login_director\":\"" + login_director + "\",\"numMat\":\""+numMat+"}]";
 	}
 }
