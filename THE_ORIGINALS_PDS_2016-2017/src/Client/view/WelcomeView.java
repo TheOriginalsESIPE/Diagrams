@@ -3,6 +3,7 @@ package Client.view;
 import Client.enumeration.EnumUserToken;
 import Client.controller.ControllerIndicatorActivity;
 import Client.controller.ControllerPieceDetached;
+import Client.controller.Controller_vehicle_repaired;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -96,6 +97,7 @@ public class WelcomeView extends JFrame implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+    	//service de Yuxin
         if(e.getSource() == idctOperation){
             SwingUtilities.invokeLater(()->{
                 IndicatorActivityView idct = new IndicatorActivityView();
@@ -103,11 +105,11 @@ public class WelcomeView extends JFrame implements ActionListener{
                 c.control();
             });
         }
-
+        //service de Bakary
         if (e.getSource() == vehicleInfo){
 
         }
-
+        //service r2
         if (e.getSource() == pieceDetached){
             SwingUtilities.invokeLater(()->{
                 ViewPieceDetached v = new ViewPieceDetached();
@@ -115,9 +117,13 @@ public class WelcomeView extends JFrame implements ActionListener{
                 c.control();
             });
         }
-
+        //service de Laetitia
         if (e.getSource() == changeStatus){
-
+        	SwingUtilities.invokeLater(()->{
+        		ViewVehicleRepaired v=new ViewVehicleRepaired();
+        		Controller_vehicle_repaired cvr=new Controller_vehicle_repaired(client,v);
+        		cvr.control();
+        	});
         }
     }
 }
