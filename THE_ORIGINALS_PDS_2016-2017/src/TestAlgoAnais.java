@@ -1,3 +1,5 @@
+import Server.Algo;
+
 import java.sql.SQLException;
 
 public class TestAlgoAnais {
