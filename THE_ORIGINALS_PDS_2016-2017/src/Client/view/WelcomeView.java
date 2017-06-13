@@ -30,7 +30,7 @@ import java.net.Socket;
 public class WelcomeView extends JFrame implements ActionListener{
     private JLabel welcome;
     private JLabel jtoken;
-    private JButton vehicleInfo, idctOperation, changeStatus, pieceDetached;
+    private JButton vehicleInfo, idctOperation, changeStatus, pieceDetached, depotPiece;
     private String token;
     private Socket client;
 
@@ -43,7 +43,7 @@ public class WelcomeView extends JFrame implements ActionListener{
         this.token = token;
         this.client = client;
         setLayout(null);
-        setSize(400, 500);
+        setSize(400, 600);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         welcome = new JLabel("Welcome to use theOriginals technology");
@@ -60,17 +60,22 @@ public class WelcomeView extends JFrame implements ActionListener{
         changeStatus.setBounds(100, 240, 200, 50);
         pieceDetached = new JButton("Add Detached Piece");
         pieceDetached.setBounds(100,310, 200, 50);
+        depotPiece = new JButton("Piece warehouse");
+        depotPiece.setBounds(100, 450, 200, 50);
 
         this.showTokenMsg();
         vehicleInfo.addActionListener(this);
         changeStatus.addActionListener(this);
         pieceDetached.addActionListener(this);
+        depotPiece.addActionListener(this);
+        
         this.add(welcome);
         this.add(jtoken);
         this.add(vehicleInfo);
         this.add(changeStatus);
         this.add(pieceDetached);
         this.add(idctOperation);
+        this.add(depotPiece);
     }
 
     public void showTokenMsg(){
@@ -123,6 +128,13 @@ public class WelcomeView extends JFrame implements ActionListener{
         		ViewVehicleRepaired v=new ViewVehicleRepaired();
         		Controller_vehicle_repaired cvr=new Controller_vehicle_repaired(client,v);
         		cvr.control();
+        	});
+        }
+        
+        //service Karim
+        if(e.getSource() == depotPiece){
+        	SwingUtilities.invokeLater(()->{
+        		
         	});
         }
     }
