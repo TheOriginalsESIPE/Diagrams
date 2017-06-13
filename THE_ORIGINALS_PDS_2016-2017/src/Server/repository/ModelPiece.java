@@ -14,11 +14,6 @@ package Server.repository;
 
 	    }
 
-        /**
-         * @modify by yuxin, this function return a Result Set consisted by 2 DTO
-         * @param ref_piece_detached
-         * @return
-         */
         public String select(String ref_piece_detached){
             return "SELECT piece_detached.ref_piece_detached, model, mark, price, name FROM piece_detached" +
 					" WHERE ref_piece_detached= '" + ref_piece_detached + "';" ;
