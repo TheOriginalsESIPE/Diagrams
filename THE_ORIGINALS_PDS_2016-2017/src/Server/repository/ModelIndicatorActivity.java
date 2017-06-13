@@ -37,7 +37,9 @@ public class ModelIndicatorActivity {
             btype = "and (breakdown.name = 'roulement' or breakdown.name = 'vitesse difficile a passer')" ;
         else if (btype.equals("all"))
             btype = "";
-        else {btype=("breakdown.name="+btype+"");}
+        else {
+        	btype= " and (breakdown.name='" + btype + "')";
+        }
     }
     public ModelIndicatorActivity(){}
 
