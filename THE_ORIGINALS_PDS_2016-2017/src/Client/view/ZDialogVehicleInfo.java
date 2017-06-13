@@ -11,8 +11,10 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -27,9 +29,6 @@ public class ZDialogVehicleInfo extends JFrame {
 	public static JComboBox<String> breakdownText, visitingMotifText;
 	public static TextArea listBreakdown, listVisitingMotif;
 	public static JTextField registerText;
-	
-	private boolean sendData;
-	private InfoSysteme infoSysteme = new InfoSysteme();
 	
 	public ZDialogVehicleInfo(){
 		this.socket = socket;
@@ -182,13 +181,6 @@ public class ZDialogVehicleInfo extends JFrame {
 
 		this.getContentPane().add(panMain);
 	}
-	
-	public InfoSysteme showZDialog(){
-	    this.sendData = false;
-	    this.setVisible(true);      
-	    return this.infoSysteme;      
-	  }
-	
 
 	
 	/**
@@ -399,20 +391,6 @@ public class ZDialogVehicleInfo extends JFrame {
 	 */
 	public static void setRegisterText(JTextField registerText) {
 		ZDialogVehicleInfo.registerText = registerText;
-	}
-
-	/**
-	 * @return the infoSysteme
-	 */
-	public InfoSysteme getInfoSysteme() {
-		return infoSysteme;
-	}
-
-	/**
-	 * @param infoSysteme the infoSysteme to set
-	 */
-	public void setInfoSysteme(InfoSysteme infoSysteme) {
-		this.infoSysteme = infoSysteme;
 	}
 
 	public static void main(String[] args){

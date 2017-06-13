@@ -1,10 +1,13 @@
 package Server.serialization;
 
-import Server.dto.BreakdownDTO;
-import Server.dto.IndicatorDTO;
-import Server.dto.VehicleDTO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import Server.dto.BreakdownDTO;
+import Server.dto.IndicatorDTO;
+import Server.dto.ParkingDTO;
+import Server.dto.VehicleDTO;
+//import Server.dto.VisitingMotifDTO;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -35,5 +38,17 @@ public class DeserializationGson {
         Type type = new TypeToken<Vector<VehicleDTO>>(){}.getType();
         Vector<VehicleDTO> vehicleInfo = g.fromJson(str, type);
         return vehicleInfo;
+    }
+    
+    /*public Vector<VisitingMotifDTO> deserialVisitingMotif(String str){
+        Type type = new TypeToken<Vector<VisitingMotifDTO>>(){}.getType();
+        Vector<VisitingMotifDTO> visitingMotifList = g.fromJson(str, type);
+        return visitingMotifList;
+    }*/
+    
+    public Vector<ParkingDTO> deserialParkingDTO(String str){
+        Type type = new TypeToken<Vector<ParkingDTO>>(){}.getType();
+        Vector<ParkingDTO> listPark = g.fromJson(str, type);
+        return listPark;
     }
 }

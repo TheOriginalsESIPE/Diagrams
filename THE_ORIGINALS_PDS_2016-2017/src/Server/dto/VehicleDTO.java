@@ -6,8 +6,6 @@ public class VehicleDTO {
 	private String model;
 	private String mark;
 	private String vehicle_type;
-	private int numPlace;
-	private String status;
 	
 	public VehicleDTO(){
 
@@ -18,6 +16,9 @@ public class VehicleDTO {
 		this.model=mo;
 		this.mark=ma;
 		this.vehicle_type=vt;
+	}
+	public VehicleDTO(String nM){ 
+		this.numMat=nM;
 	}
 	
 	public String getNumMat() {
@@ -48,25 +49,9 @@ public class VehicleDTO {
 		this.vehicle_type = vehicle_type;
 	}
 	
-	public int getNumPlace() {
-		return numPlace;
-	}
-
-	public void setNumPlace(int numPlace) {
-		this.numPlace = numPlace;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	@Override
 	public String toString() {
 		return "[{\"numMat\":\"" + numMat + "\",\"model\":\"" + model + "\",\"mark\":\"" + mark + "\",\"vehicle_type\":\"" + vehicle_type
-				+"\",\"numPlace\":\""+numPlace+"\",\"status\":\""+status+"\"}]";
+				+"\"}]";
 	}
 }

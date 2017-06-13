@@ -17,6 +17,7 @@ import Server.repository.ModelIndicatorActivity;
 import Server.repository.ModelPiece;
 import Server.repository.ZDialogVehicleInfoRepository;
 import Server.sql.HandlerSQL;
+import Server.dto.ParkingDTO;
 import Server.dto.Vehicle_warehouseDTO;
 import Server.dto.WarehouseDTO;
 //import repository.ModelVehicle;
@@ -250,6 +251,36 @@ public class Service {
            }else System.out.println("je suis pas dans le If");
     	return vehicleInfo;
     }
+    
+    public String saveHehicle(String infoB, String infoV, String infoR){
+		ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
+		//System.out.println(infoB+""+infoV+""+infoR);
+       	int query = hsql.updateQuery(zdvr.setOperation(infoB, infoV, infoR));
+    
+       	return String.valueOf(query);
+}
+
+public String getParking(){
+	
+	Vector<ParkingDTO> vectorList = new Vector<>();
+	ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
+	ResultSet resultSet = hsql.selectQuery(zdvr.getPark());
+	try{
+	while(resultSet.next()){
+		ParkingDTO parkingDTO = new ParkingDTO();
+		parkingDTO.setNumPlace(resultSet.getInt("numPlace"));
+		vectorList.add(parkingDTO);
+	}
+}catch(SQLException sqle){
+	sqle.printStackTrace();
+}
+
+SerializationGson serial = new SerializationGson();
+String parking = serial.serialGenericVehicle(vectorList);
+System.out.println(parking);
+
+return parking;
+}
     
     public Vector<Vehicle_warehouseDTO> VehiclenumMatServiceAll(String date_end){
     	System.out.println("vehicle num sevice");
