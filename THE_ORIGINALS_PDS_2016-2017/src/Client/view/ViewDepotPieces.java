@@ -28,7 +28,7 @@ public class ViewDepotPieces extends JFrame{
 		   this.setTitle("depot");
 		   this.setBackground(Color.white);
 		   this.setSize(800, 500);
-		   this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		   this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	       this.setLocationRelativeTo(null);
 	       this.setLayout(null);
 		    

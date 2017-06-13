@@ -46,7 +46,7 @@ public class ZDialogVehicleInfo extends JFrame {
 	public void initComponeInfo(){
 
 		//Information for vehicle image
-		imageLabel = new JLabel(new ImageIcon("C:/Users/DEMBELE/Desktop/ESIAG-UPEC/Inge1-B/PDS20162017/Image/voitureIcon1.jpg"));
+		imageLabel = new JLabel(new ImageIcon("C:/Users/LM/Desktop/Image/voitureIcon.png"));
 		JPanel panVoitureIcon = new JPanel();
 		panVoitureIcon.setBackground(Color.white);
 		panVoitureIcon.setLayout(new BorderLayout());
