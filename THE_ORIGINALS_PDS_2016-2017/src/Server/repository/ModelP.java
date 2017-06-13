@@ -8,6 +8,11 @@ public class ModelP {
 		return query ;
 	}
 	
+	public String setTime( int idOp ){
+		String query="UPDATE operation SET time_begin = CURRENT_TIME ,date_begin =CURRENT_DATE"
+				+ "   WHERE operation.id_operation ="+idOp+";";
+		return query ;
+	}
 	
 	public String selectMaxRang(){
         String query = "SELECT MIN(rang) FROM `operation_sort` " ;

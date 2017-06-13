@@ -14,13 +14,11 @@ import java.util.Date;
 import javax.swing.JButton;
 
 import Client.enumeration.EnumService;
-import Server.repository.ModelVehicle;
-//import view.ViewRelocate;
+
 
 public class Controller_relocate {
 	
 	private Client.view.ViewRelocate vr; 
-	private Server.repository.ModelVehicle mv;
 	private ActionListener ac,ac1;
 	BufferedReader in;
     PrintStream out;
@@ -72,7 +70,7 @@ public class Controller_relocate {
 					
 					for(String ele : res){System.out.println(ele);}
 					vr.getInfo().setText(res[0]+" vehicule relocalise "+DateAujourdhui(answer2)+"\r\n"+res[0]+" date modifiee"+"\r\n"+res[0]+" vehicule mis en circulation");
-					vr.getInfo2().setText("numero d'immatriculation: "+answer1+"\r\n"+"id_warehouse: "+answer2+"\r\n"+"adresse:"+res[1]);
+					vr.getInfo2().setText("numero d'immatriculation: "+answer1+"\r\n"+"id_warehouse: "+answer2+"\r\n"+"adresse: "+res[1]);
 				}
 			}
 

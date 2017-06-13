@@ -82,6 +82,9 @@ public class ViewFin extends JFrame{
 	public JTextField gettexp(){
 		return texp;
 	}
+	public JFrame getframe(){
+		return frame ;
+	}
 
 	
 	

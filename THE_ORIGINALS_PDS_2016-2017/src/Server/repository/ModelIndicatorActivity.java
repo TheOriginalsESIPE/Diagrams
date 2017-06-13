@@ -34,10 +34,12 @@ public class ModelIndicatorActivity {
         else if (btype.equals("conso"))
             btype = "and (breakdown.name = 'conso. huile' or breakdown.name = 'surconsommation')";
         else if (btype.equals("roulement"))
-            btype = "(and breakdown.name = 'roulement' or breakdown.name = 'vitesse difficile a passer')" ;
+            btype = "and (breakdown.name = 'roulement' or breakdown.name = 'vitesse difficile a passer')" ;
         else if (btype.equals("all"))
             btype = "";
-
+        else {
+        	btype= " and (breakdown.name='" + btype + "')";
+        }
     }
     public ModelIndicatorActivity(){}
 

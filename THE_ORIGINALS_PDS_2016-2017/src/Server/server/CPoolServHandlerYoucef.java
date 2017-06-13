@@ -1,8 +1,9 @@
 package Server.server;
 
-import enumeration.EnumService;
+import enumeration.EnumServiceYoucef;
 
 import repository.ModelAuth;
+import repository.ModelFin;
 import repository.ModelInfoVehicle;
 import repository.ModelNewOp;
 import repository.ModelP;
@@ -50,7 +51,7 @@ public class CPoolServHandlerYoucef extends Thread {
                 String cmd = in.readLine();
                 System.out.println(cmd);
 
-                if (cmd.equals(EnumService.AUTH.name())) {
+                if (cmd.equals(EnumServiceYoucef.AUTH.name())) {
                     String login = in.readLine();
                     loginRepair= login ;
                     String pwd = in.readLine();
@@ -66,7 +67,7 @@ public class CPoolServHandlerYoucef extends Thread {
                     
                   
              
-                } else if(cmd.equals(EnumService.IMPORT_PIECE.name())){
+                } else if(cmd.equals(EnumServiceYoucef.IMPORT_PIECE.name())){
                 	server.msg.append("import piece\n");
                     ModelPieceY mp = new ModelPieceY();
 
@@ -140,8 +141,8 @@ public class CPoolServHandlerYoucef extends Thread {
                 	
                
                 }
-            }else if (cmd.equals(EnumService.AFFICHE_PSORT.name())){
-            	server.msg.append("\n"+EnumService.AFFICHE_PSORT.name());
+            }else if (cmd.equals(EnumServiceYoucef.AFFICHE_PSORT.name())){
+            	server.msg.append("\n"+EnumServiceYoucef.AFFICHE_PSORT.name());
             	//we call ModelViewListOp
             	ModelViewListOp m= new ModelViewListOp();
             	//on construit notre requette sql
@@ -181,7 +182,7 @@ public class CPoolServHandlerYoucef extends Thread {
             	
             	
             	
-            }else if (cmd.equals(EnumService.GET_OPERATION_SORT.name())){
+            }else if (cmd.equals(EnumServiceYoucef.GET_OPERATION_SORT.name())){
             	//on appel le modelP
             	ModelP mdlp = new ModelP();
             	String reqMaxRang =mdlp.selectMaxRang();
@@ -196,7 +197,7 @@ public class CPoolServHandlerYoucef extends Thread {
            
             	String reqOpSort =mdlp.selectMaxline(max);//ici on recupérée l'operation priorisée 
                 server.msg.append("\n"+reqOpSort);
-
+ 
             	ResultSet rsMAX=hsql.selectQuery(reqOpSort);
                 if(rsMAX.next()){
                     server.msg.append("\n operation trouvé");
@@ -206,6 +207,13 @@ public class CPoolServHandlerYoucef extends Thread {
                 
                 idOperation=idOp_Op;
                 server.msg.append("\n identifiant de loperation : "+idOperation);
+                
+                //on renseigne les champs time_begin et date begin
+                String renseign =mdlp.setTime(idOp_Op);
+                int ligneModif =hsql.updateQuery(renseign);
+                
+                server.msg.append("\n les champs time et date on été renseigné  "+ligneModif);
+                
                 
                 //int idPanne=rsMAX.getInt(3);
                 
@@ -260,7 +268,7 @@ public class CPoolServHandlerYoucef extends Thread {
             	}
             	
             	
-            }else if (cmd.equals(EnumService.SHOW_INFO.name())){
+            }else if (cmd.equals(EnumServiceYoucef.SHOW_INFO.name())){
             	server.msg.append("\n"+cmd);
             	
             	ModelInfoVehicle modelInfo = new ModelInfoVehicle();
@@ -312,8 +320,8 @@ public class CPoolServHandlerYoucef extends Thread {
             	
             	
             	
-            }else if (cmd.equals(EnumService.ADD_OP.name())){
-            	server.msg.append("\n"+EnumService.ADD_OP.name());
+            }else if (cmd.equals(EnumServiceYoucef.ADD_OP.name())){
+            	server.msg.append("\n"+EnumServiceYoucef.ADD_OP.name());
             	
             	ModelNewOp mOp= new ModelNewOp();
             	String nomDEpanne = in.readLine();
@@ -349,13 +357,59 @@ public class CPoolServHandlerYoucef extends Thread {
             	
             	}
             	
+            }else if(cmd.equals(EnumServiceYoucef.FINIR.name())){
+            	ModelFin mf = new ModelFin();
+            	String reqRenseign = mf.reqRenseigne(idOperation, loginRepair);
+            	String reqSup =mf.supOpSort(idOperation);
+            	String reqCount=mf.compterOp(matricul);
+            	String reqChangeStatus=mf.modifStatu(matricul);
             	
+            	//on renseigne les information au niveau de la table operation
+            	int nbR = hsql.updateQuery(reqRenseign);
+            	if(nbR!=0){
+            		server.msg.append("\n" + reqRenseign);
+            		
+            		//on suprime loperation_sort
+            		int nbS=hsql.updateQuery(reqSup);
+            		
+            		if (nbS!=0){
+                		server.msg.append("\n" + reqSup);
+                	//on compte le nombre d'operation restante pour ce vehicule
+                	
+                		ResultSet result=hsql.selectQuery(reqCount);
+                		
+                		if(result.next()){
+                    		server.msg.append("\n" + reqCount);
+                    		int nombreDop =result.getInt(1);
+                    		String nombreDopS=Integer.toString(nombreDop);
+                    		out.println(nombreDopS);
+                    		
+                    		//on teste si il est null afin de changer le statu du véhicule en "réparé"
+                    		
+                    		if(nombreDop==0){
+                    			server.msg.append("\n  il n'ya plus d'operation pour ce vehcul");
+                    			int nbChange =hsql.updateQuery(reqChangeStatus);
+                    			if(nbChange!=0){
+                    				server.msg.append("\n"+reqChangeStatus);
+                    				
+                    				
+                    			}
+                    		}
+
+                		}
+
+            		}
+            		
+            		
+            	}
             	
             	
             	
             	
             	
             }
+                
+                
             }
         } catch (IOException e) {
                 e.printStackTrace();

@@ -73,7 +73,6 @@ public class ViewP extends JFrame {
 		     btnOp         = new JButton("Prendre une Operation");
 		     btnListOp     = new JButton("Liste d'operations");
 			 btnAjoutOp    = new JButton("Ajouter une operation");
-			 btnFin        = new JButton("FIN");
 			 btnFinOp        = new JButton("Fin d'operation");
 
 			 
@@ -145,14 +144,12 @@ public class ViewP extends JFrame {
 		     frame.getContentPane().add(btnOp);
 		     frame.getContentPane().add(btnAjoutOp);
 		     frame.getContentPane().add(btnListOp);
-		     frame.getContentPane().add(btnFin);
 		     frame.getContentPane().add(btnFinOp);
 
 		     
 		     btnOp.setBounds(10,10,300,50);
 		     btnAjoutOp.setBounds(10,600,200,50);
 		     btnListOp.setBounds(380,10,300,50);
-		     btnFin.setBounds(520,600,150,50);
 		     btnFinOp.setBounds(280,600,150,50);
 
 		     
@@ -192,11 +189,17 @@ public class ViewP extends JFrame {
 		 btnAjoutPiece = new JButton("Ajouter une piece");
 	     frame.getContentPane().add(btnAjoutPiece);
 	     btnAjoutPiece.setBounds(200, 190, 300, 50);
+        }
+	 
+	 public void showbtnnFin(){
+		 btnFin        = new JButton("FIN");
+	     frame.getContentPane().add(btnFin);
+	     btnFin.setBounds(520,600,150,50);
 
 
 
-		 
 	 }
+		 
 	 
 	
 	 public JButton getbtnOp (){

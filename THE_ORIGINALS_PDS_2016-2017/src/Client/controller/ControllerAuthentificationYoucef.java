@@ -1,5 +1,5 @@
 package Client.controller;
-import enumeration.EnumService;
+import enumeration.EnumServiceYoucef;
 import view.ViewAuthentification;
 import view.ViewP;
 
@@ -39,7 +39,7 @@ public void control(){
 			String compte = v1.getTxt1().getText();
             String password = String.valueOf(v1.getTxt2().getPassword());
 
-			out.println(EnumService.AUTH.name());
+			out.println(EnumServiceYoucef.AUTH.name());
 			out.flush();
 			out.println(compte);
 			out.flush();

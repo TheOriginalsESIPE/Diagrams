@@ -17,14 +17,14 @@ import javax.swing.JButton;
 //import enumeration.EnumService;
 //import ViewL.View_detail_vehicle;
 //import ViewL.View_vehicle_repaired;
-import Server.repository.ModelVehicle;
+//import Server.repository.ModelVehicle;
 //import repositoryL.Model_Vehicle;
 //import view.ViewDetailVehicle;
 //import view.ViewVehicleRepaired;
 
 public class Controller_vehicle_repaired {
 	
-	private Server.repository.ModelVehicle mv;
+	//private Server.repository.ModelVehicle mv;
 	private Client.view.ViewVehicleRepaired vvr;
 	private Client.view.ViewDetailVehicle vdv;
 	private ActionListener ac,ac1,ac2;

@@ -1,6 +1,7 @@
 package Server.server;
-import Server.dto.Vehicle_warehouseDTO;
+import Server.dto.Vehicle_warehouseDTOL;
 import Server.enumeration.EnumService;
+import Server.dto.Vehicle_warehouseDTO;
 import Server.service.Service;
 //import dto.Vehicle_warehouseDTO;
 
@@ -90,13 +91,28 @@ public class CPoolServHandler extends Thread {
                 	System.out.println(vehicleInfo);
                 	out.println(vehicleInfo);
                 	out.flush();
+                }else if(cmd.equals(EnumService.SAVEVEHICLE.name())){
+                    String infoB = in.readLine();
+                     	//System.out.println(infoB);
+                    String infoV = in.readLine();
+                     	//System.out.println(infoV);
+                    String infoR = in.readLine();
+                         //System.out.println(infoR);
+                    String res = serv.saveHehicle(infoB, infoV, infoR);
+                    out.println(res);
+                    out.flush();
+                }else if(cmd.equals(EnumService.PARKINGDOWLOAD.name())){
+                    
+                    String res = serv.getParking();
+                    out.println(res);
+                    out.flush();
                 }
                 
                 else if(cmd.equals(EnumService.SEARCHVEHICLE.name())){
                 	//System.out.println("debug");
                 	String date_end=in.readLine();//partie rajoutée
                 	System.out.println(date_end);
-                	Vector<Vehicle_warehouseDTO> d=serv.VehiclenumMatServiceAll(date_end);
+                	Vector<Vehicle_warehouseDTOL> d=serv.VehiclenumMatServiceAll(date_end);
                 	System.out.println("get vector " + d.size());
                 	out.println(d.size());
                 	for(int i=0; i<d.size(); i++){

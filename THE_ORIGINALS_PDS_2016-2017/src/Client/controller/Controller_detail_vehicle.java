@@ -15,11 +15,11 @@ import javax.swing.JButton;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import Client.dto.VehicleDTO;
+import Client.dto.VehicleDTOL;
 import Client.enumeration.EnumService;
 import Client.view.ViewDetailVehicle;
 import Client.view.ViewRelocate;
-import Server.repository.ModelVehicle;
+//import Server.repository.ModelVehicle;
 
 /**import dto.VehicleDTO;
 import dto.Vehicle_warehouseDTO;
@@ -40,7 +40,7 @@ public class Controller_detail_vehicle {
 	private ViewDetailVehicle vdv;
 	private ViewRelocate vr;
 	private Controller_relocate cr;
-	private ModelVehicle mv;
+	//private ModelVehicle mv;
 	private ActionListener ac,ac1;
 	Socket socket;
     BufferedReader in;
@@ -77,7 +77,7 @@ public class Controller_detail_vehicle {
 						
 						Client.serialization.Deserialization d=new Client.serialization.Deserialization();
 						JSONObject j=d.deserialGeneric(reponse);
-						VehicleDTO v=new VehicleDTO();
+						VehicleDTOL v=new VehicleDTOL();
 						JSONArray jsonArray = (JSONArray) d.deserialObject(j, v.getClass().getSimpleName());
 						j = (JSONObject) jsonArray.get(0);
 						
