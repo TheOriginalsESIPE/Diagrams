@@ -1,8 +1,10 @@
 package Client.view;
 
 import Client.enumeration.EnumUserToken;
+import Client.controller.ControllerDepotPieces;
 import Client.controller.ControllerIndicatorActivity;
 import Client.controller.ControllerPieceDetached;
+import Client.controller.ControllerZDialogVehicleInfo;
 import Client.controller.Controller_vehicle_repaired;
 
 import javax.swing.*;
@@ -112,8 +114,14 @@ public class WelcomeView extends JFrame implements ActionListener{
         }
         //service de Bakary
         if (e.getSource() == vehicleInfo){
+        	 SwingUtilities.invokeLater(()->{
+                 ZDialogVehicleInfo v = new ZDialogVehicleInfo();
+                 ControllerZDialogVehicleInfo c = new ControllerZDialogVehicleInfo(v, client);
+                 c.myControl();
+             });
+         }
 
-        }
+        
         //service r2
         if (e.getSource() == pieceDetached){
             SwingUtilities.invokeLater(()->{
@@ -134,7 +142,9 @@ public class WelcomeView extends JFrame implements ActionListener{
         //service Karim
         if(e.getSource() == depotPiece){
         	SwingUtilities.invokeLater(()->{
-        		
+        		ViewDepotPieces v= new ViewDepotPieces();
+        		ControllerDepotPieces j=new ControllerDepotPieces(v, client);
+        		j.Control();
         	});
         }
     }

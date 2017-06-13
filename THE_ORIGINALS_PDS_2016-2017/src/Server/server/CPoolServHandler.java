@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import org.json.simple.JSONArray;
@@ -32,6 +33,7 @@ import Server.serialization.Deserialization;
 public class CPoolServHandler extends Thread {
     private Socket client;
     private Server server;
+    private HandlerSQL hsql = new HandlerSQL()  ;
 
     /**
      * The constructor.
@@ -205,7 +207,7 @@ public class CPoolServHandler extends Thread {
 	                            String z1 = null;
 	                            String z = null;
 	                            while (rs.next()){
-	                            	z ="entré:"+rs.getString("date_reception");
+	                            	z ="entre:"+rs.getString("date_reception");
 	                            	server.msg.append("\n Result search = " + z);}
 	                            while (rs2.next()){
 	                            	 z1 ="sortie:"+rs2.getString("date_reception");
@@ -254,6 +256,9 @@ public class CPoolServHandler extends Thread {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

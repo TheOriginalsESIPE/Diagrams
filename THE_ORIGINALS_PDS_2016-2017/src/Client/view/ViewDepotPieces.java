@@ -41,7 +41,7 @@ public class ViewDepotPieces extends JFrame{
 	   
 	   
 	      a2.setBounds(70, 170, 150, 30);
-	      a3 = new JButton("pieces utilisés ");
+	      a3 = new JButton("pieces utilises ");
 	      a3.setBounds(70,300,150,30);
 	    
 	      label = new JLabel(); 
