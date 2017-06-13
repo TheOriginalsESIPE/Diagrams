@@ -4,7 +4,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import Server.dto.IndicatorDTO;
+import Client.dto.IndicatorDTO;
 
 import java.io.File;
 import java.io.FileNotFoundException;

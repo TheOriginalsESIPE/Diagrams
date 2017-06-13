@@ -2,7 +2,7 @@ package Client.controller;
 
 import Client.serialization.DeserializationGson;
 import Client.serialization.Serialization;
-import Server.dto.IndicatorDTO;
+import Client.dto.IndicatorDTO;
 import Client.enumeration.EnumService;
 import Client.view.IndicatorActivityView;
 import Client.view.IndicatorRapportPDF;

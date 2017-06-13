@@ -1,7 +1,7 @@
 package Client.view;
 
 import Client.client.Client;
-import Server.dto.IndicatorDTO;
+import Client.dto.IndicatorDTO;
 import Client.enumeration.BreakdownType;
 import Client.controller.ControllerIndicatorActivity;
 import org.jdesktop.swingx.JXDatePicker;

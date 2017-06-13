@@ -19,7 +19,7 @@ import Client.dto.VehicleDTOL;
 import Client.enumeration.EnumService;
 import Client.view.ViewDetailVehicle;
 import Client.view.ViewRelocate;
-import Server.repository.ModelVehicle;
+//import Server.repository.ModelVehicle;
 
 /**import dto.VehicleDTO;
 import dto.Vehicle_warehouseDTO;
@@ -40,7 +40,7 @@ public class Controller_detail_vehicle {
 	private ViewDetailVehicle vdv;
 	private ViewRelocate vr;
 	private Controller_relocate cr;
-	private ModelVehicle mv;
+	//private ModelVehicle mv;
 	private ActionListener ac,ac1;
 	Socket socket;
     BufferedReader in;

@@ -14,13 +14,11 @@ import java.util.Date;
 import javax.swing.JButton;
 
 import Client.enumeration.EnumService;
-import Server.repository.ModelVehicle;
-//import view.ViewRelocate;
+
 
 public class Controller_relocate {
 	
 	private Client.view.ViewRelocate vr; 
-	private Server.repository.ModelVehicle mv;
 	private ActionListener ac,ac1;
 	BufferedReader in;
     PrintStream out;

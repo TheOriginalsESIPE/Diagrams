@@ -4,9 +4,9 @@ import Server.dto.BreakdownDTO;
 import Server.dto.IndicatorDTO;
 import Server.dto.Piece_detachedDTO;
 import Server.dto.VehicleDTOL;
-import Client.enumeration.EnumDTO;
-import Client.enumeration.EnumOperation;
-import Client.enumeration.EnumUserToken;
+import Server.enumeration.EnumDTO;
+import Server.enumeration.EnumOperation;
+import Server.enumeration.EnumUserToken;
 import Server.serialization.Deserialization;
 import Server.serialization.Serialization;
 import Server.serialization.SerializationGson;
@@ -17,10 +17,14 @@ import Server.repository.ModelIndicatorActivity;
 import Server.repository.ModelPiece;
 import Server.repository.ZDialogVehicleInfoRepository;
 import Server.sql.HandlerSQL;
+
 import Server.dto.Vehicle_warehouseDTOL;
 import Server.dto.WarehouseDTOL;
 //import repository.ModelVehicle;
 import Server.dto.VehicleDTO;
+
+import Server.dto.ParkingDTO;
+
 import Server.dto.Vehicle_warehouseDTO;
 import Server.dto.WarehouseDTO;
 
@@ -253,6 +257,39 @@ public class Service {
            }else System.out.println("je suis pas dans le If");
     	return vehicleInfo;
     }
+    
+
+ 
+
+    public String saveHehicle(String infoB, String infoV, String infoR){
+		ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
+		//System.out.println(infoB+""+infoV+""+infoR);
+       	int query = hsql.updateQuery(zdvr.setOperation(infoB, infoV, infoR));
+    
+       	return String.valueOf(query);
+}
+
+public String getParking(){
+	
+	Vector<ParkingDTO> vectorList = new Vector<>();
+	ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
+	ResultSet resultSet = hsql.selectQuery(zdvr.getPark());
+	try{
+	while(resultSet.next()){
+		ParkingDTO parkingDTO = new ParkingDTO();
+		parkingDTO.setNumPlace(resultSet.getInt("numPlace"));
+		vectorList.add(parkingDTO);
+	}
+}catch(SQLException sqle){
+	sqle.printStackTrace();
+}
+
+SerializationGson serial = new SerializationGson();
+String parking = serial.serialGenericVehicle(vectorList);
+System.out.println(parking);
+
+return parking;
+}
     
     public Vector<Vehicle_warehouseDTOL> VehiclenumMatServiceAll(String date_end){
     	System.out.println("vehicle num sevice");

@@ -91,6 +91,21 @@ public class CPoolServHandler extends Thread {
                 	System.out.println(vehicleInfo);
                 	out.println(vehicleInfo);
                 	out.flush();
+                }else if(cmd.equals(EnumService.SAVEVEHICLE.name())){
+                    String infoB = in.readLine();
+                     	//System.out.println(infoB);
+                    String infoV = in.readLine();
+                     	//System.out.println(infoV);
+                    String infoR = in.readLine();
+                         //System.out.println(infoR);
+                    String res = serv.saveHehicle(infoB, infoV, infoR);
+                    out.println(res);
+                    out.flush();
+                }else if(cmd.equals(EnumService.PARKINGDOWLOAD.name())){
+                    
+                    String res = serv.getParking();
+                    out.println(res);
+                    out.flush();
                 }
                 
                 else if(cmd.equals(EnumService.SEARCHVEHICLE.name())){

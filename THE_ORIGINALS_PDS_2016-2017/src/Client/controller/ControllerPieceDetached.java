@@ -10,7 +10,7 @@ import javax.swing.JButton;
 
 import Client.serialization.Deserialization;
 import Client.serialization.Serialization;
-import Server.dto.Piece_detachedDTO;
+import Client.dto.Piece_detachedDTO;
 import Client.enumeration.EnumOperation;
 import Client.enumeration.EnumService;
 import Client.view.ViewPieceDetached;
