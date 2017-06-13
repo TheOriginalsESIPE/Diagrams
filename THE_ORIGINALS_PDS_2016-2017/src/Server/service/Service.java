@@ -3,7 +3,7 @@ package Server.service;
 import Server.dto.BreakdownDTO;
 import Server.dto.IndicatorDTO;
 import Server.dto.Piece_detachedDTO;
-import Server.dto.VehicleDTO;
+import Server.dto.VehicleDTOL;
 import Client.enumeration.EnumDTO;
 import Client.enumeration.EnumOperation;
 import Client.enumeration.EnumUserToken;
@@ -17,9 +17,12 @@ import Server.repository.ModelIndicatorActivity;
 import Server.repository.ModelPiece;
 import Server.repository.ZDialogVehicleInfoRepository;
 import Server.sql.HandlerSQL;
+import Server.dto.Vehicle_warehouseDTOL;
+import Server.dto.WarehouseDTOL;
+//import repository.ModelVehicle;
+import Server.dto.VehicleDTO;
 import Server.dto.Vehicle_warehouseDTO;
 import Server.dto.WarehouseDTO;
-//import repository.ModelVehicle;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -251,9 +254,9 @@ public class Service {
     	return vehicleInfo;
     }
     
-    public Vector<Vehicle_warehouseDTO> VehiclenumMatServiceAll(String date_end){
+    public Vector<Vehicle_warehouseDTOL> VehiclenumMatServiceAll(String date_end){
     	System.out.println("vehicle num sevice");
-    	Vector<Vehicle_warehouseDTO> list=new Vector<Vehicle_warehouseDTO>();
+    	Vector<Vehicle_warehouseDTOL> list=new Vector<Vehicle_warehouseDTOL>();
     	//String date_end1="";
     	
     	try{
@@ -262,7 +265,7 @@ public class Service {
     		 ResultSet rs=hsql.selectQuery(mv.selectAll(date_end));
     		 System.out.println("get rs");
     		 while(rs.next()){
-    			 Vehicle_warehouseDTO vh=new Vehicle_warehouseDTO();
+    			 Vehicle_warehouseDTOL vh=new Vehicle_warehouseDTOL();
     			 vh.setNumMat(rs.getString("numMat"));
     			 list.add(vh);
     		 }
@@ -277,7 +280,7 @@ public class Service {
 
         Server.repository.ModelVehicle mv=new Server.repository.ModelVehicle();
         //Vehicle_warehouseDTO vh=new Vehicle_warehouseDTO();
-        VehicleDTO v=new VehicleDTO();
+        VehicleDTOL v=new VehicleDTOL();
             
        
     	

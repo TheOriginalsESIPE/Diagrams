@@ -1,6 +1,7 @@
 package Server.server;
-import Server.dto.Vehicle_warehouseDTO;
+import Server.dto.Vehicle_warehouseDTOL;
 import Server.enumeration.EnumService;
+import Server.dto.Vehicle_warehouseDTO;
 import Server.service.Service;
 //import dto.Vehicle_warehouseDTO;
 
@@ -96,7 +97,7 @@ public class CPoolServHandler extends Thread {
                 	//System.out.println("debug");
                 	String date_end=in.readLine();//partie rajoutée
                 	System.out.println(date_end);
-                	Vector<Vehicle_warehouseDTO> d=serv.VehiclenumMatServiceAll(date_end);
+                	Vector<Vehicle_warehouseDTOL> d=serv.VehiclenumMatServiceAll(date_end);
                 	System.out.println("get vector " + d.size());
                 	out.println(d.size());
                 	for(int i=0; i<d.size(); i++){
