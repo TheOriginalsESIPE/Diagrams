@@ -10,8 +10,10 @@ import java.net.Socket;
 
 import javax.swing.JOptionPane;
 
-import enumeration.EnumService;
-import view.ViewPanneOp;
+import Client.enumeration.EnumService;
+import Client.view.ViewPanneOp;
+
+
 
 public class ControllerNewOp{
 	 ViewPanneOp vpo;
@@ -46,8 +48,8 @@ public class ControllerNewOp{
 						 
 					 }else{
 						 String retourP=in.readLine();
-						 if(retourP.equals("ajouté")){
-					     JOptionPane.showMessageDialog(null, "vous ajouté une panne a cette voiture \n"
+						 if(retourP.equals("ajoutï¿½")){
+					     JOptionPane.showMessageDialog(null, "vous ajoutï¿½ une panne a cette voiture \n"
 					     		+ "    la panne est : "+nameBreakd);
 
 							 

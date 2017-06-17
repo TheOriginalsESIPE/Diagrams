@@ -61,6 +61,7 @@ public class ControllerIndicatorActivity {
 
                 Map indicatorRequest = new HashMap<String,String>(5);
                 ButtonModel bm = indicatorView.timeScale.getSelection();
+               
                 String vehicleType = "";
                 if(indicatorView.from.getDate() != null && indicatorView.to.getDate() != null){
                     //two dates are different! Pay attention to cast them.

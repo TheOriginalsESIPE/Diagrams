@@ -15,7 +15,7 @@ public class ViewVehicleRepaired extends JFrame{
 	public static final int HEIGHT=300;
 	
 	private JFrame fenetre1;
-	private JButton ok, search,ok1;
+	private JButton ok, search,ok1,sauvegarde;
 	private JTextField textdate;
 	private JTextArea JnumMat;
 	//private JScrollPane js;
@@ -34,12 +34,14 @@ public class ViewVehicleRepaired extends JFrame{
 		ok=new JButton("OK");
 		ok1=new JButton("research");
 		search=new JButton("search");
+		sauvegarde=new JButton("backup");
 		textdate=new JTextField("");
 		JnumMat=new JTextArea("");
 		//js=new JScrollPane(JnumMat);
 		
 		ok.setPreferredSize(new Dimension(100, 30));
 		ok1.setPreferredSize(new Dimension(100, 30));
+		sauvegarde.setPreferredSize(new Dimension(100, 30));
 		textdate.setPreferredSize(new Dimension(180, 30));
 		JnumMat.setPreferredSize(new Dimension(250, 400));
 		//js.setPreferredSize(new Dimension(200, 400));
@@ -53,6 +55,7 @@ public class ViewVehicleRepaired extends JFrame{
 		panel1.add(textdate);
 		panel1.add(ok);
 		panel1.add(ok1);
+		panel1.add(sauvegarde);
 		panel1.add(JnumMat);
 		//panel1.add(ok1);
 		//panel1.add(js);
@@ -113,6 +116,16 @@ public class ViewVehicleRepaired extends JFrame{
 	public void setOk1(JButton ok1) {
 		this.ok1 = ok1;
 	}
+	
+	public JButton getSauvegarde() {
+		return sauvegarde;
+	}
+
+	public void setSauvegarde(JButton sauvegarde) {
+		this.sauvegarde = sauvegarde;
+	}
+
+	
 	public static void main(String[]args){
 		Socket s;
 		try {

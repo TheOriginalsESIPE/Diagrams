@@ -10,10 +10,11 @@ import java.net.Socket;
 
 import javax.swing.SwingUtilities;
 
-import enumeration.EnumService;
-import view.ViewInfoVehicle;
-import view.ViewListOp;
-import view.ViewP;
+import Client.enumeration.EnumService;
+import Client.view.ViewInfoVehicle;
+import Client.view.ViewP;
+
+
 
 
 public class ControllerInfoVehicle {

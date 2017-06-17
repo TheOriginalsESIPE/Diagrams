@@ -1,8 +1,11 @@
 package Client.controller;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -12,26 +15,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 //import java.util.Scanner;
 import javax.swing.JButton;
+import java.awt.Desktop;
 
-//import dto.Vehicle_warehouseDTO;
-//import enumeration.EnumService;
-//import ViewL.View_detail_vehicle;
-//import ViewL.View_vehicle_repaired;
-//import Server.repository.ModelVehicle;
-//import repositoryL.Model_Vehicle;
-//import view.ViewDetailVehicle;
-//import view.ViewVehicleRepaired;
+
 
 public class Controller_vehicle_repaired {
 	
 	//private Server.repository.ModelVehicle mv;
 	private Client.view.ViewVehicleRepaired vvr;
 	private Client.view.ViewDetailVehicle vdv;
-	private ActionListener ac,ac1,ac2;
+	private ActionListener ac,ac1,ac2,ac3;
 	private Controller_detail_vehicle cvd;
 	Socket socket;
     BufferedReader in;
     PrintStream out;
+    BufferedWriter out1;
+    File f;
 	
 	public Controller_vehicle_repaired(Socket socket, Client.view.ViewVehicleRepaired vvr){
 		this.socket=socket;
@@ -51,7 +50,7 @@ public class Controller_vehicle_repaired {
 					e2.printStackTrace();
 				}
 				if((JButton)e.getSource()==vvr.getSearch()){
-					vvr.getTextdate().setText("entrez la date de fin d'operation");
+					vvr.getTextdate().setText("entrez la date d'aujourd'hui");
 					
 					ac1=new ActionListener(){
 						
@@ -101,6 +100,23 @@ public class Controller_vehicle_repaired {
 				}
 			}
 		};vvr.getSearch().addActionListener(ac);
+		
+ac3=new ActionListener(){
+			
+			public void actionPerformed(ActionEvent e){
+				
+				if((JButton)e.getSource()==vvr.getSauvegarde()){
+					f=new File("C:/Users/LM/Desktop/gitrep1/Master/THE_ORIGINALS_PDS_2016-2017/src/Client/properties/Sauvegardes");
+					
+					try {
+						Desktop.getDesktop().open(f);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		};vvr.getSauvegarde().addActionListener(ac3);
 
 	}
 	

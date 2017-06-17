@@ -61,7 +61,7 @@ public class ControllerZDialogVehicleInfo {
 	
 	public void myControl(){
 		
-		/*visitingMotifActionListener = new ActionListener() {
+		visitingMotifActionListener = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -94,7 +94,7 @@ public class ControllerZDialogVehicleInfo {
 					}
 				}
 		};
-		viewZDialogVI.getButtonVisitingMotif().addActionListener(visitingMotifActionListener);*/
+		viewZDialogVI.getButtonVisitingMotif().addActionListener(visitingMotifActionListener);
 		
 		breckdownActionListener = new ActionListener() {
 			

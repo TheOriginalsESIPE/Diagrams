@@ -1,7 +1,9 @@
 package Client.view;
 
 import Client.enumeration.EnumUserToken;
+import Client.controller.ControllerChef;
 import Client.controller.ControllerDepotPieces;
+import Client.controller.ControllerPersonel;
 import Client.controller.ControllerIndicatorActivity;
 import Client.controller.ControllerPieceDetached;
 import Client.controller.ControllerZDialogVehicleInfo;
@@ -10,6 +12,7 @@ import Client.controller.Controller_vehicle_repaired;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.Socket;
 
 /**
@@ -32,7 +35,7 @@ import java.net.Socket;
 public class WelcomeView extends JFrame implements ActionListener{
     private JLabel welcome;
     private JLabel jtoken;
-    private JButton vehicleInfo, idctOperation, changeStatus, pieceDetached, depotPiece;
+    private JButton vehicleInfo, idctOperation, changeStatus, pieceDetached, depotPiece, workflow, repairer;
     private String token;
     private Socket client;
 
@@ -45,7 +48,7 @@ public class WelcomeView extends JFrame implements ActionListener{
         this.token = token;
         this.client = client;
         setLayout(null);
-        setSize(400, 600);
+        setSize(400, 800);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         welcome = new JLabel("Welcome to use theOriginals technology");
@@ -64,12 +67,18 @@ public class WelcomeView extends JFrame implements ActionListener{
         pieceDetached.setBounds(100,310, 200, 50);
         depotPiece = new JButton("Piece warehouse");
         depotPiece.setBounds(100, 450, 200, 50);
+        workflow = new JButton("Workflow");
+        workflow.setBounds(100, 520, 200, 50);
+        repairer = new JButton("Operation repairer");
+        repairer.setBounds(100, 590, 200, 50);
 
         this.showTokenMsg();
         vehicleInfo.addActionListener(this);
         changeStatus.addActionListener(this);
         pieceDetached.addActionListener(this);
         depotPiece.addActionListener(this);
+        repairer.addActionListener(this);
+        workflow.addActionListener(this);
         
         this.add(welcome);
         this.add(jtoken);
@@ -78,15 +87,19 @@ public class WelcomeView extends JFrame implements ActionListener{
         this.add(pieceDetached);
         this.add(idctOperation);
         this.add(depotPiece);
+        this.add(workflow);
+        this.add(repairer);
     }
 
     public void showTokenMsg(){
         if(!token.equals(EnumUserToken.DIRECTOR.name()) && !token.equals(EnumUserToken.ADMINISTRATOR.name())){
             idctOperation.setEnabled(false);
-            jtoken.setText("You are denied to use Operation Syntheses");
+            repairer.setEnabled(false);
+            jtoken.setText("You are denied to use some services.");
         } else {
             jtoken.setText("You are allowed to all Server.service.");
             idctOperation.addActionListener(this);
+            repairer.addActionListener(this);
         }
 
     }
@@ -119,9 +132,7 @@ public class WelcomeView extends JFrame implements ActionListener{
                  ControllerZDialogVehicleInfo c = new ControllerZDialogVehicleInfo(v, client);
                  c.myControl();
              });
-         }
-
-        
+        }
         //service r2
         if (e.getSource() == pieceDetached){
             SwingUtilities.invokeLater(()->{
@@ -142,9 +153,38 @@ public class WelcomeView extends JFrame implements ActionListener{
         //service Karim
         if(e.getSource() == depotPiece){
         	SwingUtilities.invokeLater(()->{
-        		ViewDepotPieces v= new ViewDepotPieces();
-        		ControllerDepotPieces j=new ControllerDepotPieces(v, client);
-        		j.Control();
+        		ViewDepotPieces v = new ViewDepotPieces();
+        		ControllerDepotPieces c = new ControllerDepotPieces(v, client);
+        		c.Control();
+        	});
+        }
+        
+        if(e.getSource() == workflow){
+        	SwingUtilities.invokeLater(()->{
+        		System.out.println("workflow!!!");
+				try {
+					ViewPersonel v = new ViewPersonel();
+					ControllerPersonel z = new ControllerPersonel(v,client);
+	        		z.control();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        		
+        	});
+        }
+        if(e.getSource() == repairer){
+        	SwingUtilities.invokeLater(()->{
+        		ViewChef v;
+				try {
+					v = new ViewChef();
+					ControllerChef z = new ControllerChef(v,client);
+	        		z.control();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        		
         	});
         }
     }

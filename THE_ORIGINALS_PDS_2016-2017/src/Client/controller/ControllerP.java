@@ -1,7 +1,6 @@
 package Client.controller;
 
 import java.awt.event.ActionEvent;
-import view.*;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,8 +11,8 @@ import java.net.Socket;
 
 import javax.swing.SwingUtilities;
 
-import enumeration.EnumService;
-import view.*;
+import Client.enumeration.EnumService;
+import Client.view.*;
 
 public class ControllerP {
 	private ViewP vp ;
@@ -112,15 +111,15 @@ public class ControllerP {
 			           	 
 			           	 out.println(EnumService.GET_OPERATION_SORT.name());
 			           	 out.flush();
-			           	 System.out.println("service envoyé");
+			           	 System.out.println("service envoyï¿½");
 			           	 String motif =in.readLine();
-			           	 vp.gettexPanne().setText(motif);//motif affiché 
+			           	 vp.gettexPanne().setText(motif);//motif affichï¿½ 
 			           	 
 			           	 String mdl ="Model : "+in.readLine();
 			           	 String numMat="Matricule : "+in.readLine();
 			           	 
 			           	 String info=mdl+"  "+numMat;
-			           	 vp.gettexRef().setText(info);//info affiché
+			           	 vp.gettexRef().setText(info);//info affichï¿½
 			           	 vp.showBtn();
 			           	 vp.showbtnPiece();
 			           	 //on ajoute l'action listener du boutton ajouter

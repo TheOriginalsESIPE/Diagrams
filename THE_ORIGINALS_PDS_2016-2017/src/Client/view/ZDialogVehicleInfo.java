@@ -56,7 +56,7 @@ public class ZDialogVehicleInfo extends JFrame {
 		JPanel panIV = new JPanel();
 		panIV.setBackground(Color.white);
 		panIV.setBorder(BorderFactory.createTitledBorder("Information du vehicule"));
-		panIV.setPreferredSize(new Dimension(450, 400));
+		panIV.setPreferredSize(new Dimension(240, 100));
 		panIV.setLayout(null);
 
 		registerLabel = new JLabel("Matricule");
@@ -156,7 +156,7 @@ public class ZDialogVehicleInfo extends JFrame {
 		jpanel.add(panVM);			jpanel.add(panB);
 
 		JPanel pan1 = new JPanel();
-		pan1.setPreferredSize(new Dimension(450, 400));
+		pan1.setPreferredSize(new Dimension(150, 100));
 		pan1.setLayout(new GridLayout(1, 1));
 		pan1.add(panVoitureIcon);
 
@@ -175,7 +175,7 @@ public class ZDialogVehicleInfo extends JFrame {
 		panMain.setLayout(new BorderLayout());
 		panMain.setPreferredSize(new Dimension(800, 800));
 		panMain.setBackground(Color.white);
-		panMain.add(pan1, BorderLayout.WEST);
+		//panMain.add(pan1, BorderLayout.WEST);
 		panMain.add(pan2, BorderLayout.CENTER);
 		panMain.add(pan3, BorderLayout.SOUTH);
 

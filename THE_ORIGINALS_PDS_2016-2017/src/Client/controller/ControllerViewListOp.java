@@ -10,8 +10,10 @@ import java.net.Socket;
 
 import javax.swing.SwingUtilities;
 
-import enumeration.EnumService;
-import view.ViewListOp;
+import Client.enumeration.EnumService;
+import Client.view.ViewListOp;
+
+
 
 public class ControllerViewListOp {
 	ViewListOp vlOp ;
@@ -56,21 +58,21 @@ public class ControllerViewListOp {
 		out = new PrintStream(socket.getOutputStream());
 		out.println(EnumService.AFFICHE_PSORT.name());
 		out.flush();
-		//on recupére les ligne du serveur
+		//on recupï¿½re les ligne du serveur
 		String line ; 
 		int nbrIteration ;
 		
 		if((line=in.readLine()).equals("DEBUT DENVOI")){
-		System.out.println("reçu : "+line);
+		System.out.println("reï¿½u : "+line);
 		
 		
 		
-		nbrIteration = Integer.parseInt(in.readLine()); //recupéré nbriteration
+		nbrIteration = Integer.parseInt(in.readLine()); //recupï¿½rï¿½ nbriteration
 		System.out.println("lecture "+nbrIteration+ " fois");
 		for(int i=0; i<nbrIteration;i++){
 			
 		line=in.readLine();
-		System.out.println("reçu : "+line);
+		System.out.println("reï¿½u : "+line);
 		vlOp.gettexp().append(line+"\n"); 
 		
 		}

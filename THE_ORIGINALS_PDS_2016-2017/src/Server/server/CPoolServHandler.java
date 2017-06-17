@@ -5,7 +5,10 @@ import Server.dto.Vehicle_warehouseDTO;
 import Server.service.Service;
 //import dto.Vehicle_warehouseDTO;
 import Server.repository.ModelpieceK;
+import Server.dto.OperationDTOAli;
 import Server.dto.Piece_stockDTO;
+import Server.dto.RepairerDTO;
+import Server.dto.VehicleDTOAli;
 import Server.enumeration.EnumOperation;
 
 import java.io.BufferedReader;
@@ -19,7 +22,11 @@ import java.util.Vector;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import Server.enumeration.*;
 import Server.sql.*;
+import Server.repository.ModelPersonel;
+import Server.repository.Modelchef;
 import Server.serialization.Deserialization;
 
 /**
@@ -33,7 +40,7 @@ import Server.serialization.Deserialization;
 public class CPoolServHandler extends Thread {
     private Socket client;
     private Server server;
-    private HandlerSQL hsql = new HandlerSQL()  ;
+    private HandlerSQL hsql = new HandlerSQL() ;
 
     /**
      * The constructor.
@@ -117,9 +124,7 @@ public class CPoolServHandler extends Thread {
                     String res = serv.getParking();
                     out.println(res);
                     out.flush();
-                }
-                
-                else if(cmd.equals(EnumService.SEARCHVEHICLE.name())){
+                } else if(cmd.equals(EnumService.SEARCHVEHICLE.name())){
                 	//System.out.println("debug");
                 	String date_end=in.readLine();//partie rajoutée
                 	System.out.println(date_end);
@@ -131,16 +136,13 @@ public class CPoolServHandler extends Thread {
                 		out.flush();
                 	}
                 	
-                }
-                
-                else if(cmd.equals(EnumService.SEARCHInfoVEHICLE.name())){
+                }  else if(cmd.equals(EnumService.SEARCHInfoVEHICLE.name())){
                 	server.msg.append("service serch vehicle.\n");
                 	String numMat=in.readLine();
                 	String d=serv.Vehiclenumat(numMat);
                 	out.println(d);
                 	out.flush();
-               }
-                else if(cmd.equals(EnumService.VEHICLERELOCATE.name())){
+               }  else if(cmd.equals(EnumService.VEHICLERELOCATE.name())){
                 	server.msg.append("service serch vehicle.\n");
                 	String numMat=in.readLine();
                 	int id_warehouse = Integer.parseInt(in.readLine());
@@ -178,8 +180,8 @@ public class CPoolServHandler extends Thread {
                             String z = Integer.toString(i);
                             out.println(z);
                         }
-                    }}
-                    else if(cmd.equals("Historique")){
+                    }
+                }else if(cmd.equals("Historique")){
                     	
                         String jsonString1 = in.readLine();
 	                    System.out.println(jsonString1);
@@ -207,7 +209,7 @@ public class CPoolServHandler extends Thread {
 	                            String z1 = null;
 	                            String z = null;
 	                            while (rs.next()){
-	                            	z ="entre:"+rs.getString("date_reception");
+	                            	z ="entr�:"+rs.getString("date_reception");
 	                            	server.msg.append("\n Result search = " + z);}
 	                            while (rs2.next()){
 	                            	 z1 ="sortie:"+rs2.getString("date_reception");
@@ -215,9 +217,8 @@ public class CPoolServHandler extends Thread {
 	                            }
 	                            out.println(z+" "+z1);
 	                        }
-                    	
-                    	
-                    } }
+                    } 
+	            }
                     else if(cmd.equals("toutelespieces")){
                     	 String jsonString1 = in.readLine();
 		                    System.out.println(jsonString1);
@@ -252,13 +253,88 @@ public class CPoolServHandler extends Thread {
 		                            out.println(z);
 		                        }
 		                    }
-		               }
+		               } else if(cmd.equals("chef")){
+                        String jsonString = in.readLine();
+                        System.out.println(jsonString);
+                        server.msg.append("\n" + jsonString);
+
+                        Deserialization des = new Deserialization();
+                        JSONObject jo = des.deserialGeneric(jsonString);
+                        int action = des.deserialAction(jo);//get action
+
+                        /**
+                         * Now we have action and vehicle, should call the Model
+                         * */
+                        Modelchef modechef = new Modelchef();
+                        RepairerDTO dto = new RepairerDTO();
+                        OperationDTOAli DTOp = new OperationDTOAli();
+                        if(des.deserialObject(jo, EnumDTO.REPAIRER.getName()) != null){
+                            JSONArray jsonArray = (JSONArray) des.deserialObject(jo, EnumDTO.REPAIRER.getName());
+                            jo = (JSONObject) jsonArray.get(0);
+                            dto.setFirstname(((String) jo.get("firstname")));
+                            dto.setLastname((String) jo.get("lastname"));
+                         if (action == EnumOperation.SEARCH.getIndex()) {
+    							String query = modechef.selectlogin(dto.getLastname(),dto.getFirstname());
+                                server.msg.append("\nQuery select login=" + query);
+                                ResultSet rs = hsql.selectQuery(query);
+                              	while (rs.next()){
+                                		dto.setLogin((rs.getString("login")));
+                                		 server.msg.append("\nQuery select op=" + rs.getString("login"));
+                                					  }
+                                String query2 = modechef.selectOp(dto.getLogin());
+                                server.msg.append("\nQuery select op=" + query2);
+                                ResultSet rs2 = hsql.selectQuery(query2);
+                                String z="";
+                                String v="";
+                                int i=0;
+                                while(rs2.next()){
+                                		v="reparateur :"+rs2.getString("login_repairer")+"\n"+" Numero Matricule :"+rs2.getString("numMat")+"\n"+" date_begin :"+rs2.getString("date_begin")
+                                		+"  date_end :"+rs2.getString("date_end")+"  time_end"+rs2.getString("time_end")+"\n"+"id_operation :"
+                                		+rs2.getString("id_operation")+"  id_breakdown"+rs2.getString("id_breakdown");
+                                	server.msg.append("\nQuery select login=" + v);
+                                	z=z+v+"\n";
+                                     i++;  }
+                               out.println(i+"\n"+z);
+                               
+                         }
+                    }
+                } else if(cmd.equals("personelMatricule")){
+                    String jsonString = in.readLine();
+                    System.out.println(jsonString);
+                    server.msg.append("\n" + jsonString);
+
+                    Deserialization des = new Deserialization();
+                    JSONObject jo = des.deserialGeneric(jsonString);
+                    int action = des.deserialAction(jo);//get action
+
+                    
+                    ModelPersonel modelPersonel = new ModelPersonel();
+                    VehicleDTOAli dto = new VehicleDTOAli();
+                    OperationDTOAli DTOp = new OperationDTOAli();
+                    if(des.deserialObject(jo, EnumDTO.VEHICLE.getName()) != null){   
+                        JSONArray jsonArray = (JSONArray) des.deserialObject(jo, EnumDTO.VEHICLE.getName());
+                        jo = (JSONObject) jsonArray.get(0);
+                        dto.setNumMat(((String) jo.get("numMat")));
+                        String p = null;
+                        if (action == EnumOperation.SEARCH.getIndex()) {
+                          	String List = modelPersonel.SelectOp(dto.getNumMat());
+                          	server.msg.append("\n REquet " + List);
+                          	ResultSet rs2 = hsql.selectQuery(List);
+                           String z="";
+                           String v="";
+                           while(rs2.next()){
+                           	v="Numero Matricule :"+rs2.getString("numMat")+" satus :"+rs2.getString("status");
+                           	server.msg.append("\nQuery select login=" + v);
+                           	z=z+v+"\n";
+                                  }
+                          out.println(z);
+                        }		
+                   }
+               }
+                
             }
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        }
     }
 }
