@@ -24,8 +24,9 @@ public class Controller_vehicle_repaired {
 	//private Server.repository.ModelVehicle mv;
 	private Client.view.ViewVehicleRepaired vvr;
 	private Client.view.ViewDetailVehicle vdv;
-	private ActionListener ac,ac1,ac2,ac3;
+	private ActionListener ac,ac1,ac2,ac3,ac4;
 	private Controller_detail_vehicle cvd;
+	private Client.view.ViewShowTable vst;
 	Socket socket;
     BufferedReader in;
     PrintStream out;
@@ -118,10 +119,21 @@ ac3=new ActionListener(){
 			}
 		};vvr.getSauvegarde().addActionListener(ac3);
 
+		ac4=new ActionListener(){
+			
+			public void actionPerformed(ActionEvent e){
+				
+				if((JButton)e.getSource()==vvr.getTable()){
+					vst=new Client.view.ViewShowTable();
+					//cst=new
+					//cst.control();
+				}
+			}
+		};vvr.getTable().addActionListener(ac4);
+
 	}
 	
 
 }
-	
 
 

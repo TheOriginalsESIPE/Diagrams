@@ -8,18 +8,22 @@ public class Vehicle_warehouseDTOL {
 	private String numPlace;
 	private String status;
 	private VehicleDTOL id_warehouse;
+	private String dateBeginOperation;
+	private String dateEndOperation;
 
 	public Vehicle_warehouseDTOL(){
 
 	}
 
-	public Vehicle_warehouseDTOL(String date_entrance, String date_wayout, String numMat, String numPlace, String status, VehicleDTOL id_warehouse ){
+	public Vehicle_warehouseDTOL(String date_entrance, String date_wayout, String numMat, String numPlace, String status, VehicleDTOL id_warehouse,String dateBeginOperation,String dateEndOperation ){
 		this.date_entrance=date_entrance;
 		this.date_wayout=date_wayout;
 		this.numMat=numMat;
 		this.numPlace=numPlace;
 		this.status=status;
 		this.id_warehouse=id_warehouse;
+		this.dateBeginOperation=dateBeginOperation;
+		this.dateEndOperation=dateEndOperation;
 
 	}
 
@@ -69,11 +73,29 @@ public class Vehicle_warehouseDTOL {
 	public void setNumPlace(String numPlace) {
 		this.numPlace = numPlace;
 	}
+	
+	
+
+	public String getDateBeginOperation() {
+		return dateBeginOperation;
+	}
+
+	public void setDateBeginOperation(String dateBeginOperation) {
+		this.dateBeginOperation = dateBeginOperation;
+	}
+
+	public String getDateEndOperation() {
+		return dateEndOperation;
+	}
+
+	public void setDateEndOperation(String dateEndOperation) {
+		this.dateEndOperation = dateEndOperation;
+	}
 
 	@Override
 	public String toString() {
 		return "Vehicle_warehouseDTO [date_entrance=" + date_entrance + ", date_wayout=" + date_wayout + ", numMat="
-				+ numMat + ", numPlace=" + numPlace + ", status=" + status + ", id_warehouse=" + id_warehouse + "]";
+				+ numMat + ", numPlace=" + numPlace + ", status=" + status + ", id_warehouse=" + id_warehouse + ",dateBeginOperation=" + dateBeginOperation + ",dateEndOperation=" + dateEndOperation +"]";
 	}
 
 	

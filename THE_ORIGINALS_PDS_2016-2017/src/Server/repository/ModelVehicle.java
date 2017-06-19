@@ -34,18 +34,9 @@ public class ModelVehicle {
 		return sql;
 	}
 	
-	/*public String update1(String numMat){
-		
-		String sql="update vehicle_warehouse set status='en circulation' where numMat='"+numMat+"'";
+	public String selectTable(){
+		String sql="select vehicle_warehouse.numMat,numPlace,date_entrance,date_wayout,status,operation.date_begin,operation.date_end from vehicle_warehouse,operation where vehicle_warehouse.numMat=operation.numMat";
 		return sql;
 	}
-	
-	public String update2(String numMat, int id){
-		
-		String sql="update vehicle_warehouse set id_warehouse='"+id+"' where numMat='"+numMat+"'";
-		return sql;
-	}*/
-	
-	
 
 }
