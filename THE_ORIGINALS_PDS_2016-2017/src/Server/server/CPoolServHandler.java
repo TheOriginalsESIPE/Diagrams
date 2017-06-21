@@ -26,6 +26,7 @@ import org.json.simple.JSONObject;
 import Server.enumeration.*;
 import Server.sql.*;
 import Server.repository.ModelPersonel;
+import Server.repository.ModelViewListOp;
 import Server.repository.Modelchef;
 import Server.serialization.Deserialization;
 
@@ -41,6 +42,13 @@ public class CPoolServHandler extends Thread {
     private Socket client;
     private Server server;
     private HandlerSQL hsql = new HandlerSQL() ;
+    //variable pour le controllerP
+    
+    int idOperation =1;
+    String matricul ;
+    String panne ;
+    int idpanne  ;
+    String loginRepair ;
 
     /**
      * The constructor.
@@ -63,10 +71,12 @@ public class CPoolServHandler extends Thread {
                 String cmd = in.readLine();
                 System.out.println(cmd);
 
-                if (cmd.equals(EnumService.AUTH.name())) {
+                if (cmd.equals(EnumService.AUTH.name())) { 
                     String login = in.readLine();
                     String pwd = in.readLine();
                     String res = serv.authService(login, pwd);
+                    loginRepair= login ;
+
 
                     server.msg.append("\n auth = " + login + " " + pwd);
                     server.msg.append("\n response " + res);
@@ -74,7 +84,53 @@ public class CPoolServHandler extends Thread {
                     out.println(res);
                     out.flush();
 
-                } else if (cmd.equals(EnumService.PIECE.name())) {
+                }else if (cmd.equals(EnumService.AFFICHE_PSORT.name())){
+
+                	server.msg.append("\n"+EnumServiceYoucef.AFFICHE_PSORT.name());
+                	//we call ModelViewListOp
+                	ModelViewListOp m= new ModelViewListOp();
+                	//on construit notre requette sql
+                	String req =m.getListFromBd();
+                	server.msg.append("\n"+req);
+                	ResultSet res=hsql.selectQuery(req);
+                	
+                	server.msg.append("\n recupération de la base");
+                	//on recupére ligne par ligne 
+                	
+                	String lineBD = "";
+                	int nb=0;
+                	String nbS="";
+                	
+                	out.println("DEBUT DENVOI");
+                	out.flush();
+                	while(res.next()){
+                		nb++;
+                		nbS=Integer.toString(nb);
+                		lineBD= lineBD + "Operation N° "+nbS+" Voiture :  "+res.getString(1)+
+                				"            Panne :  "+res.getString(2)+" id_operation : "+res.getInt(3)+"\n";
+                		
+                		
+                		}
+                	out.println(nbS);
+                	out.flush();
+                	out.print(lineBD);
+                
+            		out.flush();
+            		
+            		System.out.println("ce que jai envoyé :"+ lineBD);
+            		server.msg.append("\n"+ lineBD ); 
+
+
+                	//on envoi au client le resultat
+                	
+                	
+                	
+                	
+                
+                	
+                	
+                	
+                }else if (cmd.equals(EnumService.PIECE.name())) {
 
                     String jsonString = in.readLine();
                     System.out.println(jsonString);

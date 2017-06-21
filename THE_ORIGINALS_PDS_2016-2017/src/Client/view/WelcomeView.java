@@ -5,6 +5,7 @@ import Client.controller.ControllerChef;
 import Client.controller.ControllerDepotPieces;
 import Client.controller.ControllerPersonel;
 import Client.controller.ControllerIndicatorActivity;
+import Client.controller.ControllerP;
 import Client.controller.ControllerPieceDetached;
 import Client.controller.ControllerZDialogVehicleInfo;
 import Client.controller.Controller_vehicle_repaired;
@@ -35,7 +36,7 @@ import java.net.Socket;
 public class WelcomeView extends JFrame implements ActionListener{
     private JLabel welcome;
     private JLabel jtoken;
-    private JButton vehicleInfo, idctOperation, changeStatus, pieceDetached, depotPiece, workflow, repairer;
+    private JButton vehicleInfo, idctOperation, changeStatus, pieceDetached, depotPiece, workflow, repairer,opMaint;
     private String token;
     private Socket client;
 
@@ -58,19 +59,23 @@ public class WelcomeView extends JFrame implements ActionListener{
 
         //Button
         vehicleInfo = new JButton("Vehicle Information");
-        vehicleInfo.setBounds(100, 170, 200, 50);
+        vehicleInfo.setBounds(100, 150, 200, 50);
         idctOperation = new JButton("Operation syntheses");
-        idctOperation.setBounds(100, 380, 200, 50);
+        idctOperation.setBounds(100, 360, 200, 50);
         changeStatus = new JButton("Way out vehicle");
-        changeStatus.setBounds(100, 240, 200, 50);
+        changeStatus.setBounds(100, 220, 200, 50);
         pieceDetached = new JButton("Add Detached Piece");
-        pieceDetached.setBounds(100,310, 200, 50);
+        pieceDetached.setBounds(100,290, 200, 50);
         depotPiece = new JButton("Piece warehouse");
-        depotPiece.setBounds(100, 450, 200, 50);
+        depotPiece.setBounds(100, 430, 200, 50);
         workflow = new JButton("Workflow");
-        workflow.setBounds(100, 520, 200, 50);
+        workflow.setBounds(100, 500, 200, 50);
         repairer = new JButton("Operation repairer");
-        repairer.setBounds(100, 590, 200, 50);
+        repairer.setBounds(100, 570, 200, 50);
+        //partie Youcef Bounekta
+        opMaint = new JButton("Operation de maintenance");
+        opMaint.setBounds(100, 640, 200, 50);
+
 
         this.showTokenMsg();
         vehicleInfo.addActionListener(this);
@@ -79,7 +84,7 @@ public class WelcomeView extends JFrame implements ActionListener{
         depotPiece.addActionListener(this);
         repairer.addActionListener(this);
         workflow.addActionListener(this);
-        
+        opMaint.addActionListener(this);
         this.add(welcome);
         this.add(jtoken);
         this.add(vehicleInfo);
@@ -89,6 +94,8 @@ public class WelcomeView extends JFrame implements ActionListener{
         this.add(depotPiece);
         this.add(workflow);
         this.add(repairer);
+        this.add(opMaint);
+
     }
 
     public void showTokenMsg(){
@@ -123,6 +130,14 @@ public class WelcomeView extends JFrame implements ActionListener{
                 IndicatorActivityView idct = new IndicatorActivityView();
                 ControllerIndicatorActivity c= new ControllerIndicatorActivity(idct, client);
                 c.control();
+            });
+        }
+        //service de youcef bounekta selkedriss
+        if(e.getSource() == opMaint){
+            SwingUtilities.invokeLater(()->{
+            	ViewP vp = new ViewP();
+                ControllerP ctrp= new ControllerP(vp, client);
+                ctrp.control();
             });
         }
         //service de Bakary
