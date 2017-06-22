@@ -1,7 +1,7 @@
 package Client.controller;
 
 import java.awt.event.ActionEvent;
-import view.*;
+import Client.view.*;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,9 +12,9 @@ import java.net.Socket;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import enumeration.EnumService;
+import Client.enumeration.*;;
 
-public class ControllerPieceYoucef {
+public class ControllerPieceOperation {
 	
 	private ViewPiece vp ;
 	private ActionListener actionOK ;
@@ -24,7 +24,7 @@ public class ControllerPieceYoucef {
 	 BufferedReader in;
 	    PrintStream out;
 	    
-	public ControllerPieceYoucef(ViewPiece  vp,ViewP bigView, Socket socket ){
+	public ControllerPieceOperation(ViewPiece  vp,ViewP bigView, Socket socket ){
 		this.vp=vp ;
 		this.socket=socket ;
 		this.bigView=bigView;

@@ -1,7 +1,7 @@
 package Server.repository;
 
-public class ModelPieceY {
-	public ModelPieceY (){}
+public class ModelPieceOperation {
+	public ModelPieceOperation (){}
 
 	public String testExist(String piece){
         String query = "SELECT * FROM piece_stock where name= '"+piece+"';";

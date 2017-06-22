@@ -16,8 +16,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Vector;
 
 import org.json.simple.JSONArray;
@@ -25,7 +27,11 @@ import org.json.simple.JSONObject;
 
 import Server.enumeration.*;
 import Server.sql.*;
+
+import Server.repository.ModelInfoVehicle;
+import Server.repository.ModelP;
 import Server.repository.ModelPersonel;
+import Server.repository.ModelPieceOperation;
 import Server.repository.ModelViewListOp;
 import Server.repository.Modelchef;
 import Server.serialization.Deserialization;
@@ -130,7 +136,232 @@ public class CPoolServHandler extends Thread {
                 	
                 	
                 	
-                }else if (cmd.equals(EnumService.PIECE.name())) {
+                }else if(cmd.equals(EnumServiceYoucef.IMPORT_PIECE.name())){
+                	
+
+                	server.msg.append("import piece\n");
+                    ModelPieceOperation mp = new ModelPieceOperation();
+
+                   String nomPiece = in.readLine();//recupération du nom de la piéce
+                   String qteS =in.readLine(); //recupération de la quantité
+                   
+                   if(mp.estUnEntier(qteS)){///
+                	   
+                   
+                   
+                   
+                   server.msg.append(nomPiece + " | "+ qteS);
+                   int qte=Integer.parseInt(qteS);
+                  String exist =mp.testExist(nomPiece) ;
+                  String select= mp.testtPiece(nomPiece);//on select le nombre qte afin de le tester
+                  
+                  ResultSet rsExist=hsql.selectQuery(exist);
+                  if (!rsExist.next()){
+                	  out.println("piece not exist");
+                	  out.flush();
+                	  
+                  }else {
+                  
+                  ResultSet rs= hsql.selectQuery(select);
+                  
+                  server.msg.append("conection avec la BD faite");
+                  if (rs.next()){
+                  if (rs.getInt("counter") - qte< 0){
+                	  server.msg.append("\nImpossible return") ;
+                	  out.println("impossible");
+                	  out.flush();
+                	  ///jusquici tout vas bien
+                	  
+                  }else{//on modifi la table piéce en stock
+                	  
+                      String modif=mp.importPiece(nomPiece, qte);
+                      
+                      server.msg.append("\n"+modif);
+                      int rep =hsql.updateQuery(modif);
+                      
+                      server.msg.append("\n"+rep+"  lignes modifié");
+                      //recupéréle id de la piéce 
+                      String rec =mp.recupereridPiece(nomPiece);
+                      ResultSet rs2 =hsql.selectQuery(rec);
+                      String id_piece="";
+                      if(rs2.next()){
+                    	  id_piece=rs2.getString(1);
+                    	  server.msg.append("\nid piece :" + id_piece);
+                      //recupération de lid 
+                    	  //
+                      
+                    	  String inser =mp.insertPieceConso(id_piece, nomPiece, qte, idOperation);
+                    	  int rep2 = hsql.updateQuery(inser);
+                    	  server.msg.append("\n"+rep2+" lignes ont été ajouter a la table des piece consomées");
+                    	  if (rep2 != 0){
+                    		  String ef="effect";
+                    		  out.println(ef);
+                              out.flush();
+                    	  }//pour lui dire que cest effectué 
+                      
+                      }
+                  
+                
+                      }}
+                   server.msg.append("\n" + nomPiece +"///////"+ qte);
+
+                } }else{
+                	String ef="err Qte";//le serveur détécte que la qte n'est pas un entier
+          		    out.println(ef);
+                    out.flush();
+                	
+               
+                }
+            
+                	
+                	
+                }else if (cmd.equals(EnumServiceYoucef.GET_OPERATION_SORT.name())){
+
+                	//on appel le modelP
+                	ModelP mdlp = new ModelP();
+                	String reqMaxRang =mdlp.selectMaxRang();
+                    server.msg.append("\n"+"recupération du degré max ");
+                    server.msg.append("\n"+reqMaxRang);
+
+
+                	
+                	ResultSet rsMax=hsql.selectQuery(reqMaxRang);
+                	if (rsMax.next()){
+                    int max =rsMax.getInt(1);
+               
+                	String reqOpSort =mdlp.selectMaxline(max);//ici on recupérée l'operation priorisée 
+                    server.msg.append("\n"+reqOpSort);
+     
+                	ResultSet rsMAX=hsql.selectQuery(reqOpSort);
+                    if(rsMAX.next()){
+                        server.msg.append("\n operation trouvé");
+
+                    int idOp =rsMAX.getInt(1);
+                    int idOp_Op =rsMAX.getInt(2);
+                    
+                    idOperation=idOp_Op;
+                    server.msg.append("\n identifiant de loperation : "+idOperation);
+                    
+                    //on renseigne les champs time_begin et date begin
+                    String renseign =mdlp.setTime(idOp_Op);
+                    int ligneModif =hsql.updateQuery(renseign);
+                    
+                    server.msg.append("\n les champs time et date on été renseigné  "+ligneModif);
+                    
+                    
+                    //int idPanne=rsMAX.getInt(3);
+                    
+                    
+                    String numMat =rsMAX.getString(3);
+                    matricul=numMat;
+                    server.msg.append("\n matricul vehicle : "+matricul);
+
+                    int rang =rsMAX.getInt(5);
+                    
+                    //on recupére l'idPanne
+                    String reqIdPanne=mdlp.selectIdPanne(idOperation);
+                    ResultSet resPanne =hsql.selectQuery(reqIdPanne);
+                    if (resPanne.next()){
+                    	 idpanne = resPanne.getInt(1);
+                    }
+                    
+                    //on recupére le motif 
+                    
+                    String reqMotif =mdlp.selectMotif(idpanne);
+                    server.msg.append("\n"+reqMotif);
+
+                    ResultSet rsMotif=hsql.selectQuery(reqMotif);
+                    if(rsMotif.next()){
+                    	String namePanne =rsMotif.getString("name");
+                    	panne=namePanne ;
+                    	out.println(namePanne);
+                    	out.flush();
+                        server.msg.append("\n"+"motif envoyé");
+
+                    }
+                    //on recupére le nom du véhicule
+                    String reqVehicle =mdlp.selecVehicle(numMat);
+                    server.msg.append("\n"+reqVehicle);
+                    ResultSet rss=hsql.selectQuery(reqVehicle);
+                    if (rss.next()){
+                    server.msg.append("\n"+"info envoyé");
+
+                    String mdl= rss.getString(2);
+                    out.println(mdl);
+                    out.flush();
+                    out.println(numMat);
+                    out.flush();
+                    server.msg.append("\n"+"info envoyé");
+                    }
+                    
+            
+                  
+                    
+          
+                    }
+                	}
+                	
+                	
+                
+                	
+                }else if (cmd.equals(EnumServiceYoucef.SHOW_INFO.name())){
+                	
+
+                	server.msg.append("\n"+cmd);
+                	
+                	ModelInfoVehicle modelInfo = new ModelInfoVehicle();
+                	String req1=modelInfo.reqInfoPanne(panne);
+                	String req2=modelInfo.reqInfoV(matricul);
+                	String req3=modelInfo.reqInfoWarehouse(matricul);
+                	server.msg.append("\n"+req1);
+                	ResultSet resInfo=hsql.selectQuery(req1);
+                	if (resInfo.next()){
+                		
+                		Time duree = resInfo.getTime(1);
+                		String d =duree.toString();
+                		out.println(d);
+                		out.flush();
+                		 }
+                	
+                	server.msg.append("\n"+req2);
+                	ResultSet resInfo2=hsql.selectQuery(req2);
+                	if (resInfo2.next()){
+                		String model =resInfo2.getString(2);
+                		String mark  =resInfo2.getString(3);
+                		String type  =resInfo2.getString(4);
+                		
+                		out.println(model);
+                		out.flush();
+                		
+                		out.println(mark);
+                		out.flush();
+                		
+                		out.println(type);
+                		out.flush  ();
+                       }
+                	
+                	server.msg.append("\n"+req3);
+                	ResultSet resInfo3 =hsql.selectQuery(req3);
+                	if(resInfo3.next()){
+                		int numPlace=resInfo3.getInt(2);
+                		String numPlaceS=Integer.toString(numPlace);
+                		out.println(numPlaceS);
+                		out.flush();
+                		
+                		Date d =resInfo3.getDate(3);
+                		String date=d.toString();
+                		out.println(date);
+                		out.flush();
+                		
+                	}
+                	
+                	
+                	
+                	
+                
+                }
+                
+                else if (cmd.equals(EnumService.PIECE.name())) {
 
                     String jsonString = in.readLine();
                     System.out.println(jsonString);
