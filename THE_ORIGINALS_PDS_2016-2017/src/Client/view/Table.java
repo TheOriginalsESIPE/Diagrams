@@ -33,6 +33,14 @@ public class Table extends AbstractTableModel{
 		return nom[column];
 	}
 	
+	public String[][] getDonnees() {
+		return donnees;
+	}
+
+	public void setDonnees(String[][] donnees) {
+		this.donnees = donnees;
+	}
+	
 	
 
 }

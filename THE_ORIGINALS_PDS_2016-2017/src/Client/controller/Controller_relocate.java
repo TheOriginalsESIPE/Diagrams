@@ -23,8 +23,7 @@ import Server.repository.ModelVehicle;
 
 public class Controller_relocate {
 	
-	private Client.view.ViewRelocate vr; 
-	//private Server.repository.ModelVehicle mv;
+	private Client.view.ViewRelocate vr;
 	private ActionListener ac,ac1;
 	BufferedReader in,in1;
     PrintStream out;

@@ -100,8 +100,8 @@ public class CPoolServHandler extends Thread {
                 	server.msg.append("\n"+req);
                 	ResultSet res=hsql.selectQuery(req);
                 	
-                	server.msg.append("\n recupération de la base");
-                	//on recupére ligne par ligne 
+                	server.msg.append("\n recupï¿½ration de la base");
+                	//on recupï¿½re ligne par ligne 
                 	
                 	String lineBD = "";
                 	int nb=0;
@@ -112,7 +112,7 @@ public class CPoolServHandler extends Thread {
                 	while(res.next()){
                 		nb++;
                 		nbS=Integer.toString(nb);
-                		lineBD= lineBD + "Operation N° "+nbS+" Voiture :  "+res.getString(1)+
+                		lineBD= lineBD + "Operation Nï¿½ "+nbS+" Voiture :  "+res.getString(1)+
                 				"            Panne :  "+res.getString(2)+" id_operation : "+res.getInt(3)+"\n";
                 		
                 		
@@ -123,7 +123,7 @@ public class CPoolServHandler extends Thread {
                 
             		out.flush();
             		
-            		System.out.println("ce que jai envoyé :"+ lineBD);
+            		System.out.println("ce que jai envoyï¿½ :"+ lineBD);
             		server.msg.append("\n"+ lineBD ); 
 
 
@@ -142,8 +142,8 @@ public class CPoolServHandler extends Thread {
                 	server.msg.append("import piece\n");
                     ModelPieceOperation mp = new ModelPieceOperation();
 
-                   String nomPiece = in.readLine();//recupération du nom de la piéce
-                   String qteS =in.readLine(); //recupération de la quantité
+                   String nomPiece = in.readLine();//recupï¿½ration du nom de la piï¿½ce
+                   String qteS =in.readLine(); //recupï¿½ration de la quantitï¿½
                    
                    if(mp.estUnEntier(qteS)){///
                 	   
@@ -172,32 +172,32 @@ public class CPoolServHandler extends Thread {
                 	  out.flush();
                 	  ///jusquici tout vas bien
                 	  
-                  }else{//on modifi la table piéce en stock
+                  }else{//on modifi la table piï¿½ce en stock
                 	  
                       String modif=mp.importPiece(nomPiece, qte);
                       
                       server.msg.append("\n"+modif);
                       int rep =hsql.updateQuery(modif);
                       
-                      server.msg.append("\n"+rep+"  lignes modifié");
-                      //recupéréle id de la piéce 
+                      server.msg.append("\n"+rep+"  lignes modifiï¿½");
+                      //recupï¿½rï¿½le id de la piï¿½ce 
                       String rec =mp.recupereridPiece(nomPiece);
                       ResultSet rs2 =hsql.selectQuery(rec);
                       String id_piece="";
                       if(rs2.next()){
                     	  id_piece=rs2.getString(1);
                     	  server.msg.append("\nid piece :" + id_piece);
-                      //recupération de lid 
+                      //recupï¿½ration de lid 
                     	  //
                       
                     	  String inser =mp.insertPieceConso(id_piece, nomPiece, qte, idOperation);
                     	  int rep2 = hsql.updateQuery(inser);
-                    	  server.msg.append("\n"+rep2+" lignes ont été ajouter a la table des piece consomées");
+                    	  server.msg.append("\n"+rep2+" lignes ont ï¿½tï¿½ ajouter a la table des piece consomï¿½es");
                     	  if (rep2 != 0){
                     		  String ef="effect";
                     		  out.println(ef);
                               out.flush();
-                    	  }//pour lui dire que cest effectué 
+                    	  }//pour lui dire que cest effectuï¿½ 
                       
                       }
                   
@@ -206,7 +206,7 @@ public class CPoolServHandler extends Thread {
                    server.msg.append("\n" + nomPiece +"///////"+ qte);
 
                 } }else{
-                	String ef="err Qte";//le serveur détécte que la qte n'est pas un entier
+                	String ef="err Qte";//le serveur dï¿½tï¿½cte que la qte n'est pas un entier
           		    out.println(ef);
                     out.flush();
                 	
@@ -220,7 +220,7 @@ public class CPoolServHandler extends Thread {
                 	//on appel le modelP
                 	ModelP mdlp = new ModelP();
                 	String reqMaxRang =mdlp.selectMaxRang();
-                    server.msg.append("\n"+"recupération du degré max ");
+                    server.msg.append("\n"+"recupï¿½ration du degrï¿½ max ");
                     server.msg.append("\n"+reqMaxRang);
 
 
@@ -229,12 +229,12 @@ public class CPoolServHandler extends Thread {
                 	if (rsMax.next()){
                     int max =rsMax.getInt(1);
                
-                	String reqOpSort =mdlp.selectMaxline(max);//ici on recupérée l'operation priorisée 
+                	String reqOpSort =mdlp.selectMaxline(max);//ici on recupï¿½rï¿½e l'operation priorisï¿½e 
                     server.msg.append("\n"+reqOpSort);
      
                 	ResultSet rsMAX=hsql.selectQuery(reqOpSort);
                     if(rsMAX.next()){
-                        server.msg.append("\n operation trouvé");
+                        server.msg.append("\n operation trouvï¿½");
 
                     int idOp =rsMAX.getInt(1);
                     int idOp_Op =rsMAX.getInt(2);
@@ -246,7 +246,7 @@ public class CPoolServHandler extends Thread {
                     String renseign =mdlp.setTime(idOp_Op);
                     int ligneModif =hsql.updateQuery(renseign);
                     
-                    server.msg.append("\n les champs time et date on été renseigné  "+ligneModif);
+                    server.msg.append("\n les champs time et date on ï¿½tï¿½ renseignï¿½  "+ligneModif);
                     
                     
                     //int idPanne=rsMAX.getInt(3);
@@ -258,14 +258,14 @@ public class CPoolServHandler extends Thread {
 
                     int rang =rsMAX.getInt(5);
                     
-                    //on recupére l'idPanne
+                    //on recupï¿½re l'idPanne
                     String reqIdPanne=mdlp.selectIdPanne(idOperation);
                     ResultSet resPanne =hsql.selectQuery(reqIdPanne);
                     if (resPanne.next()){
                     	 idpanne = resPanne.getInt(1);
                     }
                     
-                    //on recupére le motif 
+                    //on recupï¿½re le motif 
                     
                     String reqMotif =mdlp.selectMotif(idpanne);
                     server.msg.append("\n"+reqMotif);
@@ -276,22 +276,22 @@ public class CPoolServHandler extends Thread {
                     	panne=namePanne ;
                     	out.println(namePanne);
                     	out.flush();
-                        server.msg.append("\n"+"motif envoyé");
+                        server.msg.append("\n"+"motif envoyï¿½");
 
                     }
-                    //on recupére le nom du véhicule
+                    //on recupï¿½re le nom du vï¿½hicule
                     String reqVehicle =mdlp.selecVehicle(numMat);
                     server.msg.append("\n"+reqVehicle);
                     ResultSet rss=hsql.selectQuery(reqVehicle);
                     if (rss.next()){
-                    server.msg.append("\n"+"info envoyé");
+                    server.msg.append("\n"+"info envoyï¿½");
 
                     String mdl= rss.getString(2);
                     out.println(mdl);
                     out.flush();
                     out.println(numMat);
                     out.flush();
-                    server.msg.append("\n"+"info envoyé");
+                    server.msg.append("\n"+"info envoyï¿½");
                     }
                     
             
@@ -423,7 +423,15 @@ public class CPoolServHandler extends Thread {
                 		out.flush();
                 	}
                 	
-                }  else if(cmd.equals(EnumService.SEARCHInfoVEHICLE.name())){
+                }else if(cmd.equals(EnumService.TABLE.name())){
+                	System.out.println("table case");
+                	String d=serv.Table();
+                	out.println(d);
+                	out.flush();
+                	
+                }
+                
+                else if(cmd.equals(EnumService.SEARCHInfoVEHICLE.name())){
                 	server.msg.append("service serch vehicle.\n");
                 	String numMat=in.readLine();
                 	String d=serv.Vehiclenumat(numMat);

@@ -8,6 +8,8 @@ import Server.dto.IndicatorDTO;
 import Server.dto.ParkingDTO;
 import Server.dto.VehicleDTO;
 //import Server.dto.VisitingMotifDTO;
+import Server.dto.Vehicle_warehouseDTO;
+import Server.dto.Vehicle_warehouseDTOL;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -50,5 +52,11 @@ public class DeserializationGson {
         Type type = new TypeToken<Vector<ParkingDTO>>(){}.getType();
         Vector<ParkingDTO> listPark = g.fromJson(str, type);
         return listPark;
+    }
+    
+    public Vector<Vehicle_warehouseDTOL> desVehicle_warehouseDTOL(String s){
+    	Type t=new TypeToken<Vector<Vehicle_warehouseDTOL>>(){}.getType();
+    	Vector<Vehicle_warehouseDTOL> list1=g.fromJson(s,t);
+    	return list1;
     }
 }

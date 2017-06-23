@@ -14,16 +14,9 @@ public class ViewShowTable extends JFrame{
 	private Table t;
 	private JTable table;
 	public JScrollPane scrollp;
+	private JButton ok;
 	
 	public ViewShowTable(){
-		
-		/**fenetre=new JFrame("table");
-		this.setSize(500, 500);
-		FlowLayout fl=new FlowLayout();
-		fenetre.getContentPane().setLayout(fl);
-		fenetre.setSize(WIDTH, HEIGHT);
-		fenetre.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		fenetre.setVisible(true);**/
 		
 		super("table");
         setLayout(null);
@@ -31,6 +24,8 @@ public class ViewShowTable extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
 		
+        ok=new JButton("OK");
+        ok.setBounds(30, 420, 180, 30);
 		t= new Table();
         table = new JTable(t);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
@@ -38,8 +33,9 @@ public class ViewShowTable extends JFrame{
         table.setAutoCreateRowSorter(true);
 
         scrollp = new JScrollPane(table);
-        scrollp.setBounds(20, 20, 400, 400);
+        scrollp.setBounds(20, 20, 100, 100);
         this.getContentPane().add(scrollp);
+        this.getContentPane().add(ok);
 	}
 
 	public JFrame getFenetre() {
@@ -60,6 +56,14 @@ public class ViewShowTable extends JFrame{
 
 	public JTable getTable() {
 		return table;
+	}
+
+	public JButton getOk() {
+		return ok;
+	}
+
+	public void setOk(JButton ok) {
+		this.ok = ok;
 	}
 
 	public void setTable(JTable table) {

@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 import Server.repository.ModelAuth;
 import Server.repository.ModelIndicatorActivity;
 import Server.repository.ModelPiece;
+import Server.repository.ModelVehicle;
 import Server.repository.ZDialogVehicleInfoRepository;
 import Server.sql.HandlerSQL;
 
@@ -364,6 +365,43 @@ return parking;
     	 
     	 return res;
     }
+    
+public String Table() {
+		
+		ModelVehicle mv=new ModelVehicle();
+		List<Vehicle_warehouseDTOL> list=new ArrayList<Vehicle_warehouseDTOL>();
+		
+		String res="";
+		
+		try{
+			
+			ResultSet rs=hsql.selectQuery(mv.selectTable());
+			while(rs.next()){
+				String nM = rs.getString("numMat");
+				int nP = rs.getInt("numPlace");
+				String De = rs.getString("date_entrance");
+				String Dw = rs.getString("date_wayout");
+				String dbo = rs.getString("date_begin");
+				String deo = rs.getString("date_end");
+				String s = rs.getString("status");
+				System.out.println(nP+ " ; " + nM + ";"+ De +" ; "+ Dw +" ; "+ dbo +" ; "+ deo+" ; "+ s +" ; ");
+				Vehicle_warehouseDTOL vh=new Vehicle_warehouseDTOL();
+				vh.setNumMat(nM);
+				vh.setNumPlace(String.valueOf(nP));
+				vh.setDate_entrance(De);
+				vh.setDate_wayout(Dw);
+				vh.setDateBeginOperation(dbo);
+				vh.setDateEndOperation(deo);
+				vh.setStatus(s);
+				list.add(vh);
+			}
+			System.out.println("call table service." + rs.getRow());
+			
+			SerializationGson v=new SerializationGson();
+			res=v.serialGenericVehicle_warehouseDTOL(list);
+		}catch(SQLException e){}
+		return res;
+	}
 
 
 }

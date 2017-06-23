@@ -8,6 +8,8 @@ import Server.dto.IndicatorDTO;
 import Server.dto.ParkingDTO;
 import Server.dto.VehicleDTO;
 //import Server.dto.VisitingMotifDTO;
+import Server.dto.Vehicle_warehouseDTO;
+import Server.dto.Vehicle_warehouseDTOL;
 
 import java.util.List;
 
@@ -51,5 +53,12 @@ public class SerializationGson {
         String parseString = gson.toJson(o, obj);
         return parseString;
     }
+    
+    public String serialGenericVehicle_warehouseDTOL(Object o){
+      	 Gson gson = new Gson();
+           java.lang.reflect.Type obj = new TypeToken<List<Vehicle_warehouseDTOL>>(){}.getType();
+           String parseString = gson.toJson(o, obj);
+           return parseString;
+      }
 
 }
