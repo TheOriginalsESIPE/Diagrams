@@ -10,8 +10,8 @@ import java.net.Socket;
 
 import javax.swing.JOptionPane;
 
-import enumeration.EnumServiceYoucef;
-import view.ViewFin;
+import Client.enumeration.*;
+import Client.view.*;;
 
 
 public class ControllerFin {

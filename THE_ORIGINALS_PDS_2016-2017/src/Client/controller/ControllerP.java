@@ -140,7 +140,7 @@ public class ControllerP {
 			        				SwingUtilities.invokeLater(new Runnable() {
 			        		            public void run() {
 			        		            	vpiece = new ViewPiece();
-			        		            	ControllerPieceYoucef cp = new ControllerPieceYoucef(vpiece,vp, client);
+			        		            	ControllerPieceOperation cp = new ControllerPieceOperation(vpiece,vp, client);
 			        		            }
 			        				
 
