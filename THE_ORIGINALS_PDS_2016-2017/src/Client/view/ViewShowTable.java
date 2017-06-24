@@ -33,7 +33,7 @@ public class ViewShowTable extends JFrame{
         table.setAutoCreateRowSorter(true);
 
         scrollp = new JScrollPane(table);
-        scrollp.setBounds(20, 20, 100, 100);
+        scrollp.setBounds(20, 20, 400, 400);
         this.getContentPane().add(scrollp);
         this.getContentPane().add(ok);
 	}
