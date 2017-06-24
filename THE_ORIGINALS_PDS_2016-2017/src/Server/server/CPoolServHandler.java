@@ -35,6 +35,7 @@ import Server.repository.ModelPieceOperation;
 import Server.repository.ModelViewListOp;
 import Server.repository.Modelchef;
 import Server.serialization.Deserialization;
+import Server.repository.*;
 
 /**
  * Created by tearsyu on 15/03/17.
@@ -112,7 +113,7 @@ public class CPoolServHandler extends Thread {
                 	while(res.next()){
                 		nb++;
                 		nbS=Integer.toString(nb);
-                		lineBD= lineBD + "Operation Nï¿½ "+nbS+" Voiture :  "+res.getString(1)+
+                		lineBD= lineBD + "Operation N° "+nbS+" Voiture :  "+res.getString(1)+
                 				"            Panne :  "+res.getString(2)+" id_operation : "+res.getInt(3)+"\n";
                 		
                 		
@@ -123,7 +124,7 @@ public class CPoolServHandler extends Thread {
                 
             		out.flush();
             		
-            		System.out.println("ce que jai envoyï¿½ :"+ lineBD);
+            		System.out.println("ce que jai envoyé  :"+ lineBD);
             		server.msg.append("\n"+ lineBD ); 
 
 
@@ -359,9 +360,98 @@ public class CPoolServHandler extends Thread {
                 	
                 	
                 
-                }
+                }else if (cmd.equals(EnumServiceYoucef.ADD_OP.name())){
+
+                	server.msg.append("\n"+EnumServiceYoucef.ADD_OP.name());
+                	
+                	ModelNewOp mOp= new ModelNewOp();
+                	String nomDEpanne = in.readLine();
+                	
+                	String reqTest=mOp.testPanne(nomDEpanne);
+                	server.msg.append("\n"+reqTest);
+                	
+                	ResultSet rsOp=hsql.selectQuery(reqTest);
+                	if(rsOp.next()){
+                    	server.msg.append("\n"+"panne existante");
+
+                		out.println("panne exist");
+                		out.flush();
+                		int idBreakdown = rsOp.getInt(1);
+                		String reqInsert=mOp.ReqInserOp(idBreakdown, loginRepair, matricul);
+                    	server.msg.append("\n"+reqInsert);
+
+                		int nb=hsql.updateQuery(reqInsert);
+                    	if(nb!=0){
+                        	server.msg.append("\n"+nb+"  lignes ajouté");
+                        	out.println("ajouté");
+                        	out.flush();
+
+                    	}
+
+                		
+                		
+                	}else{
+                		out.println("panne not exist");
+                		out.flush();
+                		
+                	
+                	
+                	}
+                	
                 
-                else if (cmd.equals(EnumService.PIECE.name())) {
+                }else if(cmd.equals(EnumServiceYoucef.FINIR.name())){ 
+
+                	ModelFin mf = new ModelFin();
+                	String reqRenseign = mf.reqRenseigne(idOperation, loginRepair);
+                	String reqSup =mf.supOpSort(idOperation);
+                	String reqCount=mf.compterOp(matricul);
+                	String reqChangeStatus=mf.modifStatu(matricul);
+                	
+                	//on renseigne les information au niveau de la table operation
+                	int nbR = hsql.updateQuery(reqRenseign);
+                	if(nbR!=0){
+                		server.msg.append("\n" + reqRenseign);
+                		
+                		//on suprime loperation_sort
+                		int nbS=hsql.updateQuery(reqSup);
+                		
+                		if (nbS!=0){
+                    		server.msg.append("\n" + reqSup);
+                    	//on compte le nombre d'operation restante pour ce vehicule
+                    	
+                    		ResultSet result=hsql.selectQuery(reqCount);
+                    		
+                    		if(result.next()){
+                        		server.msg.append("\n" + reqCount);
+                        		int nombreDop =result.getInt(1);
+                        		String nombreDopS=Integer.toString(nombreDop);
+                        		out.println(nombreDopS);
+                        		
+                        		//on teste si il est null afin de changer le statu du véhicule en "réparé"
+                        		
+                        		if(nombreDop==0){
+                        			server.msg.append("\n  il n'ya plus d'operation pour ce vehcul");
+                        			int nbChange =hsql.updateQuery(reqChangeStatus);
+                        			if(nbChange!=0){
+                        				server.msg.append("\n"+reqChangeStatus);
+                        				
+                        				
+                        			}
+                        		}
+
+                    		}
+
+                		}
+                		
+                		
+                	}
+                	
+                	
+                	
+                	
+                	
+                
+                } else if (cmd.equals(EnumService.PIECE.name())) {
 
                     String jsonString = in.readLine();
                     System.out.println(jsonString);
