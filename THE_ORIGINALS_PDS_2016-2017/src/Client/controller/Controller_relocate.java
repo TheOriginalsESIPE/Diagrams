@@ -5,41 +5,40 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JButton;
 
 import Client.enumeration.EnumService;
-import Server.repository.ModelVehicle;
-//import view.ViewRelocate;
+
+
 
 public class Controller_relocate {
 	
 	private Client.view.ViewRelocate vr;
-	private ActionListener ac,ac1;
-	BufferedReader in,in1;
-    PrintStream out;
-    BufferedWriter out1;
-    File f;
+	private ActionListener ac;
+	private BufferedReader in;
+    private PrintStream out;
+    private BufferedWriter out1;
+    private File f;
 	private Socket socket;
 	public Controller_relocate(Socket socket, Client.view.ViewRelocate vr){
 		this.socket =socket;
 		this.vr=vr;
 	}
 	
+	//afficher la date et le'heure d'aujourd'hui
 	 public String DateAujourdhui(String date){
 			
 		 SimpleDateFormat formater=null;
 		 Date aujourdhui = new Date();
-		 formater = new SimpleDateFormat("'le' dd MMMM yyyy 'a' hh:mm:ss");
+		 formater = new SimpleDateFormat("'le' dd MMMM yyyy 'a' hh:mm");
 		 String date_end=formater.format(aujourdhui);
 		 return date_end;
 	 }
@@ -52,7 +51,8 @@ public class Controller_relocate {
 				
 				try{
 					f=new File("C:/Users/LM/Desktop/gitrep1/Master/THE_ORIGINALS_PDS_2016-2017/src/Client/properties/Sauvegardes");
-					out1=new BufferedWriter(new FileWriter(f));
+					in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					out1=new BufferedWriter(new FileWriter(f,true));
 					out = new PrintStream(socket.getOutputStream());
 				} catch(IOException e1){}
 				
@@ -60,11 +60,10 @@ public class Controller_relocate {
 					String answer1=vr.getTxtnumMat().getText();
 					String answer2=vr.getId().getText();
 					int answer2bis=Integer.parseInt(answer2);
-					String[] res = new String[4];
-					//String date = null;
+					String[] res = new String[100];
+					
 					try{
-						in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-						//in1=new BufferedReader(new FileReader(f));
+						
 						out.println(EnumService.VEHICLERELOCATE.name());
 						out.flush();
 						out.println(answer1);
@@ -73,9 +72,10 @@ public class Controller_relocate {
 						out.flush();
 						
 						String reponse=in.readLine();
-						res = reponse.split(" ");
+						res = reponse.split(" ",100);
 						// reponse = "AAA 2".split(" ")  
 						// res = {"AAA", "2"} res[0] = "AAA"
+						System.out.println(res[1]);
 						
 						out1.write("\r\n"+res[0]+" vehicule a été relocalise "+DateAujourdhui(answer2)+" et il a été mis en circulation à la meme date.");
 						out1.flush();

@@ -47,11 +47,9 @@ public class ControllerShowTable {
         			out=new PrintStream(socket.getOutputStream());
         			
         			if((JButton)e.getSource()==vst.getOk()){
-        				
-        				
+        				        				
         				out.println(EnumService.TABLE.name());
         				out.flush();
-        				
         				
         				String reponse=in.readLine();
         				
@@ -75,8 +73,6 @@ public class ControllerShowTable {
         				}
         				vst.getT().setDonnees(donnees);
         				vst.getT().fireTableDataChanged();
-        				vst.getTable().repaint();
-        				vst.getTable().updateUI();
         				
         			}
     			}catch(IOException e1){}

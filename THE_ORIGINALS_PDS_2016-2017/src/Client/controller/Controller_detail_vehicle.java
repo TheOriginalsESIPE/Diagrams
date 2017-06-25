@@ -7,44 +7,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
 import javax.swing.JButton;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import Client.dto.VehicleDTOL;
 import Client.enumeration.EnumService;
 import Client.view.ViewDetailVehicle;
 import Client.view.ViewRelocate;
-//import Server.repository.ModelVehicle;
 
-/**import dto.VehicleDTO;
-import dto.Vehicle_warehouseDTO;
-import enumeration.EnumDTO;
-import enumeration.EnumOperation;
-import enumeration.EnumService;
-//import ViewL.View_detail_vehicle;
-//import ViewL.View_relocate;
-import repository.ModelVehicle;
-import serialization.Deserialization;
-import serialization.Serialization;
-//import repositoryL.Model_Vehicle;
-import view.ViewDetailVehicle;
-import view.ViewRelocate;**/
 
 public class Controller_detail_vehicle {
 	
 	private ViewDetailVehicle vdv;
 	private ViewRelocate vr;
 	private Controller_relocate cr;
-	//private ModelVehicle mv;
 	private ActionListener ac,ac1;
-	Socket socket;
-    BufferedReader in;
-    PrintStream out;
+	private Socket socket;
+    private BufferedReader in;
+    private PrintStream out;
 	
 	public Controller_detail_vehicle(Socket socket, ViewDetailVehicle vdv){
 		this.socket=socket;
@@ -92,8 +72,6 @@ public class Controller_detail_vehicle {
 						
 					} catch(IOException e2){}
 					
-					/*String result=mv.select(numMat);
-					vdv.getInfovehicle().setText(result);*/
 					ac=new ActionListener(){
 						
 						public void actionPerformed(ActionEvent e){

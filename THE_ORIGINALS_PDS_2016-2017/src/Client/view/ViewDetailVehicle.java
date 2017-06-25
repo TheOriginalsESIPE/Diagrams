@@ -13,7 +13,6 @@ public class ViewDetailVehicle extends JFrame {
 	private JLabel vehicle;
 	private JTextField JnumMat;
 	private JTextArea infovehicle;
-	//private JScrollPane js;
 	
 	public ViewDetailVehicle(){
 		
@@ -31,14 +30,12 @@ public class ViewDetailVehicle extends JFrame {
 		ok=new JButton("OK");
 		
 		infovehicle=new JTextArea("");
-		//js=new JScrollPane(infovehicle);
 		JnumMat=new JTextField("");
 		
 		relocaliser.setPreferredSize(new Dimension(150, 50));
 		ok.setPreferredSize(new Dimension(150, 50));
 		infovehicle.setPreferredSize(new Dimension(100, 120));
 		JnumMat.setPreferredSize(new Dimension(100, 50));
-		//js.setPreferredSize(new Dimension(200, 120));
 		fenetre.getContentPane().add(JnumMat, BorderLayout.NORTH);
 		
 		JPanel panel=new JPanel();
@@ -48,9 +45,7 @@ public class ViewDetailVehicle extends JFrame {
 		panel.add(ok, BorderLayout.NORTH);
 		panel.add(infovehicle, BorderLayout.CENTER);
 		panel.add(relocaliser, BorderLayout.SOUTH);
-		//panel.add(infovehicle);
-		//panel.add(js);
-		
+	
 	}
 
 	public JFrame getFenetre() {
@@ -100,15 +95,5 @@ public class ViewDetailVehicle extends JFrame {
 	public void setJnumMat(JTextField jnumMat) {
 		JnumMat = jnumMat;
 	}
-
-	/**public JScrollPane getJs() {
-		return js;
-	}
-
-	public void setJs(JScrollPane js) {
-		this.js = js;
-	}**/
-	
-	
 }
 

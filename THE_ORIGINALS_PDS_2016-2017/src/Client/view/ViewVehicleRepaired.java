@@ -4,10 +4,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
 import javax.swing.*;
 
-//import server.Controller_vehicle_repaired;
 
 public class ViewVehicleRepaired extends JFrame{
 	
@@ -18,7 +16,6 @@ public class ViewVehicleRepaired extends JFrame{
 	private JButton ok, search,ok1,sauvegarde,table;
 	private JTextField textdate;
 	private JTextArea JnumMat;
-	//private JScrollPane js;
 	
 	public ViewVehicleRepaired(){
 		
@@ -38,7 +35,6 @@ public class ViewVehicleRepaired extends JFrame{
 		table=new JButton("table");
 		textdate=new JTextField("");
 		JnumMat=new JTextArea("");
-		//js=new JScrollPane(JnumMat);
 		
 		ok.setPreferredSize(new Dimension(100, 30));
 		ok1.setPreferredSize(new Dimension(100, 30));
@@ -46,7 +42,6 @@ public class ViewVehicleRepaired extends JFrame{
 		table.setPreferredSize(new Dimension(100, 30));
 		textdate.setPreferredSize(new Dimension(180, 30));
 		JnumMat.setPreferredSize(new Dimension(250, 400));
-		//js.setPreferredSize(new Dimension(200, 400));
 		
 		JPanel panel1 = new JPanel();
 		
@@ -60,8 +55,6 @@ public class ViewVehicleRepaired extends JFrame{
 		panel1.add(sauvegarde);
 		panel1.add(table);
 		panel1.add(JnumMat);
-		//panel1.add(ok1);
-		//panel1.add(js);
 	}
 
 	public JButton getSearch() {
@@ -71,14 +64,6 @@ public class ViewVehicleRepaired extends JFrame{
 	public void setSearch(JButton search) {
 		this.search = search;
 	}
-
-	/*public JScrollPane getJs() {
-		return js;
-	}
-
-	public void setJs(JScrollPane js) {
-		this.js = js;
-	}*/
 
 	public JFrame getFenetre1() {
 		return fenetre1;

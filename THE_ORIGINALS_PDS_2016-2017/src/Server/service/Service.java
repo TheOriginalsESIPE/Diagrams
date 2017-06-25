@@ -351,8 +351,6 @@ return parking;
     		 ResultSet rs=hsql.selectQuery(mv.select1(numMat));
     		 int update=hsql.updateQuery(mv.update(numMat, id_warehouse));
     		 System.out.println(mv.select1(numMat));
-    		 System.out.println(mv.select1(numMat));
-    		 System.out.println(mv.select1(numMat));
     		 res = update + " ";
     		 while(rs.next()){
     			 res += rs.getString("adress") + " ";

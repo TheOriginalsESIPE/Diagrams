@@ -10,12 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-//import java.util.Scanner;
 import javax.swing.JButton;
-import java.awt.Desktop;
+
 
 
 
@@ -26,11 +22,11 @@ public class Controller_vehicle_repaired {
 	private Controller_detail_vehicle cvd;
 	private Client.view.ViewShowTable vst;
 	private ControllerShowTable cst;
-	Socket socket;
-    BufferedReader in;
-    PrintStream out;
-    BufferedWriter out1;
-    File f;
+	private Socket socket;
+    private BufferedReader in;
+    private PrintStream out;
+    private BufferedWriter out1;
+    private File f;
 	
 	public Controller_vehicle_repaired(Socket socket, Client.view.ViewVehicleRepaired vvr){
 		this.socket=socket;
@@ -79,9 +75,6 @@ public class Controller_vehicle_repaired {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
-								
-								//String res1=mv.selectAll(date_end);
-								//vvr.getJnumMat().setText(res1);
 								
 								ac2=new ActionListener(){
 									
