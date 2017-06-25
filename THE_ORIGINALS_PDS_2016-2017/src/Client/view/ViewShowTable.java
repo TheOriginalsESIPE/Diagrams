@@ -20,12 +20,12 @@ public class ViewShowTable extends JFrame{
 		
 		super("table");
         setLayout(null);
-        setSize(500, 500);
+        setSize(580, 595);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
 		
         ok=new JButton("OK");
-        ok.setBounds(30, 420, 180, 30);
+        ok.setBounds(30, 520, 180, 30);
 		t= new Table();
         table = new JTable(t);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
@@ -33,7 +33,7 @@ public class ViewShowTable extends JFrame{
         table.setAutoCreateRowSorter(true);
 
         scrollp = new JScrollPane(table);
-        scrollp.setBounds(20, 20, 400, 400);
+        scrollp.setBounds(20, 20, 500, 500);
         this.getContentPane().add(scrollp);
         this.getContentPane().add(ok);
 	}
