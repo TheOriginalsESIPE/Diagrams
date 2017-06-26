@@ -25,7 +25,6 @@ public class Controller_vehicle_repaired {
 	private Socket socket;
     private BufferedReader in;
     private PrintStream out;
-    private BufferedWriter out1;
     private File f;
 	
 	public Controller_vehicle_repaired(Socket socket, Client.view.ViewVehicleRepaired vvr){

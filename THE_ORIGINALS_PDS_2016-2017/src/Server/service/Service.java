@@ -348,8 +348,8 @@ return parking;
     	 String res = "";
     	 try{
     		 hsql = new HandlerSQL();
-    		 ResultSet rs=hsql.selectQuery(mv.select1(numMat));
     		 int update=hsql.updateQuery(mv.update(numMat, id_warehouse));
+    		 ResultSet rs=hsql.selectQuery(mv.select1(numMat));
     		 System.out.println(mv.select1(numMat));
     		 res = update + " ";
     		 while(rs.next()){

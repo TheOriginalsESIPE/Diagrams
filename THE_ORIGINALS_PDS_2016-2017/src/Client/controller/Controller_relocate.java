@@ -75,8 +75,8 @@ public class Controller_relocate {
 						res = reponse.split(" ",100);
 						// reponse = "AAA 2".split(" ")  
 						// res = {"AAA", "2"} res[0] = "AAA"
-						System.out.println(res[1]);
-						
+						//System.out.println(res[1]);
+
 						out1.write("\r\n"+res[0]+" vehicule a été relocalise "+DateAujourdhui(answer2)+" et il a été mis en circulation à la meme date.");
 						out1.flush();
 						out1.write("\r\n"+"le numero d'immatriculation correspondant est: "+answer1+" avec un id_warehouse de: "+answer2+" et son adresse: "+res[1]+"\r\n");
