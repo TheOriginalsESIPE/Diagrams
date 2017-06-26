@@ -17,15 +17,15 @@ public class ZDialogVehicleInfoRepository {
 		return query;
 	}
 	
-	/*public static String getMotif(){
+	public static String getMotif(){
 		String query = null;
 		try{
-			query = "SELECT * FROM motif";
+			query = "SELECT name FROM motif";
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return query;
-	}*/
+	}
 	
 	public static String getVehicle(String numMat){
 		String query = null;
@@ -50,10 +50,34 @@ public class ZDialogVehicleInfoRepository {
 		return query;
 	}
 	
+	public static String setMotifHistorique( String nameMotif, String numMat){
+		String query = null;
+		try{
+			query = "INSERT INTO motif_historique(name, numMat, dateM) VALUES ('"
+                         +nameMotif+"','"+numMat+"',NOW())";
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return query;
+	}
+	
+	public static String setParking(String numP, String numMat){
+		String query = null;
+		try{
+			/*query = "INSERT "
+					+ "WHEN numPlace = '"+numP+"'AND numMat is null THEN "
+							+ " INTO parking(numMat) VALUES ('"+numMat+"')";*/
+			query = "update parking set numMat = '"+numMat+"' where numPlace = '"+numP+"' and numMat is null";
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return query;
+	}
+	
 	public static String getPark(){
 		String query = null;
 		try{
-			query = "SELECT numPlace FROM parking";
+			query = "SELECT numPlace FROM parking WHERE numMat is null";
 		}catch(Exception e){
 			e.printStackTrace();
 		}

@@ -26,6 +26,7 @@ import Client.dto.OperationDTO;
 import Client.dto.ParkingDTO;
 import Client.dto.RepairerDTO;
 import Client.dto.VehicleDTO;
+import Client.dto.VisitingMotifDTO;
 import Client.enumeration.EnumOperation;
 import Client.enumeration.EnumService;
 import Server.repository.ZDialogVehicleInfoRepository;
@@ -42,16 +43,16 @@ import Client.view.numMatError;
 public class ControllerZDialogVehicleInfo {
 	private ZDialogVehicleInfo viewZDialogVI;
 	private ZDialogVehicleInfoRepository zDialogVR;
-	private ActionListener 	breckdownActionListener, vehicleFindActionListener, listbreckdownActionListener, 
-							listMotifActionListener, visitingMotifActionListener, saveVehicleActionListener, cancelActionListener;
+	private ActionListener 	breckdownActionListener, vehicleFindActionListener, listbreckdownActionListener, buttonError1ActionListener, buttonError2ActionListener, 
+							listMotifActionListener, visitingMotifActionListener, saveVehicleActionListener, cancelActionListener, addAgainVehicleActionListener;
 	
 	private Socket socket = null;
 	private BufferedReader in = null;
 	private PrintStream out = null;
 	
 	private LocalTime tempsReparation = LocalTime.of(0, 0, 0);
-	private Vector<BreakdownDTO> listNameBreakdown;
-	//private Vector<VisitingMotifDTO> listVisitingMotif;
+	private Vector<BreakdownDTO> listNameBreakdown = new Vector<>();
+	private Vector<VisitingMotifDTO> listVisitingMotif;
 	private ArrayList<String> listBreakdown = new ArrayList<>(), listMotifvisiting = new ArrayList<>();
 	
 	public ControllerZDialogVehicleInfo(ZDialogVehicleInfo viewZDialogVI, Socket socket){
@@ -70,22 +71,22 @@ public class ControllerZDialogVehicleInfo {
 						in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 						out = new PrintStream(socket.getOutputStream());
 						
-						BreakdownDTO breakSearch = new BreakdownDTO();
+						VisitingMotifDTO motifSearch = new VisitingMotifDTO();
 						
 						Serialization serial = new Serialization();
 						
-						out.println(EnumService.BREAKDOWNLOAD.name());
+						out.println(EnumService.MOTIFDOWNLOAD.name());
 						out.flush();
-						out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "BreakdownDTO", breakSearch)));
+						out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "VisitingMotifDTO", motifSearch)));
 						out.flush();
 						
 						
 						String result = in.readLine();
 						DeserializationGson deserial = new DeserializationGson();
-						listNameBreakdown = deserial.deserialBreakdownDTO(result);
+						listVisitingMotif = deserial.deserialVisitingMotif(result);
 						
-						for(BreakdownDTO bDTO : listNameBreakdown){
-							viewZDialogVI.getVisitingMotifText().addItem(bDTO.getName());
+						for(VisitingMotifDTO vDTO : listVisitingMotif){
+							viewZDialogVI.getVisitingMotifText().addItem(vDTO.getName());
 						}
 						
 					} catch (IOException e1) {
@@ -178,6 +179,18 @@ public class ControllerZDialogVehicleInfo {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+				
+					String string1 = "Info vehicule :";
+					String string2 = "Numéro matricule :            " + viewZDialogVI.getRegisterText().getText();
+					String string3 = "La marque :                         " + viewZDialogVI.getBrandText().getText();
+					String string4 = "Le modele :                          " + viewZDialogVI.getModelText().getText();
+					String string5 = "Le type :                                " + viewZDialogVI.getVehicleTypeText().getText();
+				    
+					viewZDialogVI.getSummaryVehilce1().setText(string1);
+					viewZDialogVI.getSummaryVehilce2().setText(string2);
+					viewZDialogVI.getSummaryVehilce3().setText(string3);
+					viewZDialogVI.getSummaryVehilce4().setText(string4);
+					viewZDialogVI.getSummaryVehilce5().setText(string5);
 				}
 			}
 		};
@@ -253,16 +266,72 @@ public class ControllerZDialogVehicleInfo {
 							
 						};
 						viewZDialogVI.getMainButton2().addActionListener(cancelActionListener);
+						
+						buttonError1ActionListener = new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								
+								if((e.getSource() == viewZDialogVI.getButtonError1())){
+									
+									viewZDialogVI.getListVisitingMotif().setText(null);
+									viewZDialogVI.getListVisitingMotif().setText("LISTE DE MOTIFS: \n");
+								
+									}
+								}
+								
+							};
+							viewZDialogVI.getButtonError1().addActionListener(buttonError1ActionListener);
+							
+							buttonError2ActionListener = new ActionListener() {
+								
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									
+									if((e.getSource() == viewZDialogVI.getButtonError2())){
+										
+										viewZDialogVI.getListBreakdown().setText(null);
+										viewZDialogVI.getListBreakdown().setText("LISTE DE PANNES: \n");
+									
+										}
+									}
+									
+								};
+								viewZDialogVI.getButtonError2().addActionListener(buttonError2ActionListener);
+								
+								
+								addAgainVehicleActionListener = new ActionListener() {
+									
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										
+										if((e.getSource() == viewZDialogVI.getAddAgainVehicle())){
+											
+											viewZDialogVI.getRegisterText().setText(null);
+											viewZDialogVI.getModelText().setText(null);
+											viewZDialogVI.getModelText().setText("modele");
+											viewZDialogVI.getBrandText().setText(null);
+											viewZDialogVI.getBrandText().setText("marque");
+											viewZDialogVI.getVehicleTypeText().setText(null);
+											viewZDialogVI.getVehicleTypeText().setText("type vehicule");
+											viewZDialogVI.getListVisitingMotif().setText(null);
+											viewZDialogVI.getListVisitingMotif().setText("LISTE DE MOTIFS: \n");
+											viewZDialogVI.getListBreakdown().setText(null);
+											viewZDialogVI.getListBreakdown().setText("LISTE DE PANNES: \n");
+										
+											}
+										}
+										
+									};
+									viewZDialogVI.getAddAgainVehicle().addActionListener(addAgainVehicleActionListener);
 				
 	}
-	
 	
 	
 	public void myMainButton(){
 		
 		//Recover numMat of vehicle
 		String numMat = viewZDialogVI.getRegisterText().getText();
-		
 		
 		//Recover the breakdown list
 		String breakdownList = viewZDialogVI.getListBreakdown().getText();
@@ -283,6 +352,18 @@ public class ControllerZDialogVehicleInfo {
 				while(line != null){
 					listBreakdown.add(line);
 					line = inbreak.readLine();
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			String line1 = null;
+			try {
+				line1 = inMotif.readLine();
+				while(line1 != null){
+					listMotifvisiting.add(line1);
+					line1 = inMotif.readLine();
 				}
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -311,7 +392,8 @@ public class ControllerZDialogVehicleInfo {
 			}
 			
 			listBreakdown.remove(0);
-			int temps = 0, t1 = 0, t2 = 0, t3 = 0, h = 0, m = 0, s = 0;
+			listMotifvisiting.remove(0);
+			int h = 0, m = 0, s = 0;
 			
 			for(int i = 0; i < listNameBreakdown.size(); i++){
 				for(int j = 0; j < listBreakdown.size(); j++){
@@ -323,14 +405,16 @@ public class ControllerZDialogVehicleInfo {
 							in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 							out = new PrintStream(socket.getOutputStream());
 							
-							BreakdownDTO breakdownDTO = new BreakdownDTO();
+							/*BreakdownDTO breakdownDTO = new BreakdownDTO();
 							VehicleDTO vehicleDTO = new VehicleDTO();
 							RepairerDTO repairerDTO = new RepairerDTO();
 							vehicleDTO.setNumMat(numMat);
 							breakdownDTO.setId_breakdown(id_b);
-							repairerDTO.setLogin(RepLogin);
+							repairerDTO.setLogin(RepLogin);*/
 							
 							out.println(EnumService.SAVEVEHICLE.name());
+							out.flush();
+							out.println("Un");
 							out.flush();
 							out.println(id_b);
 							out.flush();
@@ -353,23 +437,66 @@ public class ControllerZDialogVehicleInfo {
 						m += lt.getMinute();
 						
 						s += lt.getSecond();
-					
-				
-						viewZDialogVI.getListVisitingMotif().append(listBreakdown.get(j)+"\n");
-						viewZDialogVI.getListVisitingMotif().append(lt+"\n");
-						
-					
-						if(j == listBreakdown.size()-1){
-							cpt++;
-						}
 					}
 				}
 			}
 			
-			viewZDialogVI.getListVisitingMotif().append(tempsReparation+"\n");
+			for(int t = 0; t < listMotifvisiting.size(); t++){
+				String motif = listMotifvisiting.get(t);
+				
+				try{
+					in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					out = new PrintStream(socket.getOutputStream());
+					
+					/*VisitingMotifDTO visitingMotifDTO = new VisitingMotifDTO();
+					VehicleDTO vehicleDTO = new VehicleDTO();
+					
+					visitingMotifDTO.setName(motif);
+					vehicleDTO.setNumMat(numMat);*/
+					
+					out.println(EnumService.SAVEVEHICLE.name());
+					out.flush();
+					out.println("Deux");
+					out.flush();
+					out.println(motif);
+					out.flush();
+					out.println(numMat);
+					out.flush();
+					
+					String res = in.readLine();
+					
+				}catch(IOException ioe){
+					ioe.printStackTrace();
+				}
+			}
+			
+			
+			
+			try {
+				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				out = new PrintStream(socket.getOutputStream());
+				
+				int numPark = lPark.get(0);
+				String numP = String.valueOf(numPark);
+				
+				out.println(EnumService.SAVEVEHICLE.name());
+				out.flush();
+				out.println("Trois");
+				out.flush();
+				out.println(numMat);
+				out.flush();
+				out.println(numP);
+				out.flush();
+				
+				String res = in.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			String d = h + " Heures " + m + " minutes " + s + " secondes\n";
 			
-			new InfoSysteme(String.valueOf(lPark.get(cpt)), d);
+			new InfoSysteme(String.valueOf(lPark.get(0)), d);
 		
 	}
 
