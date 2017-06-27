@@ -10,16 +10,8 @@ import java.net.Socket;
 import java.util.*;
 
 import javax.swing.JButton;
-import javax.swing.JTable;
-
-import Client.dto.Vehicle_warehouseDTO;
-import Client.serialization.Deserialization;
 import Client.serialization.DeserializationGson;
-import Client.serialization.Serialization;
-import Client.view.Table;
 import Client.view.ViewShowTable;
-import Client.view.ViewVehicleRepaired;
-import Server.dto.Vehicle_warehouseDTOL;
 import Client.enumeration.EnumService;
 
 public class ControllerShowTable {
