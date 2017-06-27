@@ -2,11 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/DEMBELE/Downloads/com.mysql.jdbc_5.1.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/DEMBELE/Downloads/gson-2.3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/DEMBELE/Downloads/itextpdf-5.4.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/DEMBELE/Downloads/jdatepicker-1.3.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/DEMBELE/Downloads/json-simple-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/DEMBELE/Downloads/swingx-all-1.6.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/LM/Downloads/gson-2.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/LM/Downloads/itextpdf-5.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/LM/Downloads/jdatepicker-1.3.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/LM/Downloads/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/LM/Downloads/mysql-connector-java-5.1.30.jar"/>
+	<classpathentry kind="lib" path="C:/Users/LM/Downloads/swingx-all-1.6.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
