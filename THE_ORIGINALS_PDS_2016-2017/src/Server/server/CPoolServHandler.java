@@ -477,7 +477,16 @@ public class CPoolServHandler extends Thread {
                 	System.out.println(strListName);
                 	out.println(strListName);
                 	out.flush();
-                }else if(cmd.equals(EnumService.VEHICLEDOWNLOAD.name())){
+                }else if (cmd.equals(EnumService.MOTIFDOWNLOAD.name())){
+                	String jsonString = in.readLine();
+                	
+                	//System.out.println(jsonString);
+                    //server.msg.append("\n" + jsonString);
+               	String strListMotif = serv.visitingMotifService(jsonString);
+               	System.out.println(strListMotif);
+               	out.println(strListMotif);
+               	out.flush();
+               }else if(cmd.equals(EnumService.VEHICLEDOWNLOAD.name())){
                 	String vehicle = in.readLine();
                
                 	//Server.server.msg.append("\n vehicle information : " + vehicle);
@@ -487,15 +496,36 @@ public class CPoolServHandler extends Thread {
                 	out.println(vehicleInfo);
                 	out.flush();
                 }else if(cmd.equals(EnumService.SAVEVEHICLE.name())){
+                	String etape = in.readLine();
+                	if(etape.equals("Un")){
                     String infoB = in.readLine();
                      	//System.out.println(infoB);
                     String infoV = in.readLine();
                      	//System.out.println(infoV);
                     String infoR = in.readLine();
                          //System.out.println(infoR);
-                    String res = serv.saveHehicle(infoB, infoV, infoR);
+                    String res = serv.saveVehicle(infoB, infoV, infoR);
                     out.println(res);
                     out.flush();
+                    }
+                	if(etape.equals("Deux")){
+                		String infoMotif = in.readLine();
+                     
+                		String infoV = in.readLine();
+                		
+                		String res = serv.saveVehicle2(infoMotif, infoV);
+                        out.println(res);
+                        out.flush();
+                	}
+                	if(etape.equals("Trois")){
+                		String numMat = in.readLine();
+                		
+                		String numP = in.readLine();
+                		
+                		String res = serv.saveVehicle3(numP, numMat);
+                        out.println(res);
+                        out.flush();
+                	}
                 }else if(cmd.equals(EnumService.PARKINGDOWLOAD.name())){
                     
                     String res = serv.getParking();

@@ -8,7 +8,7 @@ import Client.dto.IndicatorDTO;
 import Client.dto.ParkingDTO;
 import Client.dto.VehicleDTO;
 import Client.dto.Vehicle_warehouseDTOL;
-//import Client.dto.VisitingMotifDTO;
+import Client.dto.VisitingMotifDTO;
 import Server.dto.Vehicle_warehouseDTO;
 
 import java.lang.reflect.Type;
@@ -42,11 +42,11 @@ public class DeserializationGson {
         return vehicleInfo;
     }
     
-   /* public Vector<VisitingMotifDTO> deserialVisitingMotif(String str){
+   public Vector<VisitingMotifDTO> deserialVisitingMotif(String str){
         Type type = new TypeToken<Vector<VisitingMotifDTO>>(){}.getType();
         Vector<VisitingMotifDTO> visitingMotifList = g.fromJson(str, type);
         return visitingMotifList;
-    }*/
+    }
     
     public Vector<ParkingDTO> deserialParkingDTO(String str){
         Type type = new TypeToken<Vector<ParkingDTO>>(){}.getType();

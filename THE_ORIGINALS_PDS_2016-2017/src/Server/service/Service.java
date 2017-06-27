@@ -18,7 +18,7 @@ import Server.repository.ModelPiece;
 import Server.repository.ModelVehicle;
 import Server.repository.ZDialogVehicleInfoRepository;
 import Server.sql.HandlerSQL;
-
+import Server.dto.VisitingMotifDTO;
 import Server.dto.Vehicle_warehouseDTOL;
 import Server.dto.WarehouseDTOL;
 //import repository.ModelVehicle;
@@ -195,7 +195,9 @@ public class Service {
     		
     		while(resultSet.next()){
     			BreakdownDTO breakdownDTO = new BreakdownDTO();
+    			breakdownDTO.setId_breakdown(resultSet.getInt("id_breakdown"));
     			breakdownDTO.setName(resultSet.getString("name"));
+    			breakdownDTO.setDuree(resultSet.getTime("duree"));
     			vectorList.add(breakdownDTO);
     		} 
     		
@@ -206,6 +208,34 @@ public class Service {
     		sqle.printStackTrace();
     	}
     	return listNameBreakdown;
+    }
+    
+    public String visitingMotifService(String strJson){
+    	Deserialization deserial = new Deserialization();
+    	Vector<VisitingMotifDTO> vectorList = new Vector<VisitingMotifDTO>();
+    	JSONObject listMotif = deserial.deserialGeneric(strJson); 
+    	String listVisitingMotif = null;
+    	
+    	try{
+    		ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
+    		//hsql = new HandlerSQL();
+    		
+    		ResultSet resultSet = hsql.selectQuery(zdvr.getMotif());
+    		
+    		while(resultSet.next()){
+    			VisitingMotifDTO visitingMotifDTO = new VisitingMotifDTO();
+    			//visitingMotifDTO.setId_visitinMotif(resultSet.getInt("id_motif"));
+    			visitingMotifDTO.setName(resultSet.getString("name"));
+    			vectorList.add(visitingMotifDTO);
+    		} 
+    		
+    		SerializationGson serial = new SerializationGson();
+    		listVisitingMotif = serial.serialGenericMotif(vectorList);
+    		
+    	}catch(SQLException sqle){
+    		sqle.printStackTrace();
+    	}
+    	return listVisitingMotif;
     }
     
     
@@ -262,10 +292,26 @@ public class Service {
 
  
 
-    public String saveHehicle(String infoB, String infoV, String infoR){
+    public String saveVehicle(String infoB, String infoV, String infoR){
 		ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
-		//System.out.println(infoB+""+infoV+""+infoR);
+		
        	int query = hsql.updateQuery(zdvr.setOperation(infoB, infoV, infoR));
+    
+       	return String.valueOf(query);
+}
+    
+    public String saveVehicle2(String infoM, String infoV){
+		ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
+	
+       	int query = hsql.updateQuery(zdvr.setMotifHistorique(infoM, infoV));
+    
+       	return String.valueOf(query);
+}
+    
+    public String saveVehicle3(String numP, String numMat){
+		ZDialogVehicleInfoRepository zdvr = new ZDialogVehicleInfoRepository();
+	
+       	int query = hsql.updateQuery(zdvr.setParking(numP, numMat));
     
        	return String.valueOf(query);
 }
