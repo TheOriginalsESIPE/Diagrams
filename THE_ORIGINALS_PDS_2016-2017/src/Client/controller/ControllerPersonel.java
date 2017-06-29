@@ -52,13 +52,20 @@ public class ControllerPersonel {
                                 System.out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "VehiculeDTO", VehiculeDto)));
                                 
                                 String res = in.readLine();
-                                
-                                JTextArea z =v.getTxtA();
+                                String z="";
+          	                  
+          	                     while(res != null){
+          	                	 z=z+res+"\n";
+          	                	 if(in.ready()){
+          	                	 res=in.readLine();
+          	                        }else{break;}
+          	                	 } 
+                                JTextArea z2 =v.getTxtA();
                                 if (res.equals("")){
                                 	Erreur erreur = new Erreur();
                                 	erreur.getJlabel().setText(" le vehicule n'est pas en maintenance");
                                 	}
-                                else{ z.setText(res);}
+                                else{ z2.setText(z);}
 
                             } catch (IOException error){
                                 error.printStackTrace();

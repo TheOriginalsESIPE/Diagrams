@@ -31,7 +31,7 @@ private ViewDepotPieces v ;
 	public void Control() {
 	ac = e1 -> {
         if((JButton) e1.getSource()== v.getNiveau()){
-               String nomp = v.getNP().getText(); 
+               String nomp = (String) v.getcombo().getSelectedItem(); 
                try {
                  
                    in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -43,8 +43,16 @@ private ViewDepotPieces v ;
                    out.flush();
                    out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "Piece", R)));
                    out.flush();
-                  String rep = in.readLine();
-                  v.getNL().setText(rep);
+                
+                  String z="";
+                  String res =in.readLine();
+                  while(res != null){
+               	   z=z+res+"\n";
+               	   if(in.ready()){
+               		   res=in.readLine();
+               	   }else{break;}
+                  }
+                  v.getNL().setText(z);
                   
                } catch (IOException error){
                    error.printStackTrace();
@@ -65,8 +73,15 @@ private ViewDepotPieces v ;
                        out.flush();
                        out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "Piece", R)));
                        out.flush();
-                       String rep = in.readLine();
-                       v.getHL().setText(rep);
+                       String z="";
+                       String res =in.readLine();
+                       while(res != null){
+                    	   z=z+res+"\n";
+                    	   if(in.ready()){
+                    		   res=in.readLine();
+                    	   }else{break;}
+                       }
+                       v.getHL().setText(z);
                       
                    } catch (IOException error){
                        error.printStackTrace();
@@ -75,33 +90,7 @@ private ViewDepotPieces v ;
         
   
         
-                ac2 = e1 -> {
-                    if((JButton) e1.getSource()== v.gettoutelespieces()){
-                           try {
-                               in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                               out = new PrintStream(s.getOutputStream());
-                               Piece_stockDTO R = new Piece_stockDTO();
-                               Serialization serial = new Serialization();                 
-                               out.println("toutelespieces");
-                               out.flush();
-                               out.println(serial.serialToStr(serial.serialGeneric(EnumOperation.SEARCH.getIndex(), "Piece", R)));
-                               out.flush();
-                               String z="";
-                               String res =in.readLine();
-                               while(res != null){
-                            	   z=z+res+"\n";
-                            	   if(in.ready()){
-                            		   res=in.readLine();
-                            	   }else{break;}
-                               }
-                               v.getAtoutelespieces().setText(z);
-                               
-                               
-                           } catch (IOException error){
-                               error.printStackTrace();
-                           }
-                    }};v.gettoutelespieces().addActionListener(ac2);
-        
+               
         
         
         

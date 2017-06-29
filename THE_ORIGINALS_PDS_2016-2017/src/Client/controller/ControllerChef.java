@@ -16,7 +16,6 @@ import Client.view.Erreur;
 import Client.view.ViewChef;
 
 
-
 public class ControllerChef {
 	private Socket socket;
     private	BufferedReader in;
@@ -31,8 +30,8 @@ public class ControllerChef {
 	public void control(){       
 		ac2 = e1 -> {
                      if((JButton) e1.getSource()== v.getBtnChercher()){
-                            String nom = v.getPersonelN().getText();
-                            String prenom = v.getPersonelP().getText();
+                            String nom =(String) v.getPersonelN().getSelectedItem();
+                            String prenom =(String) v.getPersonelP().getSelectedItem();
                             try {
                                 System.out.println("select");
                                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -58,7 +57,7 @@ public class ControllerChef {
            	                	 
                                 }
                                 
-                                if (z.equals("\n")){
+                                if (z.equals("**")){
                                 	Erreur erreur = new Erreur();
                                 	erreur.getJlabel().setText("Le Reparateur n'exsite pas");
                                 	}

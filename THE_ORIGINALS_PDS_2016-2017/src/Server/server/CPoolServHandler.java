@@ -596,6 +596,39 @@ public class CPoolServHandler extends Thread {
                             out.println(z);
                         }
                     }
+                } if(cmd.equals("niveaudestock")){
+
+                    String jsonString = in.readLine();
+                    System.out.println(jsonString);
+                    server.msg.append("\n" + jsonString);
+
+                    Deserialization des = new Deserialization();
+                    JSONObject jo = des.deserialGeneric(jsonString);
+                    int action = des.deserialAction(jo);//get action
+
+                    if(des.deserialObject(jo, "Piece") != null){
+                        ModelpieceK modelPiece = new ModelpieceK();
+
+                        
+                        JSONArray jsonArray = (JSONArray) des.deserialObject(jo, "Piece");
+                        jo = (JSONObject) jsonArray.get(0);
+                        Piece_stockDTO dto = new Piece_stockDTO();
+                        dto.setname((String) jo.get("name"));
+                        if   (action == EnumOperation.SEARCH.getIndex()) {
+                            String query = modelPiece.SelectNs(dto.getname());
+                            server.msg.append("\nQuery SELECT=" + query);
+                            ResultSet rs = hsql.selectQuery(query);
+                           String a="";
+                           int i=0;
+                            while (rs.next()){
+                               a = rs.getString("counter");
+                               i=i+Integer.parseInt(a);
+                               server.msg.append("\n Result search = " + a);
+                            }
+                            
+                            out.println(i);
+                        }
+                    }
                 }else if(cmd.equals("Historique")){
                     	
                         String jsonString1 = in.readLine();
@@ -621,16 +654,17 @@ public class CPoolServHandler extends Thread {
 	                            server.msg.append("\nQuery SELECT=" + query2);
 	                            ResultSet rs = hsql.selectQuery(query);
 	                            ResultSet rs2 = hsql.selectQuery(query2);
-	                            String z1 = null;
-	                            String z = null;
+	                            String z1 ="";
+	                            String z ="";
 	                            while (rs.next()){
-	                            	z ="entr�:"+rs.getString("date_reception");
-	                            	server.msg.append("\n Result search = " + z);}
+	                            	z=z+" +  "+rs.getString("counter")+" "+rs.getString("name")+"\n";
+	                            	server.msg.append("\n Result search = " + z);
+	                            	}
 	                            while (rs2.next()){
-	                            	 z1 ="sortie:"+rs2.getString("date_reception");
-	                            	 server.msg.append("\n Result search = " + z1);
+	                            	 z1 =z1+" - "+rs2.getString("nomber")+" "+rs2.getString("name")+"\n";
+	                            	 server.msg.append("\n Result search = "+z1);
 	                            }
-	                            out.println(z+" "+z1);
+	                            out.println(z+"\n"+z1);
 	                        }
                     } 
 	            }
@@ -683,8 +717,8 @@ public class CPoolServHandler extends Thread {
                         Modelchef modechef = new Modelchef();
                         RepairerDTO dto = new RepairerDTO();
                         OperationDTOAli DTOp = new OperationDTOAli();
-                        if(des.deserialObject(jo, EnumDTO.REPAIRER.getName()) != null){
-                            JSONArray jsonArray = (JSONArray) des.deserialObject(jo, EnumDTO.REPAIRER.getName());
+                        if(des.deserialObject(jo, "Repairer") != null){
+                            JSONArray jsonArray = (JSONArray) des.deserialObject(jo,"Repairer");
                             jo = (JSONObject) jsonArray.get(0);
                             dto.setFirstname(((String) jo.get("firstname")));
                             dto.setLastname((String) jo.get("lastname"));
@@ -726,27 +760,101 @@ public class CPoolServHandler extends Thread {
                     ModelPersonel modelPersonel = new ModelPersonel();
                     VehicleDTOAli dto = new VehicleDTOAli();
                     OperationDTOAli DTOp = new OperationDTOAli();
-                    if(des.deserialObject(jo, EnumDTO.VEHICLE.getName()) != null){   
-                        JSONArray jsonArray = (JSONArray) des.deserialObject(jo, EnumDTO.VEHICLE.getName());
+                    if(des.deserialObject(jo, "VehiculeDTO") != null){   
+                        JSONArray jsonArray = (JSONArray) des.deserialObject(jo, "VehiculeDTO");
                         jo = (JSONObject) jsonArray.get(0);
                         dto.setNumMat(((String) jo.get("numMat")));
                         String p = null;
+                        server.msg.append("avant en if"+action);
                         if (action == EnumOperation.SEARCH.getIndex()) {
-                          	String List = modelPersonel.SelectOp(dto.getNumMat());
+                        	server.msg.append("entrer en if");
+                        	String List = modelPersonel.SelectOp(dto.getNumMat());
+                        	String List2 = modelPersonel.SelectOPV((dto.getNumMat()));
                           	server.msg.append("\n REquet " + List);
-                          	ResultSet rs2 = hsql.selectQuery(List);
-                           String z="";
-                           String v="";
-                           while(rs2.next()){
-                           	v="Numero Matricule :"+rs2.getString("numMat")+" satus :"+rs2.getString("status");
+                          	server.msg.append("\n REquet " + List2);
+                          	ResultSet rs7 = hsql.selectQuery(List);
+                          	ResultSet rs2 = hsql.selectQuery(List2);
+                          	String w="*";
+                          	while(rs2.next()){
+                          	w = w+"/n"+"reparateur :"+rs2.getString("login_repairer")+"\n"+"\n"+" date_begin :"+rs2.getString("date_begin")
+                    		+"  date_end :"+rs2.getString("date_end")+"  time_end"+rs2.getString("time_end")+"\n"+"id_operation :"
+                    		+rs2.getString("id_operation");
+                    		String List41 = modelPersonel.SelectBD(rs2.getString("id_breakdown"));
+                    		server.msg.append("\n REquet " + List41);
+                    		ResultSet rs4 = hsql.selectQuery(List41);
+                    		
+                    		while(rs4.next()){
+                    		w=w+"/n breakdown : "+rs4.getString("name");
+                    		server.msg.append("\n REquet " + w);
+                    		}
+                          	}
+                           String z="*";
+                           String v="*";
+                           while(rs7.next()){
+                           	v="Numero Matricule :"+rs7.getString("numMat")+" satus :"+rs7.getString("status");
                            	server.msg.append("\nQuery select login=" + v);
-                           	z=z+v+"\n";
+                           	z=z+v;
                                   }
-                          out.println(z);
+                          out.println(z+w);
                         }		
                    }
                }
-                
+                else if ((cmd.equals("cumule"))){
+                    
+               	 String jsonString = in.readLine();
+                    System.out.println(jsonString);
+                    server.msg.append("\n" + jsonString);
+
+                    Deserialization des = new Deserialization();
+                    JSONObject jo = des.deserialGeneric(jsonString);
+                    int action = des.deserialAction(jo);//get action
+
+                    /**
+                     * Now we have action and vehicle, should call the Model
+                     * */
+                    ModelPersonel modelPersonel = new ModelPersonel();
+                    VehicleDTOAli dto = new VehicleDTOAli();
+                    OperationDTOAli DTOp = new OperationDTOAli();
+                    if(des.deserialObject(jo, "Operation") != null){   
+                        		JSONArray jsonArray = (JSONArray) des.deserialObject(jo, "Operation");
+                        		jo = (JSONObject) jsonArray.get(0);
+                        		DTOp.setDate_begin(((String) jo.get("date_begin")));
+                        		DTOp.setDate_end(((String) jo.get("date_end")));
+                        		if (action == EnumOperation.SEARCH.getIndex()) {
+                        				String query = modelPersonel.SelectCum(DTOp.getDate_begin(), DTOp.getDate_end());
+                        				server.msg.append("\nQuery select login=" + query);
+                        				ResultSet rs = hsql.selectQuery(query);
+                        			    String z="";
+                                       String v="";
+                                       while(rs.next()){
+                           v="Numero Matricule : "+rs.getString("numMat")+" date_entrance"+rs.getString("date_entrance")+" date_wayout"+rs.getString("date_wayout");
+                            server.msg.append("\nQuery select login=" + v);
+                                     z=z+v+"\n";
+                                              }
+                                      out.println(z);
+                                       } 
+
+                    }
+                           
+                           }
+                else if ((cmd.equals("VehiculeMatn"))){ 
+                	ModelPersonel modelPersonel = new ModelPersonel();
+                   String query = modelPersonel.SeclectVDp();
+                   
+                    server.msg.append("\nQuery select login=" + query);
+                    ResultSet rs = hsql.selectQuery(query);
+                    String z="";
+                  
+                    String v="";
+                    
+                    while(rs.next()){
+                    	v="Numero Matricule :"+rs.getString("numMat")+" satus :"+rs.getString("status");
+                    	server.msg.append("\nQuery select login=" + v);
+                    	z=z+v+"\n";
+                           }
+                    
+                   out.println(z);
+                    }
             }
         } catch (IOException | SQLException e) {
             e.printStackTrace();

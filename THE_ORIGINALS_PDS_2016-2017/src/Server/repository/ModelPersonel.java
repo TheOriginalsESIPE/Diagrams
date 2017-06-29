@@ -4,10 +4,6 @@ public class ModelPersonel {
 	public ModelPersonel(){
 		
 	}
-	public String SelectId_Br(String matricul){
-	        String query = "SELECT id_breakdown from breakdown where numMat = '"+matricul+"';";
-	        return query;
-	    }
 	public String SelectOp(String s){
 		String query = "SELECT * from vehicle_warehouse where numMat = '"+s+"';";
         return query;
@@ -20,4 +16,13 @@ public class ModelPersonel {
 		String query = "SELECT * from vehicle_warehouse ;";
         return query;
 	}
+	public String SelectOPV(String z){
+		String query = "SELECT * from operation where numMat='"+z+"';";
+		return query;
+	}
+	public String SelectBD(String z){
+		String query = "SELECT * from breakdown where id_breakdown='"+z+"';";
+		return query;
+	}
+	
 }

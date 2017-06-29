@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -14,18 +15,35 @@ import javax.swing.JTextField;
 public class ViewChef extends JFrame {
 	private Panneau Pan = new Panneau();
 	private JLabel p1 ;
-	private JTextField PersonelN ;
 	private JLabel p2 ;
-	private JTextField PersonelP ;
+
 	private JTextArea Area ;
+	private JComboBox combo1 ;
+	private JComboBox combo2 ;
 	private JScrollPane q;
 	private JLabel NmbreOp ;
 	private JLabel NbreOP ;
 	private JButton button ;
 	public ViewChef() throws IOException{
 		p1 = new JLabel("Nom");
-		PersonelN = new JTextField();
-		PersonelP = new JTextField();
+		combo2 = new JComboBox();
+		combo1 = new JComboBox();
+		combo2.addItem("Prenom reparateur");
+		combo1.addItem("Nom reparateur");
+		   combo1.addItem("henri");
+		   combo1.addItem("jack");
+		   combo1.addItem("ali");
+		   combo1.addItem("youcef");
+		   combo1.addItem("karim");
+		   combo1.addItem("bakary");
+		   combo1.addItem("sam");
+		   combo1.addItem("robert");
+		   combo2.addItem("ronaldo");
+		   combo2.addItem("henri");
+		   combo2.addItem("jack");
+		   combo2.addItem("brahim");
+		   combo2.addItem("banhakeia");
+		   combo2.addItem("lobiiyed");
 		p2 =new JLabel("Prenom");
 		NbreOP = new JLabel("Nombre d'operration :");
 		Area =new JTextArea();
@@ -39,9 +57,9 @@ public class ViewChef extends JFrame {
 		Pan.img=ImageIO.read(new File("./image/logoupec.png"));
 		Pan.x=680; Pan.y=700; Pan.h=200;Pan.v=50;
 		p1.setBounds(10,20,40,10);
-		PersonelN.setBounds(10,40 , 200, 30);
+		combo1.setBounds(10,40 , 200, 30);
 		p2.setBounds(10,80,60,10);
-		PersonelP.setBounds(10,100 , 200, 30);
+		combo2.setBounds(10,100 , 200, 30);
 		Area.setBounds(230, 40, 500, 600);
 		q= new JScrollPane(Area, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		q.setBounds(380, 40, 500, 600);
@@ -53,9 +71,9 @@ public class ViewChef extends JFrame {
 		button.setBounds(40,620 , 100,50 );
 		Pan.setLayout(null);
 		Pan.add(button);
-		Pan.add(PersonelN);
+		Pan.add(combo1);
 		Pan.add(NbreOP);
-		Pan.add(PersonelP);
+		Pan.add(combo2);
 		Pan.add(q);
 		Pan.add(p1);
 		Pan.add(p2);
@@ -68,26 +86,17 @@ public class ViewChef extends JFrame {
 	public JButton getBtnChercher() {
 		return button;
 	}
-	public void setBtnChercher(JButton buttonch) {
-		this.button = buttonch;
-	}
-	public void setTxtA(JTextArea Area) {
-		this.Area = Area;
-	}
+	
 	public JTextArea getTxtA() {
 		return Area;
 	}
-	public void setPersonelN(JTextField s){
-		this.PersonelN=s;
+	
+	public JComboBox getPersonelN(){
+		return combo1;
 	}
-	public JTextField getPersonelN(){
-		return PersonelN;
-	}
-	public void setPersonelP(JTextField s){
-		this.PersonelP=s;
-	}
-	public JTextField getPersonelP(){
-		return PersonelP;
+	
+	public JComboBox getPersonelP(){
+		return combo2;
 }
 	public JLabel getNmbreOP(){
 		return NmbreOp;
